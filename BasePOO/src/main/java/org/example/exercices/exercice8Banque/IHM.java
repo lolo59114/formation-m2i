@@ -1,6 +1,6 @@
 package org.example.exercices.exercice8Banque;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class IHM {
@@ -30,7 +30,7 @@ public class IHM {
                         affichageMenuEffectuerDepotRetrait(client.getListeDesComptes(), StatutOp.DEPOT);
                         int indexCompte = saisiChoixCompte(client.getListeDesComptes());
                         if (indexCompte > -1) {
-                            CompteBancaire compteChoisi = client.getListeDesComptes()[indexCompte];
+                            CompteBancaire compteChoisi = client.getListeDesComptes().get(indexCompte);
                             compteChoisi.effectuerUneOperation(saisiMontantDepotRetrait(StatutOp.DEPOT), StatutOp.DEPOT);
                         }
                     }
@@ -40,15 +40,16 @@ public class IHM {
                         affichageMenuEffectuerDepotRetrait(client.getListeDesComptes(), StatutOp.RETRAIT);
                         int indexCompte = saisiChoixCompte(client.getListeDesComptes());
                         if (indexCompte > -1) {
-                            CompteBancaire compteChoisi = client.getListeDesComptes()[indexCompte];
+                            CompteBancaire compteChoisi = client.getListeDesComptes().get(indexCompte);
                             compteChoisi.effectuerUneOperation(saisiMontantDepotRetrait(StatutOp.RETRAIT), StatutOp.RETRAIT);
                         }
                     }
                 }
                 case 5 -> {
                     if (client.getListeDesComptes() != null) {
+                        affichageMenuListCompte(client.getListeDesComptes());
                         int indexCompte = saisiChoixCompte(client.getListeDesComptes());
-                        CompteBancaire compteChoisi = client.getListeDesComptes()[indexCompte];
+                        CompteBancaire compteChoisi = client.getListeDesComptes().get(indexCompte);
                         affichageListeOperations(compteChoisi.getListeOperations());
                         affichageSoldeCompte(compteChoisi);
                     }
@@ -79,25 +80,29 @@ public class IHM {
                     """);
     }
 
-    public static void affichageMenuEffectuerDepotRetrait(CompteBancaire[] listeComptes, StatutOp statut) {
+    public static void affichageMenuEffectuerDepotRetrait(List<CompteBancaire> listeComptes, StatutOp statut) {
         switch (statut) {
             case DEPOT -> System.out.println("\n=== Effectuer un dépot ===");
             case RETRAIT -> System.out.println("\n=== Effectuer un retrait ===");
         }
-        for(int i = 0; i < listeComptes.length; i++) {
-            CompteBancaire compte = listeComptes[i];
+        affichageMenuListCompte(listeComptes);
+    }
+
+    public static void affichageMenuListCompte(List<CompteBancaire> listeComptes) {
+        for(int i = 0; i < listeComptes.size(); i++) {
+            CompteBancaire compte = listeComptes.get(i);
             System.out.println((i+1) + ". " + compte);
         }
         System.out.println("0. Annuler l'opération");
     }
 
-    public static int saisiChoixCompte(CompteBancaire[] listeComptes) {
+    public static int saisiChoixCompte(List<CompteBancaire> listeComptes) {
         int choix = 0;
         while (true) {
             System.out.println("Choisissez le compte: ");
             try {
                 choix = Integer.parseInt(scanner.nextLine());
-                if(choix < 0 || choix > listeComptes.length) {
+                if(choix < 0 || choix > listeComptes.size()) {
                     throw new Exception();
                 }
                 break;
@@ -172,16 +177,16 @@ public class IHM {
         return choix;
     }
 
-    public static void affichageListeComptes(CompteBancaire[] listeCompte) {
+    public static void affichageListeComptes(List<CompteBancaire> listeCompte) {
         for(CompteBancaire compte : listeCompte) {
             System.out.println(compte);
         }
         attendreUtilisateur();
     }
 
-    public static void affichageListeOperations(Operation[] listeOperations) {
+    public static void affichageListeOperations(List<Operation> listeOperations) {
         System.out.println(("Liste des Operations :"));
-        System.out.println(Arrays.toString(listeOperations));
+        System.out.println(listeOperations);
     }
 
     public static void affichageSoldeCompte(CompteBancaire compte) {

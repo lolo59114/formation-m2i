@@ -1,13 +1,17 @@
 package org.example.exercices.exercice8Banque;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class CompteBancaire {
     protected double solde;
     protected Client client;
-    protected Operation[] listeOperations;
+    protected List<Operation> listeOperations;
 
     public CompteBancaire(double solde, Client client) {
         this.solde = solde;
         this.client = client;
+        this.listeOperations = new ArrayList<>();
     }
 
     public double getSolde() {
@@ -26,18 +30,20 @@ public abstract class CompteBancaire {
         this.client = client;
     }
 
-    public Operation[] getListeOperations() {
+    public List<Operation> getListeOperations() {
         return listeOperations;
     }
 
     public void ajouterUneOperation(Operation nouvelleOperation) {
-        Operation[] nouvelleListeOperation = new Operation[listeOperations.length + 1];
-        nouvelleListeOperation[nouvelleListeOperation.length - 1] = nouvelleOperation;
-        this.listeOperations = nouvelleListeOperation;
+        this.listeOperations.add(nouvelleOperation);
     }
 
     public void effectuerUneOperation(double montant, StatutOp statut) {
-        Operation operation = new Operation(this.getListeOperations().length + 1, montant, statut);
+        Operation operation = new Operation(this.getListeOperations().size() + 1, montant, statut);
+        switch (statut) {
+            case RETRAIT -> solde -= montant;
+            case DEPOT -> solde += montant;
+        }
         this.ajouterUneOperation(operation);
     }
 

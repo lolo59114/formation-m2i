@@ -1,12 +1,14 @@
 package org.example.exercices.exercice8Banque;
 
 import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Client {
     private String nom;
     private String prenom;
     private int identifiant;
-    private CompteBancaire[] listeDesComptes;
+    private List<CompteBancaire> listeDesComptes;
     private String numeroTel;
 
     public Client(String nom, String prenom, int identifiant, String numeroTel) {
@@ -14,7 +16,7 @@ public class Client {
         this.prenom = prenom;
         this.identifiant = identifiant;
         this.numeroTel = numeroTel;
-        this.listeDesComptes = new CompteBancaire[]{};
+        this.listeDesComptes = new ArrayList<>();
     }
 
     public String getNom() {
@@ -29,7 +31,7 @@ public class Client {
         return identifiant;
     }
 
-    public CompteBancaire[] getListeDesComptes() {
+    public List<CompteBancaire> getListeDesComptes() {
         return listeDesComptes;
     }
 
@@ -38,9 +40,7 @@ public class Client {
     }
 
     private void ajouterCompteBancaire(CompteBancaire compte) {
-        CompteBancaire[] nouvelleListeCompte = new CompteBancaire[listeDesComptes.length + 1];
-        nouvelleListeCompte[nouvelleListeCompte.length - 1] = compte;
-        this.listeDesComptes = nouvelleListeCompte;
+        listeDesComptes.add(compte);
     }
 
     public void creerCompteBancaire(int choixCompte, double soldeInitial) {
