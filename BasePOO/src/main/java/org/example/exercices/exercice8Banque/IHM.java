@@ -11,7 +11,7 @@ public class IHM {
         do {
             affichageMenuPrincipal();
             choixUtilisateur = saisiMenu(Menu.PRINCIPAL);
-            switch(choixUtilisateur) {
+            switch (choixUtilisateur) {
                 case 1 -> {
                     if (client.getListeDesComptes() != null) {
                         affichageListeComptes(client.getListeDesComptes());
@@ -55,29 +55,29 @@ public class IHM {
                     }
                 }
             }
-        } while(choixUtilisateur != 0);
+        } while (choixUtilisateur != 0);
     }
 
     public static void affichageMenuPrincipal() {
         System.out.println("""
-                    \n=== Menu Principal ===
-                    1. Lister les comptes bancaires
-                    2. Créer un compte bancaire
-                    3. Effectuer un dépot
-                    4. Effectuer un retrait
-                    5. Afficher les opérations et le solde
-                    0. Quitter le programme
-                    """);
+                \n=== Menu Principal ===
+                1. Lister les comptes bancaires
+                2. Créer un compte bancaire
+                3. Effectuer un dépot
+                4. Effectuer un retrait
+                5. Afficher les opérations et le solde
+                0. Quitter le programme
+                """);
     }
 
     public static void affichageMenuCreationCompte() {
         System.out.println("""
-                    \n=== Création de Compte ===
-                    1. Créer un compte courant
-                    2. Créer un compte épargne
-                    3. Créer un compte payant
-                    0. Annuler la création de compte
-                    """);
+                \n=== Création de Compte ===
+                1. Créer un compte courant
+                2. Créer un compte épargne
+                3. Créer un compte payant
+                0. Annuler la création de compte
+                """);
     }
 
     public static void affichageMenuEffectuerDepotRetrait(List<CompteBancaire> listeComptes, StatutOp statut) {
@@ -89,9 +89,9 @@ public class IHM {
     }
 
     public static void affichageMenuListCompte(List<CompteBancaire> listeComptes) {
-        for(int i = 0; i < listeComptes.size(); i++) {
+        for (int i = 0; i < listeComptes.size(); i++) {
             CompteBancaire compte = listeComptes.get(i);
-            System.out.println((i+1) + ". " + compte);
+            System.out.println((i + 1) + ". " + compte);
         }
         System.out.println("0. Annuler l'opération");
     }
@@ -102,7 +102,7 @@ public class IHM {
             System.out.println("Choisissez le compte: ");
             try {
                 choix = Integer.parseInt(scanner.nextLine());
-                if(choix < 0 || choix > listeComptes.size()) {
+                if (choix < 0 || choix > listeComptes.size()) {
                     throw new Exception();
                 }
                 break;
@@ -111,7 +111,7 @@ public class IHM {
             }
         }
         // on retourne choix-1 pour matcher à l'index de la liste des comptes
-        return choix-1;
+        return choix - 1;
     }
 
     public static double saisiMontantDepotRetrait(StatutOp statut) {
@@ -178,7 +178,7 @@ public class IHM {
     }
 
     public static void affichageListeComptes(List<CompteBancaire> listeCompte) {
-        for(CompteBancaire compte : listeCompte) {
+        for (CompteBancaire compte : listeCompte) {
             System.out.println(compte);
         }
         attendreUtilisateur();

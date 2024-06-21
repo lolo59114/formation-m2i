@@ -34,7 +34,7 @@ public abstract class CompteBancaire {
         return listeOperations;
     }
 
-    public void ajouterUneOperation(Operation nouvelleOperation) {
+    private void ajouterUneOperation(Operation nouvelleOperation) {
         this.listeOperations.add(nouvelleOperation);
     }
 
