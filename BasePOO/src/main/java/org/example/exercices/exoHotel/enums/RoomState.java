@@ -1,4 +1,4 @@
-package org.example.exercices.exoHotel;
+package org.example.exercices.exoHotel.enums;
 
 public enum RoomState {
     FREE,
