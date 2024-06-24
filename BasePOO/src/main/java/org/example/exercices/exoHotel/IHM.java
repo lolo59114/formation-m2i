@@ -36,8 +36,14 @@ public class IHM {
                 case "2" -> displayCustomerList(hotel.getCustomers());
                 case "3" -> {
                     displayCustomerList(hotel.getCustomers());
-                    int idClient = askInput("Choisissez le numéro du client: ", "Ce numéro n'est pas dans la liste.", Integer.class);
-                    displayCustomerBooking(hotel.getCustomerById(idClient));
+                    int idClient = askInput("Choisissez le numéro du client: ", Integer.class);
+                    Customer customer = hotel.getCustomerById(idClient);
+                    if (customer == null) {
+                        System.out.println("Le client choisi n'existe pas !");
+                    } else {
+                        displayCustomerBooking(customer);
+                    }
+
                 }
                 case "4" -> startAddBookingMenu(hotel);
                 case "5" -> {
@@ -175,24 +181,11 @@ public class IHM {
                     Method valueOf = type.getMethod("valueOf", String.class);
                     inputValue = type.cast(valueOf.invoke(null, inputString));
                 } else {
-                    inputValue = (T) inputString;
+                    inputValue = type.cast(inputString);
                 }
                 return inputValue;
             } catch (Exception e) {
                 System.out.println("Erreur: " + e.getMessage());
-            }
-        }
-    }
-
-    private static <T> T askInput(String asked, String errMess, Class<T> type) {
-        while (true) {
-            System.out.println(asked);
-            try {
-                String inputString = scanner.nextLine();
-                Method valueOf = type.getMethod("valueOf", String.class);
-                return type.cast(valueOf.invoke(null, inputString));
-            } catch (Exception e) {
-                System.out.println(errMess);
             }
         }
     }
