@@ -1,6 +1,6 @@
 package org.example.exercicesJDBC.exercice1;
 
-import org.example.exercicesJDBC.JDBCConfig;
+import org.example.exercicesJDBC.DataBaseManager;
 
 import java.lang.reflect.Method;
 import java.sql.*;
@@ -13,9 +13,9 @@ public class IHM {
     private static Connection con;
 
     public static void startApp() {
-        JDBCConfig config = new JDBCConfig("exercice1");
+        DataBaseManager database = new DataBaseManager("exercice1");
         try {
-            con = DriverManager.getConnection(config.getFULL_URL(), config.getUSER(), config.getPASSWORD());
+            con = database.getConnection();
             if (con != null) {
                 while (true) {
                     displayMenu();
@@ -68,16 +68,20 @@ public class IHM {
                     .numClasse(numClasse)
                     .dateDiplome(Date.valueOf(LocalDate.parse(dateDiplome)))
                     .build();
-            String request = "INSERT INTO Etudiant(nom, prenom, num_classe, date_diplome) VALUES(?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(request);
-            ps.setString(1, nouvEtudiant.getNom());
-            ps.setString(2, nouvEtudiant.getPrenom());
-            ps.setInt(3, nouvEtudiant.getNumClasse());
-            ps.setDate(4, nouvEtudiant.getDateDiplome());
-            if (ps.executeUpdate() == 1) {
+            EtudiantDAO dao = new EtudiantDAO(con);
+            if (dao.save(nouvEtudiant)) {
                 System.out.println("L'étudiant a bien été créé.");
             }
-            ps.close();
+//            String request = "INSERT INTO Etudiant(nom, prenom, num_classe, date_diplome) VALUES(?, ?, ?, ?)";
+//            PreparedStatement ps = con.prepareStatement(request);
+//            ps.setString(1, nouvEtudiant.getNom());
+//            ps.setString(2, nouvEtudiant.getPrenom());
+//            ps.setInt(3, nouvEtudiant.getNumClasse());
+//            ps.setDate(4, nouvEtudiant.getDateDiplome());
+//            if (ps.executeUpdate() == 1) {
+//                System.out.println("L'étudiant a bien été créé.");
+//            }
+//            ps.close();
         } catch (DateTimeParseException e) {
             System.out.println(e.getMessage());
         }
