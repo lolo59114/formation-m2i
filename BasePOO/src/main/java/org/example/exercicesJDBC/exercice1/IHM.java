@@ -11,11 +11,13 @@ import java.util.Scanner;
 public class IHM {
     private static Scanner scanner = new Scanner(System.in);
     private static Connection con;
+    private static EtudiantDAO dao;
 
     public static void startApp() {
         DataBaseManager database = new DataBaseManager("exercice1");
         try {
             con = database.getConnection();
+            dao = new EtudiantDAO(con);
             if (con != null) {
                 while (true) {
                     displayMenu();
@@ -46,13 +48,9 @@ public class IHM {
     }
 
     private static void deleteEtudiant(int idEtudiant) throws SQLException {
-        String request = "DELETE FROM Etudiant WHERE id_etudiant=?";
-        PreparedStatement ps = con.prepareStatement(request);
-        ps.setInt(1, idEtudiant);
-        if (ps.executeUpdate() == 1) {
+        if (dao.delete(idEtudiant)) {
             System.out.println("L'étudiant a bien été supprimé.");
         }
-        ps.close();
         askBeforeContinue();
     }
 
@@ -68,20 +66,9 @@ public class IHM {
                     .numClasse(numClasse)
                     .dateDiplome(Date.valueOf(LocalDate.parse(dateDiplome)))
                     .build();
-            EtudiantDAO dao = new EtudiantDAO(con);
             if (dao.save(nouvEtudiant)) {
                 System.out.println("L'étudiant a bien été créé.");
             }
-//            String request = "INSERT INTO Etudiant(nom, prenom, num_classe, date_diplome) VALUES(?, ?, ?, ?)";
-//            PreparedStatement ps = con.prepareStatement(request);
-//            ps.setString(1, nouvEtudiant.getNom());
-//            ps.setString(2, nouvEtudiant.getPrenom());
-//            ps.setInt(3, nouvEtudiant.getNumClasse());
-//            ps.setDate(4, nouvEtudiant.getDateDiplome());
-//            if (ps.executeUpdate() == 1) {
-//                System.out.println("L'étudiant a bien été créé.");
-//            }
-//            ps.close();
         } catch (DateTimeParseException e) {
             System.out.println(e.getMessage());
         }
@@ -89,36 +76,19 @@ public class IHM {
     }
 
     private static void displayEtudiants() throws SQLException {
-        String request = "SELECT * FROM Etudiant ";
-        selectEtudiants(request);
+        for(Etudiant etudiant : dao.getAll()) {
+            System.out.println(etudiant);
+        }
         askBeforeContinue();
     }
 
     private static void displayEtudiants(int numClasse) throws SQLException {
-        String request = "SELECT * FROM Etudiant ";
-        if (numClasse > 0) {
-            request += "WHERE num_classe = " + numClasse + " ORDER BY num_classe";
-            selectEtudiants(request);
+        for(Etudiant etudiant : dao.getByClasse(numClasse)) {
+            System.out.println(etudiant);
         }
         askBeforeContinue();
     }
 
-    private static void selectEtudiants(String request) throws SQLException {
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(request);
-        while (rs.next()) {
-            Etudiant nouvEtudiant = Etudiant.builder()
-                    .idEtudiant(rs.getInt("id_etudiant"))
-                    .nom(rs.getString("nom"))
-                    .prenom(rs.getString("prenom"))
-                    .numClasse(rs.getInt("num_classe"))
-                    .dateDiplome(rs.getDate("date_diplome"))
-                    .build();
-            System.out.println(nouvEtudiant);
-        }
-        rs.close();
-        st.close();
-    }
 
     private static void displayMenu() {
         System.out.println("""
