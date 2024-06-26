@@ -7,7 +7,7 @@ import org.example.exercicesJPA.exercice1Zoo.Util.Diet;
 import java.time.LocalDate;
 
 
-@Entity
+//@Entity
 @Data
 @Builder
 @AllArgsConstructor

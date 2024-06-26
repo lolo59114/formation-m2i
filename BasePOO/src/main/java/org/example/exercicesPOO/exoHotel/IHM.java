@@ -171,7 +171,7 @@ public class IHM {
     }
 
     private static <T> T askInput(String asked, Class<T> type) {
-        while (true) {
+        do {
             System.out.println(asked);
             try {
                 T inputValue;
@@ -187,6 +187,6 @@ public class IHM {
             } catch (Exception e) {
                 System.out.println("Erreur: " + e.getMessage());
             }
-        }
+        } while (true);
     }
 }

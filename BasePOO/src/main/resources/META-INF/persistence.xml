@@ -8,11 +8,13 @@
             Persistence unit for the Jakarta Persistence
         </description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>org.example.exercicesJPA.Computer</class>
-        <class>org.example.exercicesJPA.exercice1Zoo.Entity.Animal</class>
+        <class>org.example.exercicesJPA.exercice2Billeterie.Entity.Address</class>
+        <class>org.example.exercicesJPA.exercice2Billeterie.Entity.Customer</class>
+        <class>org.example.exercicesJPA.exercice2Billeterie.Entity.Event</class>
+        <class>org.example.exercicesJPA.exercice2Billeterie.Entity.Ticket</class>
         <properties>
             <!-- Database connection settings -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres?currentSchema=exercice_jpa" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres?currentSchema=exercice_jpa2" />
             <property name="jakarta.persistence.jdbc.user" value="postgres" />
             <property name="jakarta.persistence.jdbc.password" value="root" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
