@@ -1,24 +1,25 @@
-package org.example.exercicesJPA.exercice1Zoo;
+package org.example.exercicesJPA.exercice1Zoo.Repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
+import org.example.exercicesJPA.exercice1Zoo.Entity.Animal;
+import org.example.exercicesJPA.exercice1Zoo.Util.Diet;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimalDAO {
+public class AnimalRepository {
     EntityManagerFactory emf;
     EntityManager em = null;
-    public AnimalDAO() {
+    public AnimalRepository() {
         this.emf = Persistence.createEntityManagerFactory("jpa");
     }
 
+    // Check connection state
     private EntityManager getEntityManager() {
-        if (em == null || !em.isOpen()) {
-            em = emf.createEntityManager();
-        }
+        if (emf == null || !emf.isOpen())
+            this.emf = Persistence.createEntityManagerFactory("jpa");
+        if (em == null || !em.isOpen())
+            this.em = emf.createEntityManager();
         return em;
     }
 
@@ -30,8 +31,6 @@ public class AnimalDAO {
             this.em.getTransaction().commit();
         } catch (Exception e) {
             this.em.getTransaction().rollback();
-        } finally {
-            this.em.close();
         }
     }
 
@@ -42,21 +41,19 @@ public class AnimalDAO {
 
     public List<Animal> getAnimalsByName(String name) {
         this.em = getEntityManager();
-        List<Animal> animals = new ArrayList<Animal>();
-        Query query = this.em.createQuery("SELECT a FROM Animal a WHERE a.nom = :name", Animal.class);
+        List<Animal> animals = new ArrayList<>();
+        TypedQuery<Animal> query = this.em.createQuery("SELECT a FROM Animal a WHERE a.name = :name", Animal.class);
         query.setParameter("name", name);
         animals = query.getResultList();
-        this.em.close();
         return animals;
     }
 
-    public List<Animal> getAnimalsByRegime(EnumRegimeAlim regime) {
+    public List<Animal> getAnimalsByRegime(Diet regime) {
         this.em = getEntityManager();
         List<Animal> animals = new ArrayList<>();
-        Query query = this.em.createQuery("SELECT a FROM Animal a WHERE a.regimeAlim = :regime", Animal.class);
+        TypedQuery<Animal> query = this.em.createQuery("SELECT a FROM Animal a WHERE a.regimeAlim = :regime", Animal.class);
         query.setParameter("regime", regime);
         animals = query.getResultList();
-        this.em.close();
         return animals;
     }
 }

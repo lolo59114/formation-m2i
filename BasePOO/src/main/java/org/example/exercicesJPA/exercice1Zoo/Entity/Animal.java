@@ -1,7 +1,8 @@
-package org.example.exercicesJPA.exercice1Zoo;
+package org.example.exercicesJPA.exercice1Zoo.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.exercicesJPA.exercice1Zoo.Util.Diet;
 
 import java.time.LocalDate;
 
@@ -16,12 +17,12 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String nom;
+    private String name;
     private int age;
 
     @Column(name="regime_alim", nullable = false)
     @Enumerated
-    EnumRegimeAlim regimeAlim;
+    Diet regimeAlim;
 
     @Column(name="date_arrivee")
     LocalDate dateArrivee;

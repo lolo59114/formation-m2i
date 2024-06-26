@@ -9,7 +9,7 @@
         </description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>org.example.exercicesJPA.Computer</class>
-        <class>org.example.exercicesJPA.exercice1Zoo.Animal</class>
+        <class>org.example.exercicesJPA.exercice1Zoo.Entity.Animal</class>
         <properties>
             <!-- Database connection settings -->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres?currentSchema=exercice_jpa" />

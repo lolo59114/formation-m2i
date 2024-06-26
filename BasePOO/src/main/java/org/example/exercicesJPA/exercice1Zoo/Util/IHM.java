@@ -1,4 +1,7 @@
-package org.example.exercicesJPA.exercice1Zoo;
+package org.example.exercicesJPA.exercice1Zoo.Util;
+
+import org.example.exercicesJPA.exercice1Zoo.Entity.Animal;
+import org.example.exercicesJPA.exercice1Zoo.Repository.AnimalRepository;
 
 import java.lang.reflect.Method;
 import java.time.LocalDate;
@@ -7,9 +10,9 @@ import java.util.Scanner;
 
 public class IHM {
     private static Scanner scanner = new Scanner(System.in);
-    private static AnimalDAO animalDAO;
+    private static AnimalRepository animalRepository;
     public static void startApp(){
-        animalDAO = new AnimalDAO();
+        animalRepository = new AnimalRepository();
         while(true){
             displayMenu();
             String choice = askInput("Votre choix: ", String.class);
@@ -32,7 +35,7 @@ public class IHM {
                 2. Omnivore
                 """);
         int regime = askInput("Votre choix: ", Integer.class);
-        List<Animal> animals = animalDAO.getAnimalsByRegime(EnumRegimeAlim.values()[regime]);
+        List<Animal> animals = animalRepository.getAnimalsByRegime(Diet.values()[regime]);
         for(Animal animal : animals){
             System.out.println(animal);
         }
@@ -41,7 +44,7 @@ public class IHM {
 
     private static void displayAnimalsByName() {
         String name = askInput("Nom de l'animal: ", String.class);
-        List<Animal> animals = animalDAO.getAnimalsByName(name);
+        List<Animal> animals = animalRepository.getAnimalsByName(name);
         for(Animal animal : animals){
             System.out.println(animal);
         }
@@ -50,7 +53,7 @@ public class IHM {
 
     private static void displayAnimalById() {
         int id = askInput("Id de l'animal: ", Integer.class);
-        Animal animal = animalDAO.getAnimal(id);
+        Animal animal = animalRepository.getAnimal(id);
         System.out.println(animal);
         askBeforeContinue();
     }
@@ -61,12 +64,12 @@ public class IHM {
         int regime = askInput("Regime alimentaire \n 0. Carnivore\n 1.Herbivore \n2.Omnivore ", Integer.class);
         String dateArrivee = askInput("Date arrivee(yyyy-MM-jj): ", String.class);
         Animal animal = Animal.builder()
-                .nom(animalName)
+                .name(animalName)
                 .age(age)
-                .regimeAlim(EnumRegimeAlim.values()[regime])
+                .regimeAlim(Diet.values()[regime])
                 .dateArrivee(LocalDate.parse(dateArrivee))
                 .build();
-        animalDAO.createAnimal(animal);
+        animalRepository.createAnimal(animal);
     }
 
     public static void displayMenu() {
