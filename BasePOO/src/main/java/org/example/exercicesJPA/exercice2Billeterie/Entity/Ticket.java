@@ -35,7 +35,8 @@ public class Ticket {
         return "Ticket{" +
                 "placeNumber=" + placeNumber +
                 ", type=" + type +
-                ", customer=" + customer +
+                ", customerFirstName=" + customer.getFirstName() +
+                ", customerLastName=" + customer.getLastName() +
                 '}';
     }
 
@@ -52,8 +53,9 @@ public class Ticket {
         return "Ticket{" +
                 "placeNumber=" + placeNumber +
                 ", type=" + type +
-                ", event=" + event +
-                ", customer=" + customer +
+                ", event=" + event.getName() +
+                ", customerFirstName=" + customer.getFirstName() +
+                ", customerLastName=" + customer.getLastName() +
                 '}';
     }
 }

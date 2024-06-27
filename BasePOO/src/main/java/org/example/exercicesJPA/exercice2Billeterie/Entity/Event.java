@@ -23,7 +23,7 @@ public class Event {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "adress_id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @Column(name="start_date")
@@ -34,4 +34,17 @@ public class Event {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     private List<Ticket> tickets;
+
+    @Override
+    public String toString() {
+        List<String> ticketString = tickets.stream().map(Ticket::toStringEvent).toList();
+        return "Event{" +
+                "placeNumber=" + placeNumber +
+                ", startDate=" + startDate +
+                ", address=" + address +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                ", tickets=" + ticketString +
+                '}';
+    }
 }

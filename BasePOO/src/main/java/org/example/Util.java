@@ -5,6 +5,12 @@ import java.util.Scanner;
 
 public class Util {
     private static Scanner scanner = new Scanner(System.in);
+
+    public static void askBeforeContinue() {
+        System.out.println("Appuyez sur entrée pour continuer...");
+        scanner.nextLine();
+    }
+
     public static <T> T askInput(String asked, Class<T> type) {
         while (true) {
             System.out.println(asked);

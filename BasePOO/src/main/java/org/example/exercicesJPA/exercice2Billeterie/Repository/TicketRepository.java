@@ -2,6 +2,7 @@ package org.example.exercicesJPA.exercice2Billeterie.Repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 import org.example.exercicesJPA.exercice2Billeterie.Entity.Ticket;
 
 import java.util.List;
@@ -24,13 +25,22 @@ public class TicketRepository {
 
     public void createTicket(Ticket ticket) {
         this.em = getEntityManager();
-        this.em.getTransaction().begin();
-        try{
-            this.em.persist(ticket);
-            this.em.getTransaction().commit();
-        } catch (Exception e) {
-            this.em.getTransaction().rollback();
+        Query query = this.em.createQuery("SELECT count(t) FROM Ticket t WHERE t.event.id = :eventId", Integer.class)
+                .setParameter("eventId", ticket.getEvent().getId());
+        int placeNumber = query.getFirstResult();
+        if(placeNumber > ticket.getEvent().getPlaceNumber()) {
+            System.out.println("Sorry no more place are available");
+        } else {
+            ticket.setPlaceNumber(placeNumber);
+            this.em.getTransaction().begin();
+            try{
+                this.em.persist(ticket);
+                this.em.getTransaction().commit();
+            } catch (Exception e) {
+                this.em.getTransaction().rollback();
+            }
         }
+
     }
 
     public Ticket getTicketById(int id) {

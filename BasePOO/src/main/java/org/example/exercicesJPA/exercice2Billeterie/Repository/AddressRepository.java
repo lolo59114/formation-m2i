@@ -24,7 +24,7 @@ public class AddressRepository {
         return em;
     }
 
-    public void createAdress(Address address) {
+    public void createAddress(Address address) {
         this.em = getEntityManager();
         this.em.getTransaction().begin();
         try{
@@ -35,18 +35,18 @@ public class AddressRepository {
         }
     }
 
-    public Address getAdressById(int id) {
+    public Address getAddressById(int id) {
         this.em = getEntityManager();
         return this.em.find(Address.class, id);
     }
 
-    public Set<Address> getAllAdress() {
+    public Set<Address> getAllAddress() {
         this.em = getEntityManager();
         TypedQuery<Address> query = em.createQuery("SELECT a FROM Address a", Address.class);
         return new HashSet<Address>(query.getResultList());
     }
 
-    public boolean updateAdress(Address address) {
+    public boolean updateAddress(Address address) {
         boolean result = false;
         this.em = getEntityManager();
         this.em.getTransaction().begin();
@@ -62,7 +62,7 @@ public class AddressRepository {
         return result;
     }
 
-    public boolean deleteAdress(Address address) {
+    public boolean deleteAddress(Address address) {
         this.em = getEntityManager();
         this.em.getTransaction().begin();
         try{

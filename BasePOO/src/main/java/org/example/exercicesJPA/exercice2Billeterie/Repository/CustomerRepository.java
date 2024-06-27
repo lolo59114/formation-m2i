@@ -29,6 +29,7 @@ public class CustomerRepository {
             this.em.persist(customer);
             this.em.getTransaction().commit();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             this.em.getTransaction().rollback();
         }
     }
