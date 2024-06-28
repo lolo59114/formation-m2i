@@ -57,4 +57,17 @@ public class EventRepository {
         }
         return false;
     }
+
+    public boolean deleteEvent(Event event) {
+        this.em = getEntityManager();
+        try {
+            this.em.getTransaction().begin();
+            this.em.remove(event);
+            this.em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            this.em.getTransaction().rollback();
+        }
+        return false;
+    }
 }

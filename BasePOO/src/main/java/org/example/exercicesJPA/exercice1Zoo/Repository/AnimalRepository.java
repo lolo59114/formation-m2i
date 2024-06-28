@@ -11,13 +11,13 @@ public class AnimalRepository {
     EntityManagerFactory emf;
     EntityManager em = null;
     public AnimalRepository() {
-        this.emf = Persistence.createEntityManagerFactory("jpa");
+        this.emf = Persistence.createEntityManagerFactory("exercice_jpa");
     }
 
     // Check connection state
     private EntityManager getEntityManager() {
         if (emf == null || !emf.isOpen())
-            this.emf = Persistence.createEntityManagerFactory("jpa");
+            this.emf = Persistence.createEntityManagerFactory("exercice_jpa");
         if (em == null || !em.isOpen())
             this.em = emf.createEntityManager();
         return em;

@@ -15,7 +15,7 @@ import org.example.exercicesJPA.exercice2Billeterie.Repository.TicketRepository;
 import java.time.LocalDateTime;
 
 public class IHM {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("exercice_jpa2");
     private static AddressRepository addressRepository = new AddressRepository(emf);
     private static CustomerRepository customerRepository = new CustomerRepository(emf);
     private static EventRepository eventRepository = new EventRepository(emf);
@@ -93,7 +93,15 @@ public class IHM {
     }
 
     private static void deleteEvent() {
-
+        int eventId = Util.askInput("Event id to delete:", Integer.class);
+        Event event = eventRepository.getEventById(eventId);
+        if (event == null) {
+            System.out.println("No event found with id " + eventId);
+        } else {
+            if (eventRepository.deleteEvent(event))
+                System.out.println("Event has been removed");
+        }
+        Util.askBeforeContinue();
     }
 
     private static void updateEvent() {

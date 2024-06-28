@@ -32,15 +32,19 @@ public class TicketRepository {
             System.out.println("Sorry no more place are available");
         } else {
             ticket.setPlaceNumber(placeNumber);
-            this.em.getTransaction().begin();
-            try{
-                this.em.persist(ticket);
-                this.em.getTransaction().commit();
-            } catch (Exception e) {
-                this.em.getTransaction().rollback();
-            }
+            save(ticket);
         }
 
+    }
+
+    private void save(Ticket ticket) {
+        this.em.getTransaction().begin();
+        try{
+            this.em.persist(ticket);
+            this.em.getTransaction().commit();
+        } catch (Exception e) {
+            this.em.getTransaction().rollback();
+        }
     }
 
     public Ticket getTicketById(int id) {
