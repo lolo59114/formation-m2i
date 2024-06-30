@@ -26,7 +26,7 @@ public class IHMArticle {
                 6. Restocker les articles
                 0. Retour au menu principal
                 """);
-            choice = InputManager.askInput("Votre choix:", String.class);
+            choice = InputManager.askInputChoice(6);
             switch (choice) {
                 case "1" -> articleService.create();
                 case "2" -> articleService.update();

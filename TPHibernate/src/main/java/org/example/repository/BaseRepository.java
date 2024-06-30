@@ -26,6 +26,19 @@ public abstract class BaseRepository<T> {
         }
     }
 
+    public void update(T element) {
+        try {
+            openSession();
+            session.beginTransaction();
+            session.merge(element);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+    }
+
 
     public void delete(T element) {
         try {

@@ -109,55 +109,32 @@ public class ArticleService implements BaseService<Article> {
         double price = InputManager.askInput("Prix("+ article.getPrice() + "):", Double.class);
         int quantity = InputManager.askInput("Quantité en stock(" + article.getQuantityAvailable() + "):", Integer.class);
         LocalDate restockDate = InputManager.askInput("Date de restock(" + article.getRestockDate() + ") (yyyy-MM-dd):", LocalDate.class);
-
+        // Mise à jour de l'article
+        article.setDescription("".equals(description) ? article.getDescription() : description);
+        article.setPrice(price == 0 ? article.getPrice() : price);
+        article.setQuantityAvailable(quantity == 0 ? article.getQuantityAvailable() : quantity);
+        article.setRestockDate(restockDate);
         switch (article.getClass().getSimpleName()) {
             case "ArticleElectronic" -> {
                 long durationInMinutes = InputManager.askInput("Durée de batterie(" + ((ArticleElectronic)article).getDurationInMinutes() +") (minutes):", Long.class);
                 ArticleElectronic updatedArticle = (ArticleElectronic) article;
-                updatedArticle = ArticleElectronic.builder()
-                        .id(article.getId())
-                        .description(description)
-                        .price(price)
-                        .quantityAvailable(quantity)
-                        .restockDate(restockDate)
-                        .durationInMinutes(durationInMinutes)
-                        .build();
-                articleRepository.save(updatedArticle);
+                updatedArticle.setDurationInMinutes(durationInMinutes == 0 ? updatedArticle.getDurationInMinutes() : durationInMinutes);
+                articleRepository.update(updatedArticle);
             }
             case "ArticleFood" -> {
                 LocalDate expirationDate = InputManager.askInput("Date d'expiration (" + ((ArticleFood)article).getExpirationDate() + ") (yyyy-MM-dd):", LocalDate.class);
                 ArticleFood updatedArticle = (ArticleFood) article;
-                        ArticleFood.builder()
-                        .id(article.getId())
-                        .description(description)
-                        .price(price)
-                        .quantityAvailable(quantity)
-                        .restockDate(restockDate)
-                        .expirationDate(expirationDate)
-                        .build();
-                articleRepository.save(updatedArticle);
+                updatedArticle.setExpirationDate(expirationDate);
+                articleRepository.update(updatedArticle);
             }
             case "ArticleMode" -> {
                 System.out.println("Catégorie actuelle : " + ((ArticleMode)article).getCategory().name());
                 CategoryMode categoryMode = InputManager.askFromEnum(CategoryMode.values(), "catégories");
                 String taille = InputManager.askInput("Taille("+ ((ArticleMode)article).getTaille() + "):", String.class);
                 ArticleMode updatedArticle = (ArticleMode) article;
-                updatedArticle.setDescription(description);
-                updatedArticle.setPrice(price);
                 updatedArticle.setCategory(categoryMode);
-                updatedArticle.setQuantityAvailable(quantity);
-                updatedArticle.setTaille(taille);
-                updatedArticle.setRestockDate(restockDate);
-//                        ArticleMode.builder()
-//                        .id(article.getId())
-//                        .description(description)
-//                        .price(price)
-//                        .quantityAvailable(quantity)
-//                        .restockDate(restockDate)
-//                        .category(categoryMode)
-//                        .taille(taille)
-//                        .build();
-                articleRepository.save(updatedArticle);
+                updatedArticle.setTaille("".equals(taille) ? updatedArticle.getTaille() : taille);
+                articleRepository.update(updatedArticle);
             }
         }
     }

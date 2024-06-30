@@ -11,16 +11,23 @@ public class IHMGlobal {
 
     public void start() {
         String choice;
-        System.out.println("""
+        while (true) {
+            System.out.println("""
                 === Menu principal
                 1. Menu Inventaire
                 2. Menu Vente
                 3. Menu Client
+                0. Quitter l'application
                 """);
-        choice = InputManager.askInput("Votre choix:", String.class);
-        switch (choice) {
-            case "1" -> ihmArticle.start();
+            choice = InputManager.askInputChoice(3);
+            switch (choice) {
+                case "1" -> ihmArticle.start();
+                default -> {
+                    return;
+                }
+            }
         }
+
     }
 
 }
