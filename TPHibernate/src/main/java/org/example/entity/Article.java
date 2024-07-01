@@ -33,8 +33,8 @@ public abstract class Article {
     @Column(name="restock_date")
     protected LocalDate restockDate;
 
-    @ManyToMany(mappedBy = "articles", fetch = FetchType.LAZY)
-    protected List<Sale> sales;
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    protected List<SaleLine> saleLines;
 
     @Override
     public String toString() {

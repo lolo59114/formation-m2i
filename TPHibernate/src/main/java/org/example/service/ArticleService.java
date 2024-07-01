@@ -57,7 +57,6 @@ public class ArticleService implements BaseService<Article> {
         String description = InputManager.askInput("Description:", String.class);
         double price = InputManager.askInput("Prix:", Double.class);
         int quantity = InputManager.askInput("Quantité en stock:", Integer.class);
-//        LocalDate restockDate = InputManager.askInput("Date de restock (yyyy-MM-dd):", LocalDate.class);
         LocalDate restockDate = LocalDate.now();
         newArticle = createArticleBase(description, price, quantity, restockDate, type);
         switch (type) {
