@@ -1,4 +1,4 @@
-package Exercice1Note;
+package exercice1Note;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

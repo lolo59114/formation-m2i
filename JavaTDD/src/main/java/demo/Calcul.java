@@ -1,4 +1,4 @@
-package Demo;
+package demo;
 
 public class Calcul {
     public double addition(double x, double y) {

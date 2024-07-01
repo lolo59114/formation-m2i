@@ -1,4 +1,4 @@
-package Exercice1Note;
+package exercice1Note;
 
 public class GradingCalculator {
     public int Score;
