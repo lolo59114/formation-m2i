@@ -33,7 +33,7 @@ public class IHMArticle {
                 case "3" -> articleService.delete();
                 case "4" -> articleService.findById();
                 case "5" -> articleService.displayAll();
-                case "6" -> {}
+                case "6" -> articleService.restockArticle();
                 default -> {
                     return;
                 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,7 +18,8 @@ import java.time.LocalDate;
 public abstract class Article {
     @Id
     @GeneratedValue
-    protected long id;
+    @Column(name="id_article")
+    protected long idArticle;
 
     @Column(nullable = false)
     protected String description;
@@ -31,9 +33,12 @@ public abstract class Article {
     @Column(name="restock_date")
     protected LocalDate restockDate;
 
+    @ManyToMany(mappedBy = "articles", fetch = FetchType.LAZY)
+    protected List<Sale> sales;
+
     @Override
     public String toString() {
-        return "id=" + id +
+        return "id=" + idArticle +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", quantityAvailable=" + quantityAvailable +

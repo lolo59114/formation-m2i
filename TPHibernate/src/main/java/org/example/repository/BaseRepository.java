@@ -12,28 +12,32 @@ public abstract class BaseRepository<T> {
         sessionFactory = SessionFactorySingleton.getSessionFactory();
     }
 
-    public void save(T element) {
+    public boolean save(T element) {
         try {
             openSession();
             session.beginTransaction();
             session.persist(element);
             session.getTransaction().commit();
+            return true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
+            return false;
         } finally {
             session.close();
         }
     }
 
-    public void update(T element) {
+    public boolean update(T element) {
         try {
             openSession();
             session.beginTransaction();
             session.merge(element);
             session.getTransaction().commit();
+            return true;
         } catch (Exception e) {
             session.getTransaction().rollback();
+            return false;
         } finally {
             session.close();
         }

@@ -44,7 +44,9 @@ public class ArticleService implements BaseService<Article> {
     @Override
     public void displayAll() {
         List<Article> articles = articleRepository.getAll();
-        System.out.println(articles);
+        for(Article article : articles) {
+            System.out.println(article);
+        }
     }
 
     public void create() {
@@ -55,48 +57,47 @@ public class ArticleService implements BaseService<Article> {
         String description = InputManager.askInput("Description:", String.class);
         double price = InputManager.askInput("Prix:", Double.class);
         int quantity = InputManager.askInput("Quantité en stock:", Integer.class);
-        LocalDate restockDate = InputManager.askInput("Date de restock (yyyy-MM-dd):", LocalDate.class);
-        
+//        LocalDate restockDate = InputManager.askInput("Date de restock (yyyy-MM-dd):", LocalDate.class);
+        LocalDate restockDate = LocalDate.now();
+        newArticle = createArticleBase(description, price, quantity, restockDate, type);
         switch (type) {
             // Electronique
             case "1" -> {
                 long durationInMinutes = InputManager.askInput("Durée de batterie (minutes):", Long.class);
-                newArticle = ArticleElectronic.builder()
-                        .description(description)
-                        .price(price)
-                        .quantityAvailable(quantity)
-                        .restockDate(restockDate)
-                        .durationInMinutes(durationInMinutes)
-                        .build();
-                articleRepository.save(newArticle);
+                ((ArticleElectronic) newArticle).setDurationInMinutes(durationInMinutes);
             }
             // Food
             case "2" -> {
                 LocalDate expirationDate = InputManager.askInput("Date d'expiration (yyyy-MM-dd):", LocalDate.class);
-                newArticle = ArticleFood.builder()
-                        .description(description)
-                        .price(price)
-                        .quantityAvailable(quantity)
-                        .restockDate(restockDate)
-                        .expirationDate(expirationDate)
-                        .build();
-                articleRepository.save(newArticle);
+                ((ArticleFood) newArticle).setExpirationDate(expirationDate);
             }
             // Mode
             case "3" -> {
                 CategoryMode categoryMode = InputManager.askFromEnum(CategoryMode.values(), "catégories");
                 String taille = InputManager.askInput("Taille(XS,S,M,L,XL,etc.):", String.class);
-                newArticle = ArticleMode.builder()
-                        .description(description)
-                        .price(price)
-                        .quantityAvailable(quantity)
-                        .restockDate(restockDate)
-                        .category(categoryMode)
-                        .taille(taille)
-                        .build();
-                articleRepository.save(newArticle);
+                ((ArticleMode) newArticle).setCategory(categoryMode);
+                ((ArticleMode) newArticle).setTaille(taille);
             }
         }
+        if(articleRepository.save(newArticle))
+            System.out.println("L'article a bien été créé.");
+
+    }
+
+    private Article createArticleBase(String description, double price, int quantity, LocalDate restockDate, String type) {
+        Article newArticle = null;
+        switch (type) {
+            case "1" -> newArticle = new ArticleElectronic();
+            case "2" -> newArticle = new ArticleFood();
+            case "3" -> newArticle = new ArticleMode();
+        }
+        assert newArticle != null;
+        newArticle.setPrice(price);
+        newArticle.setDescription(description);
+        newArticle.setPrice(price);
+        newArticle.setQuantityAvailable(quantity);
+        newArticle.setRestockDate(restockDate);
+        return newArticle;
     }
 
 
@@ -137,5 +138,24 @@ public class ArticleService implements BaseService<Article> {
                 articleRepository.update(updatedArticle);
             }
         }
+    }
+
+    public void restockArticle() {
+        System.out.println("=== Restockage d'un article ===");
+        displayAll();
+        long id = InputManager.askInput("Spécifiez l'id de l'article à restocker:", Long.class);
+        Article articleToRestock = articleRepository.getById(Article.class, id);
+        int addedStock = 0;
+        int cpt = 0;
+        do {
+            // Sécurité pour éviter une boucle infinie
+            cpt++;
+            addedStock = InputManager.askInput("Quel stock voulez-vous ajouter (doit être positif) ?", Integer.class);
+        } while (addedStock < 0 || cpt > 5);
+
+        int newStock = addedStock + articleToRestock.getQuantityAvailable();
+        articleToRestock.setRestockDate(LocalDate.now());
+        articleToRestock.setQuantityAvailable(newStock);
+        articleRepository.update(articleToRestock);
     }
 }
