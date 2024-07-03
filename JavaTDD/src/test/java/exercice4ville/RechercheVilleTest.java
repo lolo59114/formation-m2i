@@ -1,6 +1,6 @@
-package exercice4Ville;
+package exercice4ville;
 
-import exercice4Ville.exception.NotFoundException;
+import exercice4ville.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class RechercheVilleTest {
         //Arrange
         String mot = "P";
         //Act Assert
-        Assertions.assertThrows(NotFoundException.class,()->{rec.Rechercher(mot);});
+        Assertions.assertThrows(NotFoundException.class,()->{rec.rechercher(mot);});
     }
 
     @Test
@@ -28,7 +28,7 @@ public class RechercheVilleTest {
         //Arrange
         String mot = "Va";
         //Act
-        List<String> result = rec.Rechercher(mot);
+        List<String> result = rec.rechercher(mot);
         // Assert
         assertThat(result).allMatch(s -> s.startsWith(mot));
     }
@@ -37,9 +37,9 @@ public class RechercheVilleTest {
     public void TestRechercherWhenMotIsCaseSensitive_va_ThenReturnListeVillesStartWith_Va() {
         //Arrange
         String mot = "va";
-        List<String> listExpected = villes.stream().filter(s -> s.startsWith("Va")).toList();
+        List<String> listExpected = List.of("Vancouver", "Valence");
         //Act
-        List<String> result = rec.Rechercher(mot);
+        List<String> result = rec.rechercher(mot);
         // Assert
         assertThat(result).containsExactlyInAnyOrderElementsOf(listExpected);
     }
@@ -48,9 +48,9 @@ public class RechercheVilleTest {
     public void TestRechercherWhenMotIs_ape_ThenReturnListeVillesContains_ape() {
         //Arrange
         String mot = "ape";
-        List<String> listExpected = villes.stream().filter(s -> s.contains("ape")).toList();
+        List<String> listExpected = List.of("Budapest");
         //Act
-        List<String> result = rec.Rechercher(mot);
+        List<String> result = rec.rechercher(mot);
         // Assert
         assertThat(result).containsExactlyInAnyOrderElementsOf(listExpected);
     }
@@ -61,7 +61,7 @@ public class RechercheVilleTest {
         String mot = "*";
         List<String> listExpected = villes;
         //Act
-        List<String> result = rec.Rechercher(mot);
+        List<String> result = rec.rechercher(mot);
         // Assert
         assertThat(result).containsExactlyInAnyOrderElementsOf(listExpected);
     }

@@ -1,4 +1,4 @@
-package exercice3Dice;
+package exercice3dice;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package exercice3Dice;
+package exercice3dice;
 
 public class DiceScore {
     private Ide de;

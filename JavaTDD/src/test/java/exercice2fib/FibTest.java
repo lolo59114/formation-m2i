@@ -1,4 +1,4 @@
-package exercice2Fib;
+package exercice2fib;
 
 import org.junit.jupiter.api.Test;
 import java.util.List;

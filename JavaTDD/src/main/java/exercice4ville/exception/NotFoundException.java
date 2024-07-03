@@ -1,4 +1,4 @@
-package exercice4Ville.exception;
+package exercice4ville.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String msg) {

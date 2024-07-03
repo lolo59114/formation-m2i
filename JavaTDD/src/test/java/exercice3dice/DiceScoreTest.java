@@ -1,4 +1,4 @@
-package exercice3Dice;
+package exercice3dice;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

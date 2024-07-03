@@ -1,4 +1,4 @@
-package exercice2Fib;
+package exercice2fib;
 
 import java.util.ArrayList;
 import java.util.List;

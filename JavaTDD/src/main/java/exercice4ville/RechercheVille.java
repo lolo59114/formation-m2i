@@ -1,11 +1,9 @@
-package exercice4Ville;
+package exercice4ville;
 
-import exercice4Ville.exception.NotFoundException;
+import exercice4ville.exception.NotFoundException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class RechercheVille {
     private List<String> villes;
@@ -13,7 +11,7 @@ public class RechercheVille {
         this.villes = villes;
     }
 
-    public List<String> Rechercher(String mot) {
+    public List<String> rechercher(String mot) {
         List<String> villesTrouvees;
         if(mot.equals("*")) {
             villesTrouvees = villes;
