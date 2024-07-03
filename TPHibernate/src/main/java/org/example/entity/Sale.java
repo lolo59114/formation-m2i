@@ -19,13 +19,24 @@ public class Sale {
     @Column(name="id_sale")
     long idSale;
 
+    @Column(name="total_price")
+    double totalPrice;
+
     SaleState state;
 
-    @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
+    @Transient
     List<SaleLine> saleLines;
 
     public Sale() {
         this.state = SaleState.ON_GOING;
     }
 
+    @Override
+    public String toString() {
+        return "Sale{" +
+                "idSale=" + idSale +
+                ", totalPrice=" + totalPrice +
+                ", state=" + state +
+                '}';
+    }
 }

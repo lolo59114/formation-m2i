@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -33,8 +32,8 @@ public abstract class Article {
     @Column(name="restock_date")
     protected LocalDate restockDate;
 
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
-    protected List<SaleLine> saleLines;
+//    @OneToMany(mappedBy = "article", fetch = FetchType.EAGER)
+//    protected List<SaleLine> saleLines;
 
     @Override
     public String toString() {

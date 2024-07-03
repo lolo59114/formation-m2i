@@ -4,9 +4,11 @@ import org.example.util.InputManager;
 
 public class IHMGlobal {
     private IHMArticle ihmArticle;
+    private IHMSale ihmSale;
 
     public IHMGlobal() {
         ihmArticle = new IHMArticle();
+        ihmSale = new IHMSale();
     }
 
     public void start() {
@@ -22,6 +24,7 @@ public class IHMGlobal {
             choice = InputManager.askInputChoice(3);
             switch (choice) {
                 case "1" -> ihmArticle.start();
+                case "2" -> ihmSale.start();
                 default -> {
                     return;
                 }

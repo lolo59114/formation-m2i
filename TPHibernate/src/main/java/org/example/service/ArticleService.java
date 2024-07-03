@@ -49,6 +49,10 @@ public class ArticleService implements BaseService<Article> {
         }
     }
 
+    public List<Article> getArticles() {
+        return articleRepository.getAll();
+    }
+
     public void create() {
         Article newArticle;
         System.out.println("=== Création d'un article ===");

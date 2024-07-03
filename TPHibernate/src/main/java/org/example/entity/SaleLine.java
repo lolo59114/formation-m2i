@@ -11,23 +11,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@IdClass(SaleLinePK.class)
+@Table(name = "sale_line")
 public class SaleLine {
-    @Id
-    @Column(name = "id_sale")
-    private long idSale;
-    @Column(name = "id_article")
-    @Id
-    private long idArticle;
+    @EmbeddedId
+    private SaleLinePK id = new SaleLinePK();
 
     private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "id_sale")
-    private Sale sale;
+    @Column(name="sub_total_price")
+    private double subTotalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "id_article")
-    private Article article;
-
+    @Override
+    public String toString() {
+        return "SaleLine{" + id +
+                ", quantity=" + quantity +
+                ", subTotalPrice=" + subTotalPrice +
+                '}';
+    }
 }
