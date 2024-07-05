@@ -21,9 +21,9 @@ public class ArticleService implements BaseService<Article> {
         if(article == null) {
             System.out.println("L'article avec id " + id + " n'a pas été trouvé");
             return false;
-        } else {
-            return articleRepository.delete(article);
         }
+
+        return articleRepository.delete(article);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ArticleService implements BaseService<Article> {
         return newArticle;
     }
 
-
+    @Override
     public boolean update(Article article) {
         return articleRepository.update(article);
     }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.util.SaleState;
 
 import java.time.LocalDate;
@@ -27,8 +28,12 @@ public class Sale {
 
     LocalDate saleDate;
 
-    @OneToMany(mappedBy = "id.sale", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "id.sale", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     List<SaleLine> saleLines;
+
+    @ManyToOne
+    @JoinColumn(name="id_customer")
+    Customer customer;
 
     public Sale() {
         this.state = SaleState.ON_GOING;

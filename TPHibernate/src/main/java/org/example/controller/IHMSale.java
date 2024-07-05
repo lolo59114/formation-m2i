@@ -1,10 +1,8 @@
 package org.example.controller;
 
-import org.example.entity.Article;
-import org.example.entity.Sale;
-import org.example.entity.SaleLine;
-import org.example.entity.SaleLinePK;
+import org.example.entity.*;
 import org.example.service.ArticleService;
+import org.example.service.CustomerService;
 import org.example.service.SaleLineService;
 import org.example.service.SaleService;
 import org.example.util.DisplayManager;
@@ -18,11 +16,13 @@ public class IHMSale {
     private SaleService saleService;
     private SaleLineService saleLineService;
     private ArticleService articleService;
+    private CustomerService customerService;
 
     public IHMSale() {
         saleService = new SaleService();
         saleLineService = new SaleLineService();
         articleService = new ArticleService();
+        customerService = new CustomerService();
     }
 
     public void start() {
@@ -57,44 +57,55 @@ public class IHMSale {
     private void createSale() {
         System.out.println("=== Création d'une vente ===");
         List<Article> articles = articleService.getAll();
-        Sale newSale = Sale.builder()
-                .state(SaleState.ON_GOING)
-                .saleDate(LocalDate.now())
-                .build();
-        if(saleService.create(newSale)) {
-            double totalPrice = 0;
-            while (true) {
-                DisplayManager.displayList(articles, Article.class);
-                long id = InputManager.askInput("Donnez l'id de l'article à ajouter à la vente:", Long.class);
-                // On vérifie que l'article choisi n'est pas déjà dans la vente
-                Article article = articles.stream().filter(a -> a.getIdArticle() == id).findFirst().orElse(null);
-                if (article != null) {
-                    int quantity = InputManager.askInput("Donnez la quantité voulue:", Integer.class);
-                    double subTotal = quantity * article.getPrice();
-                    article.setQuantityAvailable(article.getQuantityAvailable() - quantity);
-                    SaleLine saleLine = SaleLine.builder()
-                            .id(new SaleLinePK(newSale, article))
-                            .quantity(quantity)
-                            .subTotalPrice(subTotal)
-                            .build();
-                    if(saleLineService.create(saleLine)) {
-                        totalPrice += subTotal;
-                        articles.remove(article);
+
+        List<Customer> customers = customerService.getAll();
+        DisplayManager.displayList(customers, Customer.class);
+        long idCustomer = InputManager.askInput("Choisissez l'id du client:", Long.class);
+        Customer customer = customerService.findById(idCustomer);
+        if(customer == null) {
+            System.out.println("Le client avec id " + idCustomer + " n'a pas été trouvé");
+        } else {
+            Sale newSale = Sale.builder()
+                    .state(SaleState.ON_GOING)
+                    .saleDate(LocalDate.now())
+                    .customer(customer)
+                    .build();
+
+            if(saleService.create(newSale)) {
+                double totalPrice = 0;
+                while (true) {
+                    DisplayManager.displayList(articles, Article.class);
+                    long id = InputManager.askInput("Donnez l'id de l'article à ajouter à la vente:", Long.class);
+                    // On vérifie que l'article choisi n'est pas déjà dans la vente
+                    Article article = articles.stream().filter(a -> a.getIdArticle() == id).findFirst().orElse(null);
+                    if (article != null) {
+                        int quantity = InputManager.askInput("Donnez la quantité voulue:", Integer.class);
+                        double subTotal = quantity * article.getPrice();
+                        article.setQuantityAvailable(article.getQuantityAvailable() - quantity);
+                        SaleLine saleLine = SaleLine.builder()
+                                .id(new SaleLinePK(newSale, article))
+                                .quantity(quantity)
+                                .subTotalPrice(subTotal)
+                                .build();
+                        if(saleLineService.create(saleLine)) {
+                            totalPrice += subTotal;
+                            articles.remove(article);
+                        } else {
+                            System.out.println("Erreur lors de l'ajout de la ligne de vente");
+                        }
                     } else {
-                        System.out.println("Erreur lors de l'ajout de la ligne de vente");
+                        System.out.println("L'id de l'article n'existe pas ou l'article a déjà été ajouté à la vente");
                     }
-                } else {
-                    System.out.println("L'id de l'article n'existe pas ou l'article a déjà été ajouté à la vente");
+                    String continueSale = InputManager.askInput("Voulez-vous ajouter un autre article ?(y/n)", String.class);
+                    if(!continueSale.equalsIgnoreCase("y")) {
+                        break;
+                    }
                 }
-                String continueSale = InputManager.askInput("Voulez-vous ajouter un autre article ?(y/n)", String.class);
-                if(!continueSale.equalsIgnoreCase("y")) {
-                    break;
-                }
+                newSale.setState(SaleState.FINISHED);
+                newSale.setTotalPrice(totalPrice);
+                if(saleService.update(newSale))
+                    System.out.println("La vente a bien été créée !");
             }
-            newSale.setState(SaleState.FINISHED);
-            newSale.setTotalPrice(totalPrice);
-            if(saleService.update(newSale))
-                System.out.println("La vente a bien été créée !");
         }
     }
 
@@ -103,16 +114,16 @@ public class IHMSale {
         displayAllSales();
         Long idSale = InputManager.askInput("Choisissez l'id de la vente à annuler:", Long.class);
         Sale sale = saleService.findById(idSale);
-        if(sale == null) {
-            System.out.println("La vente avec id " + idSale + " n'a pas été trouvée");
+        if(sale == null || sale.getState() == SaleState.CANCELLED) {
+            System.out.println("La vente avec id " + idSale + " n'existe pas ou ne peut pas être annulé");
         } else {
             System.out.println(sale);
             DisplayManager.displayList(sale.getSaleLines(), SaleLine.class);
-
             String confirmation = InputManager.askInput("Etes-vous sûr de vouloir annuler cette vente ?(y/n)", String.class);
             if(confirmation.equalsIgnoreCase("y")) {
-                sale.setState(SaleState.CANCELLED);
-                saleService.update(sale);
+                if(saleService.cancel(sale)) {
+                    System.out.println("La vente a bien été annulée.");
+                }
             }
         }
     }

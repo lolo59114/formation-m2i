@@ -12,12 +12,12 @@ public abstract class BaseRepository<T> {
         sessionFactory = SessionFactorySingleton.getSessionFactory();
     }
 
-    public boolean save(T element) {
+    public boolean save(T entity) {
         boolean success = false;
         try {
             openSession();
             session.beginTransaction();
-            session.persist(element);
+            session.persist(entity);
             session.getTransaction().commit();
             success = true;
         } catch (Exception e) {
@@ -29,12 +29,12 @@ public abstract class BaseRepository<T> {
         return success;
     }
 
-    public boolean update(T element) {
+    public boolean update(T entity) {
         boolean success = false;
         try {
             openSession();
             session.beginTransaction();
-            session.merge(element);
+            session.merge(entity);
             session.getTransaction().commit();
             success = true;
         } catch (Exception e) {
@@ -46,12 +46,12 @@ public abstract class BaseRepository<T> {
     }
 
 
-    public boolean delete(T element) {
+    public boolean delete(T entity) {
         boolean success = false;
         try {
             openSession();
             session.beginTransaction();
-            session.remove(element);
+            session.remove(entity);
             session.getTransaction().commit();
             success = true;
         } catch (Exception e) {

@@ -1,10 +1,14 @@
 package org.example.service;
 
 import org.example.entity.Sale;
+import org.example.entity.SaleLine;
 import org.example.repository.SaleLineRepository;
 import org.example.repository.SaleRepository;
+import org.example.util.DisplayManager;
+import org.example.util.SaleState;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SaleService implements BaseService<Sale>{
@@ -21,9 +25,9 @@ public class SaleService implements BaseService<Sale>{
         if(sale == null) {
             System.out.println("La vente avec id " + id + " n'a pas été trouvée");
             return false;
-        } else {
-            return saleRepository.delete(sale);
         }
+
+        return saleRepository.delete(sale);
     }
 
     @Override
@@ -42,6 +46,7 @@ public class SaleService implements BaseService<Sale>{
         return saleRepository.save(newSale);
     }
 
+    @Override
     public boolean update(Sale sale) {
         return saleRepository.update(sale);
     }
@@ -52,5 +57,17 @@ public class SaleService implements BaseService<Sale>{
 
     public List<Sale> getSalesBySaleDate(LocalDate period) {
         return saleRepository.getSalesBySaleDate(period);
+    }
+
+    public boolean cancel(Sale sale) {
+        sale.setState(SaleState.CANCELLED);
+        List<SaleLine> saleLines = new ArrayList<>();
+        for(SaleLine saleLine : sale.getSaleLines()) {
+            int newQuantity = saleLine.getId().getArticle().getQuantityAvailable() + saleLine.getQuantity();
+            saleLine.getId().getArticle().setQuantityAvailable(newQuantity);
+            saleLines.add(saleLine);
+        }
+        sale.setSaleLines(saleLines);
+        return update(sale);
     }
 }

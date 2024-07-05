@@ -7,4 +7,5 @@ public interface BaseService<T> {
     public boolean delete (long id);
     public T findById (long id);
     public List<T> getAll ();
+    public boolean update(T entity);
 }

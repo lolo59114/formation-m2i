@@ -2,7 +2,6 @@ package org.example.controller;
 
 import org.example.entity.*;
 import org.example.service.ArticleService;
-import org.example.service.SaleService;
 import org.example.util.CategoryMode;
 import org.example.util.DisplayManager;
 import org.example.util.InputManager;
