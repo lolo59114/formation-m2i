@@ -1,7 +1,6 @@
 package org.example.repository;
 
 import org.example.entity.Sale;
-import org.example.entity.SaleLine;
 import org.hibernate.query.Query;
 
 import java.time.LocalDate;
@@ -15,9 +14,10 @@ public class SaleRepository extends BaseRepository<Sale>{
     public List<Sale> getAll (){
         openSession();
         Query<Sale> query = session.createQuery("from Sale", Sale.class);
-        return query.list();
+        List<Sale> sales = query.list();
+        session.close();
+        return sales;
     }
-
 
     @Override
     public Sale getById (Class<Sale> classe, long id) {

@@ -1,7 +1,9 @@
 package org.example.service;
 
+import org.example.entity.Article;
 import org.example.entity.Sale;
 import org.example.entity.SaleLine;
+import org.example.repository.ArticleRepository;
 import org.example.repository.SaleLineRepository;
 import org.example.repository.SaleRepository;
 import org.example.util.DisplayManager;
@@ -14,9 +16,11 @@ import java.util.List;
 public class SaleService implements BaseService<Sale>{
     SaleRepository saleRepository;
     SaleLineRepository saleLineRepository;
+    ArticleRepository articleRepository;
     public SaleService() {
         saleRepository = new SaleRepository();
         saleLineRepository = new SaleLineRepository();
+        articleRepository = new ArticleRepository();
     }
 
     @Override
@@ -61,13 +65,12 @@ public class SaleService implements BaseService<Sale>{
 
     public boolean cancel(Sale sale) {
         sale.setState(SaleState.CANCELLED);
-        List<SaleLine> saleLines = new ArrayList<>();
         for(SaleLine saleLine : sale.getSaleLines()) {
             int newQuantity = saleLine.getId().getArticle().getQuantityAvailable() + saleLine.getQuantity();
-            saleLine.getId().getArticle().setQuantityAvailable(newQuantity);
-            saleLines.add(saleLine);
+            Article article = saleLine.getId().getArticle();
+            article.setQuantityAvailable(newQuantity);
+            articleRepository.update(article);
         }
-        sale.setSaleLines(saleLines);
         return update(sale);
     }
 }
