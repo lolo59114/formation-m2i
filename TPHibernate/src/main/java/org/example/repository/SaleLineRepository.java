@@ -8,35 +8,22 @@ import java.util.List;
 
 public class SaleLineRepository extends BaseRepository<SaleLine> {
 
-    public List<SaleLine> getAllByIdSale(long id) {
-        openSession();
-        Query<SaleLine> query = session.createQuery("from SaleLine sl where sl.id.sale.id = :idSale", SaleLine.class)
-                .setParameter("idSale", id);
-        return query.list();
-    }
-
-    public List<SaleLine> getAllByIdArticle(long id) {
-        openSession();
-        Query<SaleLine> query = session.createQuery("from SaleLine sl where sl.id.article.id = :idArticle", SaleLine.class)
-                .setParameter("idArticle", id);
-        return query.list();
-    }
-
     @Override
     public boolean save(SaleLine sale) {
+        boolean success = false;
         try {
             openSession();
             session.beginTransaction();
             session.merge(sale.getId().getArticle());
             session.persist(sale);
             session.getTransaction().commit();
-            return true;
+            success = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
-            return false;
         } finally {
             session.close();
         }
+        return success;
     }
 }

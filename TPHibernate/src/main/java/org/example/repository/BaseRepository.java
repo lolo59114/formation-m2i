@@ -13,54 +13,61 @@ public abstract class BaseRepository<T> {
     }
 
     public boolean save(T element) {
+        boolean success = false;
         try {
             openSession();
             session.beginTransaction();
             session.persist(element);
             session.getTransaction().commit();
-            return true;
+            success = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
-            return false;
         } finally {
             session.close();
         }
+        return success;
     }
 
     public boolean update(T element) {
+        boolean success = false;
         try {
             openSession();
             session.beginTransaction();
             session.merge(element);
             session.getTransaction().commit();
-            return true;
+            success = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
-            return false;
         } finally {
             session.close();
         }
+        return success;
     }
 
 
-    public void delete(T element) {
+    public boolean delete(T element) {
+        boolean success = false;
         try {
             openSession();
             session.beginTransaction();
             session.remove(element);
             session.getTransaction().commit();
+            success = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
         } finally {
             session.close();
         }
+        return success;
     }
 
     public T getById (Class<T> classe, long id){
         openSession();
-        return session.get(classe, id);
+        T result = (T) session.get(classe, id);
+        session.close();
+        return result;
     }
 
 

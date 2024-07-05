@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.example.util.SaleState;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -24,7 +25,9 @@ public class Sale {
 
     SaleState state;
 
-    @Transient
+    LocalDate saleDate;
+
+    @OneToMany(mappedBy = "id.sale", fetch = FetchType.LAZY)
     List<SaleLine> saleLines;
 
     public Sale() {
@@ -37,6 +40,7 @@ public class Sale {
                 "idSale=" + idSale +
                 ", totalPrice=" + totalPrice +
                 ", state=" + state +
+                ", saleDate=" + saleDate +
                 '}';
     }
 }

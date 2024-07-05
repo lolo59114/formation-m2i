@@ -1,11 +1,10 @@
 package org.example.service;
 
 import org.example.entity.Sale;
-import org.example.entity.SaleLine;
 import org.example.repository.SaleLineRepository;
 import org.example.repository.SaleRepository;
-import org.example.util.InputManager;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class SaleService implements BaseService<Sale>{
@@ -17,47 +16,26 @@ public class SaleService implements BaseService<Sale>{
     }
 
     @Override
-    public void delete() {
-        System.out.println("=== Suppression d'une vente ===");
-        long id = InputManager.askInput("Id de la vente à supprimer:", Long.class);
+    public boolean delete(long id) {
         Sale sale = saleRepository.getById(Sale.class, id);
         if(sale == null) {
             System.out.println("La vente avec id " + id + " n'a pas été trouvée");
+            return false;
         } else {
-            saleRepository.delete(sale);
+            return saleRepository.delete(sale);
         }
     }
 
-    public Sale getById(long id) {
+    @Override
+    public Sale findById(long id) {
         Sale sale = saleRepository.getById(Sale.class, id);
-        if(sale != null) {
-            sale.setSaleLines(saleLineRepository.getAllByIdSale(sale.getIdSale()));
-        }
         return sale;
     }
 
-    @Override
-    public void findById() {
-        System.out.println("=== Affichage d'une vente ===");
-        long id = InputManager.askInput("Id de la vente à afficher:", Long.class);
-        Sale sale = saleRepository.getById(Sale.class, id);
-        if(sale == null) {
-            System.out.println("La vente avec id " + id + " n'a pas été trouvée");
-        } else {
-            List<SaleLine> saleLines = saleLineRepository.getAllByIdSale(id);
-            System.out.println(sale);
-            for(SaleLine saleLine : saleLines) {
-                System.out.println(saleLine);
-            }
-        }
-    }
 
     @Override
-    public void displayAll() {
-        List<Sale> sales = saleRepository.getAll();
-        for(Sale sale : sales) {
-            System.out.println(sale);
-        }
+    public List<Sale> getAll() {
+        return saleRepository.getAll();
     }
 
     public boolean create(Sale newSale) {
@@ -66,5 +44,13 @@ public class SaleService implements BaseService<Sale>{
 
     public boolean update(Sale sale) {
         return saleRepository.update(sale);
+    }
+
+    public List<Sale> getSalesByIdArticle(long id) {
+        return saleRepository.getSalesByIdArticle(id);
+    }
+
+    public List<Sale> getSalesBySaleDate(LocalDate period) {
+        return saleRepository.getSalesBySaleDate(period);
     }
 }

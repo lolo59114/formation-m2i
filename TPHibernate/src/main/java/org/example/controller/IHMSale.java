@@ -7,10 +7,11 @@ import org.example.entity.SaleLinePK;
 import org.example.service.ArticleService;
 import org.example.service.SaleLineService;
 import org.example.service.SaleService;
+import org.example.util.DisplayManager;
 import org.example.util.InputManager;
 import org.example.util.SaleState;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 public class IHMSale {
@@ -33,14 +34,18 @@ public class IHMSale {
                 2. Annuler une vente
                 3. Consulter une vente
                 4. Consulter toutes les ventes
+                5. Consulter les ventes d'un produit
+                6. Consulter les ventes d'une période
                 0. Retour au menu principal
                 """);
-            choice = InputManager.askInputChoice(4);
+            choice = InputManager.askInputChoice(6);
             switch (choice) {
-                case "1" -> create();
-                case "2" -> cancel();
-                case "3" -> saleService.findById();
-                case "4" -> saleService.displayAll();
+                case "1" -> createSale();
+                case "2" -> cancelSale();
+                case "3" -> findSaleById();
+                case "4" -> displayAllSales();
+                case "5" -> displaySalesByArticle();
+                case "6" -> displaySalesByPeriod();
                 default -> {
                     return;
                 }
@@ -49,39 +54,17 @@ public class IHMSale {
         }
     }
 
-    private void cancel() {
-        System.out.println("=== Annulation d'une vente ===");
-        saleService.displayAll();
-        Long idSale = InputManager.askInput("Choisissez l'id de la vente à annuler:", Long.class);
-        Sale sale = saleService.getById(idSale);
-        if(sale == null) {
-            System.out.println("La vente avec id " + idSale + " n'a pas été trouvée");
-        } else {
-            System.out.println(sale);
-            for(SaleLine saleLine : sale.getSaleLines()) {
-                System.out.println(saleLine);
-            }
-
-            String confirmation = InputManager.askInput("Etes-vous sûr de vouloir annuler cette vente ?(y/n)", String.class);
-            if(confirmation.equalsIgnoreCase("y")) {
-                sale.setState(SaleState.CANCELLED);
-                saleService.update(sale);
-            }
-        }
-    }
-
-    private void create() {
+    private void createSale() {
         System.out.println("=== Création d'une vente ===");
-        List<Article> articles = articleService.getArticles();
+        List<Article> articles = articleService.getAll();
         Sale newSale = Sale.builder()
                 .state(SaleState.ON_GOING)
+                .saleDate(LocalDate.now())
                 .build();
         if(saleService.create(newSale)) {
             double totalPrice = 0;
             while (true) {
-                for(Article article : articles) {
-                    System.out.println(article);
-                }
+                DisplayManager.displayList(articles, Article.class);
                 long id = InputManager.askInput("Donnez l'id de l'article à ajouter à la vente:", Long.class);
                 // On vérifie que l'article choisi n'est pas déjà dans la vente
                 Article article = articles.stream().filter(a -> a.getIdArticle() == id).findFirst().orElse(null);
@@ -113,5 +96,57 @@ public class IHMSale {
             if(saleService.update(newSale))
                 System.out.println("La vente a bien été créée !");
         }
+    }
+
+    private void cancelSale() {
+        System.out.println("=== Annulation d'une vente ===");
+        displayAllSales();
+        Long idSale = InputManager.askInput("Choisissez l'id de la vente à annuler:", Long.class);
+        Sale sale = saleService.findById(idSale);
+        if(sale == null) {
+            System.out.println("La vente avec id " + idSale + " n'a pas été trouvée");
+        } else {
+            System.out.println(sale);
+            DisplayManager.displayList(sale.getSaleLines(), SaleLine.class);
+
+            String confirmation = InputManager.askInput("Etes-vous sûr de vouloir annuler cette vente ?(y/n)", String.class);
+            if(confirmation.equalsIgnoreCase("y")) {
+                sale.setState(SaleState.CANCELLED);
+                saleService.update(sale);
+            }
+        }
+    }
+
+    private void findSaleById() {
+        System.out.println("=== Affichage d'une vente ===");
+        long id = InputManager.askInput("Id de la vente à afficher:", Long.class);
+        Sale sale = saleService.findById(id);
+        if(sale == null) {
+            System.out.println("La vente avec id " + id + " n'a pas été trouvée");
+        } else {
+            System.out.println(sale);
+            DisplayManager.displayList(sale.getSaleLines(), SaleLine.class);
+        }
+    }
+
+    private void displayAllSales() {
+        List<Sale> sales = saleService.getAll();
+        DisplayManager.displayList(sales, Sale.class);
+    }
+
+    private void displaySalesByArticle() {
+        System.out.println("=== Les ventes d'un article ===");
+        List<Article> articles = articleService.getAll();
+        DisplayManager.displayList(articles, Article.class);
+        long id = InputManager.askInput("Spécifiez l'id de l'article:", Long.class);
+        List<Sale> sales = saleService.getSalesByIdArticle(id);
+        DisplayManager.displayList(sales, Sale.class);
+    }
+
+    private void displaySalesByPeriod() {
+        System.out.println("=== Les ventes d'une période ===");
+        LocalDate period = InputManager.askInput("Choisissez une date (yyyy-MM-dd):", LocalDate.class);
+        List<Sale> sales = saleService.getSalesBySaleDate(period);
+        DisplayManager.displayList(sales, Sale.class);
     }
 }
