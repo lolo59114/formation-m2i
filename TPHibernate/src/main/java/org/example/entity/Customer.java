@@ -26,6 +26,17 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     List<Sale> salesHistory;
 
+    public String toStringSaleHistory() {
+        StringBuilder sb = new StringBuilder();
+        for (Sale sale : salesHistory) {
+            sb.append("\t")
+                    .append(sale)
+                    .append("\n")
+                    .append(sale.toStringSaleLines());
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return "Customer{" +

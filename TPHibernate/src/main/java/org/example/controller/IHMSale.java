@@ -57,7 +57,6 @@ public class IHMSale {
     private void createSale() {
         System.out.println("=== Création d'une vente ===");
         List<Article> articles = articleService.getAll();
-
         List<Customer> customers = customerService.getAll();
         DisplayManager.displayList(customers, Customer.class);
         long idCustomer = InputManager.askInput("Choisissez l'id du client:", Long.class);
@@ -136,7 +135,7 @@ public class IHMSale {
             System.out.println("La vente avec id " + id + " n'a pas été trouvée");
         } else {
             System.out.println(sale);
-            DisplayManager.displayList(sale.getSaleLines(), SaleLine.class);
+            System.out.println(sale.toStringSaleLines());
         }
     }
 

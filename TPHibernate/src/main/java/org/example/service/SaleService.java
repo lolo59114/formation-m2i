@@ -6,11 +6,9 @@ import org.example.entity.SaleLine;
 import org.example.repository.ArticleRepository;
 import org.example.repository.SaleLineRepository;
 import org.example.repository.SaleRepository;
-import org.example.util.DisplayManager;
 import org.example.util.SaleState;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SaleService implements BaseService<Sale>{
@@ -36,8 +34,7 @@ public class SaleService implements BaseService<Sale>{
 
     @Override
     public Sale findById(long id) {
-        Sale sale = saleRepository.getById(Sale.class, id);
-        return sale;
+        return saleRepository.getById(Sale.class, id);
     }
 
 

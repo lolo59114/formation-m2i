@@ -38,6 +38,18 @@ public class Sale {
         this.state = SaleState.ON_GOING;
     }
 
+    public String toStringSaleLines() {
+        StringBuilder sb = new StringBuilder();
+        for (SaleLine line : saleLines) {
+            sb.append("\t")
+                    .append(line.getId().getArticle().toString())
+                    .append(", quantity=").append(line.getQuantity())
+                    .append(", subTotalPrice=").append(line.getSubTotalPrice())
+                    .append("\n");
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return "Sale{" +

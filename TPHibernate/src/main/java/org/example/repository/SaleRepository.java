@@ -5,6 +5,7 @@ import org.hibernate.query.Query;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class SaleRepository extends BaseRepository<Sale>{
     public SaleRepository() {
@@ -22,11 +23,11 @@ public class SaleRepository extends BaseRepository<Sale>{
     @Override
     public Sale getById (Class<Sale> classe, long id) {
         openSession();
-        Query<Sale> query = session.createQuery("from Sale s join fetch s.saleLines where s.id = :idSale", Sale.class);
+        Query<Sale> query = session.createQuery("select distinct s from Sale s left join fetch s.saleLines where s.id = :idSale", classe);
         query.setParameter("idSale", id);
-        Sale sale = query.getSingleResult();
+        Optional<Sale> sale = query.uniqueResultOptional();
         session.close();
-        return sale;
+        return sale.orElse(null);
     }
 
     public List<Sale> getSalesByIdArticle(long id) {

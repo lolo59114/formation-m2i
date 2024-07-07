@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import org.example.entity.Article;
 import org.example.entity.Customer;
 import org.example.service.CustomerService;
 import org.example.util.DisplayManager;
@@ -24,16 +23,18 @@ public class IHMCustomer {
                     2. Modifier un client
                     3. Supprimer un client
                     4. Consulter un client
-                    5. Afficher tous les clients
+                    5. Afficher l'historique d'achat d'un client
+                    6. Afficher tous les clients
                     0. Retour au menu principal
                     """);
-            choice = InputManager.askInputChoice(5);
+            choice = InputManager.askInputChoice(6);
             switch (choice) {
                 case "1" -> createCustomer();
                 case "2" -> updateCustomer();
                 case "3" -> deleteCustomer();
-                case "4" -> findCustomerById();
-                case "5" -> displayAllCustomers();
+                case "4" -> displayCustomerById(false);
+                case "5" -> displayCustomerById(true);
+                case "6" -> displayAllCustomers();
                 default -> {
                     return;
                 }
@@ -77,7 +78,7 @@ public class IHMCustomer {
         }
     }
 
-    private void findCustomerById() {
+    private void displayCustomerById(boolean isHistory) {
         System.out.println("=== Affichage d'un client ===");
         long id = InputManager.askInput("Id du client à afficher:", Long.class);
         Customer customer = customerService.findById(id);
@@ -85,8 +86,13 @@ public class IHMCustomer {
             System.out.println("Le client avec id " + id + " n'a pas été trouvé");
         } else {
             System.out.println(customer);
+            if(isHistory) {
+
+                System.out.println(customer.toStringSaleHistory());
+            }
         }
     }
+
 
     private void displayAllCustomers() {
         List<Customer> customers = customerService.getAll();
