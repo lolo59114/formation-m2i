@@ -1,0 +1,67 @@
+:root{
+    --bg-color-de: beige;
+    --bg-color-point: red;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+.de{
+    display: inline-block;
+    position: relative;
+    margin: 1em;
+    width: 6em;
+    height: 6em;
+    border-radius: 20%;
+    background-color: var(--bg-color-de);
+}
+
+.point{
+    width:1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background-color: var(--bg-color-point);
+}
+
+.center{
+    position: absolute;
+    left: 2.25em;
+    top: 2.25em;
+}
+
+.top-left{
+    position: absolute;
+    left: 0.5em;
+    top: 0.5em;
+}
+
+.top-right{
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+}
+
+.bottom-left{
+    position: absolute;
+    left: 0.5em;
+    bottom: 0.5em;
+}
+
+.bottom-right{
+    position: absolute;
+    right: 0.5em;
+    bottom: 0.5em;
+}
+
+.middle-left{
+    position: absolute;
+    left: 0.5em;
+    top: 2.25em;
+}
+
+.middle-right{
+    position: absolute;
+    right: 0.5em;
+    top: 2.25em;
+}
