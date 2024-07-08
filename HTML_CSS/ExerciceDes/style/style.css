@@ -18,6 +18,7 @@
 }
 
 .point{
+    position: absolute;
     width:1.5em;
     height: 1.5em;
     border-radius: 50%;
@@ -25,43 +26,36 @@
 }
 
 .center{
-    position: absolute;
     left: 2.25em;
     top: 2.25em;
 }
 
 .top-left{
-    position: absolute;
     left: 0.5em;
     top: 0.5em;
 }
 
 .top-right{
-    position: absolute;
     right: 0.5em;
     top: 0.5em;
 }
 
 .bottom-left{
-    position: absolute;
     left: 0.5em;
     bottom: 0.5em;
 }
 
 .bottom-right{
-    position: absolute;
     right: 0.5em;
     bottom: 0.5em;
 }
 
 .middle-left{
-    position: absolute;
     left: 0.5em;
     top: 2.25em;
 }
 
 .middle-right{
-    position: absolute;
     right: 0.5em;
     top: 2.25em;
 }
