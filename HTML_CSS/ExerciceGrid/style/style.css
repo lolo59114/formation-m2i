@@ -12,6 +12,8 @@
     justify-items: stretch;
 }
 
+
+
 header{
     grid-area: header;
     background-color: aqua;
