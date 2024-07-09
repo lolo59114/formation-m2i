@@ -1,0 +1,39 @@
+.grid-container{
+    display: grid;
+}
+
+#container1{
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+        "header header header header" 
+        "menu1 main main menu2"
+        "footer footer footer footer";
+    justify-items: stretch;
+}
+
+header{
+    grid-area: header;
+    background-color: aqua;
+    
+}
+
+aside:first-of-type{
+    grid-area: menu1;
+    background-color: chocolate;
+}
+
+aside:last-of-type{
+    grid-area: menu2;
+    background-color: darkorange;
+}
+
+main{
+    grid-area: main;
+    background-color: beige;
+}
+
+footer{
+    grid-area: footer;
+    background-color: forestgreen;
+}
