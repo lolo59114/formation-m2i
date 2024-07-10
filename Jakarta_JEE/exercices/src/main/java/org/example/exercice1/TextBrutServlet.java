@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "textBrut", value = "/text-brut")
+@WebServlet(name = "textBrut", value = "/exercice1/text-brut")
 public class TextBrutServlet extends HttpServlet {
 
     @Override

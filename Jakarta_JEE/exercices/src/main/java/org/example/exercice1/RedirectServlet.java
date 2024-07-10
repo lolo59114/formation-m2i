@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "redirect", value = "/redirect")
+@WebServlet(name = "redirect", value = "/exercice1/redirect")
 public class RedirectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/exercice1/maPageJSP.jsp").forward(request, response);

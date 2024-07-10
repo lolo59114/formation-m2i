@@ -9,9 +9,9 @@
 </h1>
 <br/>
 <ul>
-    <li><a href="text-brut">Texte brut</a></li>
-    <li><a href="html">HTML</a></li>
-    <li><a href="redirect">Redirection vers JSP</a></li>
+    <li><a href="exercice1/text-brut">Texte brut</a></li>
+    <li><a href="exercice1/html">HTML</a></li>
+    <li><a href="exercice1/redirect">Redirection vers JSP</a></li>
 </ul>
 </body>
 </html>
