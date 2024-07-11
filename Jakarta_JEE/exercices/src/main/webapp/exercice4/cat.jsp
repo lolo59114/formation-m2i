@@ -10,7 +10,7 @@
     <main class="container">
         <h2>Liste des chats :</h2>
         <% if(cats.isEmpty()) { %>
-            <%= "Vous n'avez aucun chat dans votre liste" %>
+        <p><%= "Vous n'avez aucun chat dans votre liste" %></p>
         <% } else { %>
         <table class="col-12 table table-dark striped">
             <thead>
@@ -19,7 +19,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Race</th>
                 <th scope="col">Favorite meal</th>
-                <th scope="col">Bithday</th>
+                <th scope="col">Birthday</th>
             </tr>
             </thead>
             <tbody>
