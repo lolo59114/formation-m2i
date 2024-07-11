@@ -1,4 +1,4 @@
-package org.example.exercice3;
+package org.example.exercice3.model;
 
 public class Personne {
     private String nom;
