@@ -19,9 +19,9 @@ public class CatServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         cats = new ArrayList<>();
-        cats.add(new Cat("Felix", "Chat", "Croquettes", LocalDate.now()));
-        cats.add(new Cat("Michel", "Humaine", "Poissons", LocalDate.now()));
-        cats.add(new Cat("Sphinx", "Statue", "????", LocalDate.now()));
+//        cats.add(new Cat("Felix", "Chat", "Croquettes", LocalDate.now()));
+//        cats.add(new Cat("Michel", "Humaine", "Poissons", LocalDate.now()));
+//        cats.add(new Cat("Sphinx", "Statue", "????", LocalDate.now()));
     }
 
     @Override

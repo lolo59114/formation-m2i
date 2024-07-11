@@ -9,6 +9,9 @@
 <body>
     <main class="container">
         <h2>Liste des chats :</h2>
+        <% if(cats.isEmpty()) { %>
+            <%= "Vous n'avez aucun chat dans votre liste" %>
+        <% } else { %>
         <table class="col-12 table table-dark striped">
             <thead>
             <tr>
@@ -34,6 +37,9 @@
             <% } %>
             </tbody>
         </table>
+        <% } %>
+        <hr>
+        <h2>Ajouter un nouveau chat :</h2>
         <form class="col-4 text-bg-dark p-3 rounded" action="cat" method="post">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
@@ -51,8 +57,9 @@
                 <label for="birthday" class="form-label">Birthday</label>
                 <input type="date" class="form-control" id="birthday" name="birthday">
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
         </form>
     </main>
 </body>
