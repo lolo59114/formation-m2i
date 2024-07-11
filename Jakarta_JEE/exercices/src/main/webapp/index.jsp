@@ -8,6 +8,9 @@
 <h1><%= "Bonjour ! Vous pouvez choisir l'exercice." %>
 </h1>
 <br/>
-<a href="exercice1">Exercice 1</a>
+<ul>
+    <li><a href="exercice1">Exercice 1</a></li>
+    <li><a href="exercice2">Exercice 2</a></li>
+</ul>
 </body>
 </html>
