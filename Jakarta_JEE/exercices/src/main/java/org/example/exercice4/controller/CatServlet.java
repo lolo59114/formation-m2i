@@ -35,7 +35,6 @@ public class CatServlet extends HttpServlet {
         LocalDate date = req.getParameter("birthday").isBlank() ? LocalDate.now() : LocalDate.parse(req.getParameter("birthday"));
         Cat newCat = new Cat(req.getParameter("name"), req.getParameter("race"), req.getParameter("favorite-meal"), date);
         cats.add(newCat);
-        req.setAttribute("cats", cats);
-        req.getRequestDispatcher("cat.jsp").forward(req, resp);
+        doGet(req, resp);
     }
 }

@@ -2,18 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Menu principal</title>
+    <%@include file="/WEB-INF/bootstrap.html"%>
 </head>
 <body>
-<h1><%= "Bonjour ! Vous pouvez choisir l'exercice." %>
-</h1>
-<br/>
-<ul>
-    <li><a href="exercice1">Exercice 1</a></li>
-    <li><a href="exercice2">Exercice 2</a></li>
-    <li><a href="exercice3">Exercice 3</a></li>
-    <li><a href="exercice4">Exercice 4</a></li>
-
-</ul>
+<main class="container m-1">
+    <h2><%= "Bonjour ! Vous pouvez choisir l'exercice." %></h2>
+    <br>
+    <ul class="col-4 list-group">
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice1">Exercice 1</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice2">Exercice 2</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice3/tab-pers">Exercice 3</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice4/cat">Exercice 4</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice5">Exercice 5</a>
+    </ul>
+</main>
 </body>
 </html>

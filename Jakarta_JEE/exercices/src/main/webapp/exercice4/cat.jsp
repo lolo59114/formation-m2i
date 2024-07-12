@@ -40,7 +40,7 @@
         <% } %>
         <hr>
         <h2>Ajouter un nouveau chat :</h2>
-        <form class="col-4 text-bg-dark p-3 rounded" action="cat" method="post">
+        <form class="col-4 text-bg-dark p-3 rounded" action="${pageContext.request.contextPath}/exercice4/cat" method="post">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name">
