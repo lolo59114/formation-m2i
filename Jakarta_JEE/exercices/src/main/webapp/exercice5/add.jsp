@@ -11,7 +11,10 @@
             <h1>- <c:out value="${title}" /> -</h1>
             <hr>
     <c:choose>
-        <c:when test="${isNotFound}">
+        <c:when test="${errorMessage != null}">
+            <p class="text-danger">ERROR : ${errorMessage}</p>
+        </c:when>
+        <c:when test="${readOnly != null && dog == null}">
             <p>No dog found with id : ${id}</p>
         </c:when>
         <c:otherwise>
@@ -37,7 +40,7 @@
             </form>
         </c:otherwise>
     </c:choose>
-    <c:if test="${isNotFound || dog != null}">
+    <c:if test="${readOnly != null}">
             <div class="text-end">
                 <button onclick="location.href='${pageContext.request.contextPath}/exercice5/dog/list'" type="button" class="btn btn-warning">Return</button>
             </div>

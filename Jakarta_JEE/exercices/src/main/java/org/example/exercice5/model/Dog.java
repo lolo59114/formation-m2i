@@ -1,19 +1,30 @@
 package org.example.exercice5.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 
+@Entity
 public class Dog {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private static int nbDogs = 0;
     private String name;
     private String breed;
     private LocalDate birthDate;
 
+
     public Dog(String name, String breed, LocalDate birthDate) {
-        this.id = ++nbDogs;
         this.name = name;
         this.breed = breed;
         this.birthDate = birthDate;
+    }
+
+    public Dog() {
+
     }
 
     public int getId() {
