@@ -14,7 +14,7 @@
         <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice2">Exercice 2</a>
         <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice3/tab-pers">Exercice 3</a>
         <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice4/cat">Exercice 4</a>
-        <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice5">Exercice 5</a>
+        <a class="list-group-item list-group-item-action list-group-item-primary" href="exercice5/dog/list">Exercice 5</a>
     </ul>
 </main>
 </body>
