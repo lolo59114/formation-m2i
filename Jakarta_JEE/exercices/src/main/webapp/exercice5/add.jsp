@@ -8,8 +8,13 @@
 <body>
     <main class="container">
         <div class="col-6 text-bg-dark rounded m-3 p-3">
-            <h1>- Add a Dog -</h1>
+            <h1>- <c:out value="${title}" /> -</h1>
             <hr>
+    <c:choose>
+        <c:when test="${isNotFound}">
+            <p>No dog found with id : ${id}</p>
+        </c:when>
+        <c:otherwise>
             <form action="${pageContext.request.contextPath}/exercice5/dog/add" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
@@ -25,16 +30,18 @@
                 </div>
                 <hr>
                 <div class="text-end">
-                    <c:choose>
-                        <c:when test="${dog.getId() > 0}">
-                            <button onclick="location.href='${pageContext.request.contextPath}/exercice5/dog/list'" type="button" class="btn btn-warning">Return</button>
-                        </c:when>
-                        <c:otherwise>
+                    <c:if test="${dog == null}">
                             <button type="submit" class="btn btn-success">Add Dog</button>
-                        </c:otherwise>
-                    </c:choose>
+                    </c:if>
                 </div>
             </form>
+        </c:otherwise>
+    </c:choose>
+    <c:if test="${isNotFound || dog != null}">
+            <div class="text-end">
+                <button onclick="location.href='${pageContext.request.contextPath}/exercice5/dog/list'" type="button" class="btn btn-warning">Return</button>
+            </div>
+    </c:if>
         </div>
     </main>
 </body>

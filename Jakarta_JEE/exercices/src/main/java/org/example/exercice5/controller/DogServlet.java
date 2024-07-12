@@ -25,19 +25,28 @@ public class DogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jspUrl = "/exercice5/index.jsp";
-        System.out.println(req.getServletPath());
+
         switch (req.getServletPath()) {
             case "/exercice5/dog/add" -> {
                 req.setAttribute("readOnly", "");
+                req.setAttribute("title", "Add a Dog");
                 jspUrl = "/exercice5/add.jsp";
             }
             case "/exercice5/dog/details" -> {
                 String pathInfo = (req.getPathInfo() != null && !req.getPathInfo().isEmpty()) ? req.getPathInfo() : "";
+                req.setAttribute("title", "View a Dog");
                 if(!pathInfo.isEmpty()){
-                    Dog dog = dogs.get(Integer.parseInt(pathInfo.substring(1)) -1);
-                    req.setAttribute("dog", dog);
+                    try {
+                        int id = Integer.parseInt(pathInfo.substring(1)) -1;
+                        req.setAttribute("id", id);
+                        Dog dog = dogs.get(id);
+                        req.setAttribute("dog", dog);
+                        req.setAttribute("readOnly", "readonly");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println(e.getMessage());
+                        req.setAttribute("isNotFound", true);
+                    }
                 }
-                req.setAttribute("readOnly", "readonly");
                 jspUrl = "/exercice5/add.jsp";
             }
             default -> {
@@ -54,7 +63,6 @@ public class DogServlet extends HttpServlet {
         String breed = req.getParameter("breed");
         LocalDate birthDate = req.getParameter("birthdate").isEmpty() ? LocalDate.now() : LocalDate.parse(req.getParameter("birthdate"));
         dogs.add(new Dog(name, breed, birthDate));
-        System.out.println(req.getContextPath()+"/exercice5/dog/list");
         resp.sendRedirect(req.getContextPath()+"/exercice5/dog/list");
     }
 }
