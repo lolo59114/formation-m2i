@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.exercice5.model.Dog;
 import org.example.exercice5.service.DogService;
+import org.example.exercice5.util.SessionFactorySingleton;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,10 +17,9 @@ import java.time.LocalDate;
 public class DogServlet extends HttpServlet {
     private DogService dogService;
 
-
     @Override
     public void init() {
-        dogService = new DogService();
+        dogService = new DogService(SessionFactorySingleton.getSessionFactory());
     }
 
     @Override

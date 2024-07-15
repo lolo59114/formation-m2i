@@ -1,3 +1,4 @@
+<%@ page import="java.time.LocalDate" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -28,8 +29,10 @@
                     <input type="text" value="${dog.getBreed()}" class="form-control" id="breed" name="breed" ${readOnly}>
                 </div>
                 <div class="mb-3">
-                    <label for="birthdate" class="form-label">Birth date</label>
-                    <input type="date" value="<c:out value="${dog.getBirthDate()}" default="2024-07-12" />" class="form-control" id="birthdate" name="birthdate" ${readOnly}>
+                    <c:set var = "now" value = "<%= LocalDate.now()%>" />
+                    <label for="birthdate" class="form-label">Birth date /></label>
+
+                    <input type="date" value="<c:out value="${dog.getBirthDate()}" default="${now}" />" class="form-control" id="birthdate" name="birthdate" ${readOnly}>
                 </div>
                 <hr>
                 <div class="text-end">
