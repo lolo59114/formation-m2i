@@ -47,5 +47,21 @@ public class DogRepository {
         return dog;
     }
 
+    public boolean delete(Dog dog) {
+        boolean success = false;
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.remove(dog);
+            session.getTransaction().commit();
+            success = true;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+        return success;
+    }
 
 }

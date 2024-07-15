@@ -43,6 +43,25 @@
     <c:if test="${readOnly != null}">
             <div class="text-end">
                 <button onclick="location.href='${pageContext.request.contextPath}/exercice5/dog/list'" type="button" class="btn btn-warning">Return</button>
+        <c:if test="${dog != null}">
+            <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmation">Delete</button>
+            <div class="modal fade text-black" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmation" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="title">Confirmation</h5>
+                        </div>
+                        <div class="modal-body text-start">
+                            Are you sure ?
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button onclick="location.href='${pageContext.request.contextPath}/exercice5/dog/delete/${dog.getId()}'" type="button" class="btn btn-primary">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:if>
             </div>
     </c:if>
         </div>

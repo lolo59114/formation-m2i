@@ -25,4 +25,8 @@ public class DogService {
     public Dog getById(int id) {
         return dogRepository.getById(id);
     }
+
+    public boolean delete(Dog dog) {
+        return dogRepository.delete(dog);
+    }
 }

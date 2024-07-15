@@ -6,15 +6,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.exercice5.model.Dog;
-import org.example.exercice5.repository.DogRepository;
 import org.example.exercice5.service.DogService;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-@WebServlet(name = "dogServlet", value = {"/exercice5/dog/list", "/exercice5/dog/add", "/exercice5/dog/details/*"})
+
+@WebServlet(name = "dogServlet", value = {"/exercice5/dog/list", "/exercice5/dog/add", "/exercice5/dog/delete/*", "/exercice5/dog/details/*"})
 public class DogServlet extends HttpServlet {
     private DogService dogService;
 
@@ -34,8 +32,15 @@ public class DogServlet extends HttpServlet {
                 jspUrl = "/exercice5/add.jsp";
             }
             case "/exercice5/dog/details" -> {
-                getDetails(req);
+                req.setAttribute("title", "View a Dog");
+                req.setAttribute("readOnly", "readonly");
+                req.setAttribute("dog", getDog(req));
                 jspUrl = "/exercice5/add.jsp";
+            }
+            case "/exercice5/dog/delete" -> {
+                deleteDog(getDog(req));
+                resp.sendRedirect(req.getContextPath()+"/exercice5/dog/list");
+                return;
             }
             default -> {
                 req.setAttribute("dogs", dogService.getAll());
@@ -53,10 +58,8 @@ public class DogServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath()+"/exercice5/dog/list");
     }
 
-    private void getDetails(HttpServletRequest req) {
+    private Dog getDog(HttpServletRequest req) {
         String pathInfo = (req.getPathInfo() != null && !req.getPathInfo().isEmpty()) ? req.getPathInfo() : "";
-        req.setAttribute("title", "View a Dog");
-        req.setAttribute("readOnly", "readonly");
         if(!pathInfo.isEmpty()){
             try {
                 int id = Integer.parseInt(pathInfo.substring(1));
@@ -65,11 +68,16 @@ public class DogServlet extends HttpServlet {
                 if(dog == null){
                     req.setAttribute("isNotFound", true);
                 }
-                req.setAttribute("dog", dog);
+                return dog;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 req.setAttribute("errorMessage", e.getMessage());
             }
         }
+        return null;
+    }
+
+    private void deleteDog(Dog dog) {
+       dogService.delete(dog);
     }
 }
