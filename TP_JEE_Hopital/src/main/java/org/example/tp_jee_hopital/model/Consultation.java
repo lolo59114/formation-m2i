@@ -17,7 +17,7 @@ public class Consultation {
     private String careSheet;
     private String prescription;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "id-patient")
     private Patient patient;
 
@@ -55,5 +55,16 @@ public class Consultation {
 
     public Patient getPatient() {
         return patient;
+    }
+
+    @Override
+    public String toString() {
+        return "Consultation{" +
+                "idConsultation=" + idConsultation +
+                ", createDate=" + createDate +
+                ", careSheet='" + careSheet + '\'' +
+                ", prescription='" + prescription + '\'' +
+                ", patient=" + patient.getIdPatient() +
+                '}';
     }
 }

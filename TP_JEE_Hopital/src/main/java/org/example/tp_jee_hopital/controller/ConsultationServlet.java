@@ -1,0 +1,82 @@
+package org.example.tp_jee_hopital.controller;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.example.tp_jee_hopital.model.Consultation;
+import org.example.tp_jee_hopital.model.Patient;
+import org.example.tp_jee_hopital.service.ConsultationService;
+import org.example.tp_jee_hopital.service.PatientService;
+import org.example.tp_jee_hopital.util.HibernateSessionFactory;
+
+import java.io.IOException;
+
+@WebServlet(name = "consultationServlet", value = "/hospital/consultation/*")
+public class ConsultationServlet extends HttpServlet {
+    private ConsultationService consultationService;
+    private PatientService patientService;
+
+    @Override
+    public void init() throws ServletException {
+        consultationService = new ConsultationService(HibernateSessionFactory.getSessionFactory());
+        patientService = new PatientService(HibernateSessionFactory.getSessionFactory());
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getPathInfo().substring(1);
+        HttpSession session = req.getSession();
+        boolean logged = session.getAttribute("isLogged") != null && (boolean) session.getAttribute("isLogged");
+        req.setAttribute("isLogged", logged);
+        switch (action) {
+            case "list" -> showAll(req, resp);
+            case "add" -> addConsultation(req,resp);
+            case "details" -> showDetails(req, resp);
+            default -> {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            }
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getPathInfo().substring(1);
+        switch (action) {
+            case "updateCareSheet" -> updateCareSheet(req,resp);
+            case "updatePrescription" -> updatePrescription(req, resp);
+        }
+        doGet(req,resp);
+    }
+
+    private void showAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("consultations", consultationService.getConsultationsByPatientId(Long.parseLong(req.getParameter("id"))));
+        req.getRequestDispatcher("/patient/patientDetails.jsp").forward(req, resp);
+    }
+
+    private void addConsultation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long idPatient = Long.parseLong(req.getParameter("idPatient"));
+        Patient patient = patientService.getPatient(idPatient);
+        Consultation consultation = consultationService.createEmptyConsultation(patient);
+        req.setAttribute("consultation", consultation);
+        req.getRequestDispatcher("/consultation/consultationDetails.jsp").forward(req, resp);
+    }
+
+    private void showDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long consultationId = Long.parseLong(req.getParameter("id"));
+        Consultation consultation = consultationService.getConsultation(consultationId);
+        req.setAttribute("consultation", consultation);
+        req.getRequestDispatcher("/consultation/consultationDetails.jsp").forward(req, resp);
+    }
+
+    private void updateCareSheet(HttpServletRequest req, HttpServletResponse resp) {
+        String careSheet = req.getParameter("careSheet");
+    }
+
+
+    private void updatePrescription(HttpServletRequest req, HttpServletResponse resp) {
+    }
+
+}

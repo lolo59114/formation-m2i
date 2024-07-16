@@ -17,17 +17,20 @@ public class Patient {
     private String firstName;
     @Column(name = "last-name")
     private String lastName;
+    @Column(name = "phone-number")
+    private String phoneNumber;
     @Column(name = "date-of-birth")
     private LocalDate dateOfBirth;
     @Column(name = "picture-name")
     private String pictureName;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<Consultation> consultations;
 
-    public Patient(String firstName, String lastName, LocalDate dateOfBirth, String pictureName) {
+    public Patient(String firstName, String lastName, String phoneNumber, LocalDate dateOfBirth, String pictureName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
         this.pictureName = pictureName;
         this.consultations = new ArrayList<>();
@@ -49,6 +52,10 @@ public class Patient {
         return lastName;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
@@ -59,5 +66,17 @@ public class Patient {
 
     public List<Consultation> getConsultations() {
         return consultations;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "idPatient=" + idPatient +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", pictureName='" + pictureName + '\'' +
+                '}';
     }
 }

@@ -22,7 +22,7 @@ public abstract class BaseRepository<T> {
         _session.delete(o);
     }
 
-    abstract T findById(int id);
+    public T findById(Class<T> classe, long id){ return _session.get(classe, id);}
 
-    abstract List<T> findAll();
+    public abstract List<T> findAll();
 }
