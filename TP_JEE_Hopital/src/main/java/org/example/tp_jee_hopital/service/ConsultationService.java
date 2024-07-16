@@ -78,4 +78,16 @@ public class ConsultationService {
         }
         return consultations;
     }
+
+    public void updateConsultation(Consultation consultation) {
+        session = _sessionFactory.openSession();
+        consultationRepository = new ConsultationRepository(session);
+        try {
+            consultationRepository.update(consultation);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+        }
+    }
 }

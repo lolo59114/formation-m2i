@@ -10,16 +10,14 @@ public abstract class BaseRepository<T> {
         _session = session;
     }
 
-    public void create(T o){
-        _session.save(o);
-    }
+    public void create(T o){_session.persist(o);}
 
     public void update(T o){
-        _session.update(o);
+        _session.merge(o);
     }
 
     public void delete(T o){
-        _session.delete(o);
+        _session.remove(o);
     }
 
     public T findById(Class<T> classe, long id){ return _session.get(classe, id);}

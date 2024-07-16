@@ -20,7 +20,7 @@
             <c:when test="${empty consultation.getCareSheet()}">
                 <h5>Soins à remplir:</h5>
                 <div class="ms-2">
-                    <form action="/hospital/consultation/updateCareSheet" method="post">
+                    <form action="updateCareSheet?idConsultation=${consultation.getIdConsultation()}" method="post">
                         <p class="m-0 p-0"><label for="careSheet" class="form-label">Contenu :</label></p>
                         <textarea name="careSheet" id="careSheet" cols="50" rows="10"></textarea>
                         <div class="text-start mt-2">
@@ -42,7 +42,7 @@
         <c:choose>
             <c:when test="${empty consultation.getPrescription()}">
         <div class="ms-2">
-            <form action="/hospital/consultation/updatePrescription" method="post">
+            <form action="updatePrescription?idConsultation=${consultation.getIdConsultation()}" method="post">
                 <p class="m-0 p-0"><label for="prescription" class="form-label">Contenu :</label></p>
                 <textarea name="prescription" id="prescription" cols="50" rows="10"></textarea>
                 <div class="text-start mt-2">

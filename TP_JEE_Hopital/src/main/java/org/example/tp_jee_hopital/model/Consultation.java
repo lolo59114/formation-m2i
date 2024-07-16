@@ -57,6 +57,14 @@ public class Consultation {
         return patient;
     }
 
+    public void setCareSheet(String careSheet) {
+        this.careSheet = careSheet;
+    }
+
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
+    }
+
     @Override
     public String toString() {
         return "Consultation{" +
