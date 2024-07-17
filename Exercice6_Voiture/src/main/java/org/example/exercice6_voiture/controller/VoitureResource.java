@@ -23,6 +23,7 @@ public class VoitureResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/add")
     public Voiture addVoiture(Voiture voiture) {
         voitureService.add(voiture);

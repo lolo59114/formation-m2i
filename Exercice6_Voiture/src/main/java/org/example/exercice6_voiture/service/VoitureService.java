@@ -1,15 +1,18 @@
 package org.example.exercice6_voiture.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.ApplicationPath;
 import org.example.exercice6_voiture.entity.Voiture;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class VoitureService {
     List<Voiture> voitures;
 
     public VoitureService() {
-        voitures = new ArrayList<Voiture>();
+        voitures = new ArrayList<>();
     }
 
     public List<Voiture> getAll() {
