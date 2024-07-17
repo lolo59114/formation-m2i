@@ -10,7 +10,7 @@
 <c:import url="/WEB-INF/header.jsp" charEncoding="UTF-8"/>
 <main class="container p-0">
     <h1>Se connecter</h1>
-    <form action="${pageContext.request.contextPath}/hospital/connection" method="post">
+    <form method="post">
         <div class="mb-3">
             <label for="login" class="form-label">Login :</label>
             <input type="text" class="form-control" id="login" name="login">

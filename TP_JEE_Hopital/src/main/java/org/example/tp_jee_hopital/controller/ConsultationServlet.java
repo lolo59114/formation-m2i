@@ -11,7 +11,7 @@ import org.example.tp_jee_hopital.model.Consultation;
 import org.example.tp_jee_hopital.model.Patient;
 import org.example.tp_jee_hopital.service.ConsultationService;
 import org.example.tp_jee_hopital.service.PatientService;
-import org.example.tp_jee_hopital.util.HibernateSessionFactory;
+import org.example.tp_jee_hopital.util.HibernateSession;
 
 import java.io.IOException;
 
@@ -21,9 +21,9 @@ public class ConsultationServlet extends HttpServlet {
     private PatientService patientService;
 
     @Override
-    public void init() throws ServletException {
-        consultationService = new ConsultationService(HibernateSessionFactory.getSessionFactory());
-        patientService = new PatientService(HibernateSessionFactory.getSessionFactory());
+    public void init() {
+        consultationService = new ConsultationService(HibernateSession.getInstance().getSessionFactory());
+        patientService = new PatientService(HibernateSession.getInstance().getSessionFactory());
     }
 
     @Override
@@ -33,7 +33,6 @@ public class ConsultationServlet extends HttpServlet {
         boolean logged = session.getAttribute("isLogged") != null && (boolean) session.getAttribute("isLogged");
         req.setAttribute("isLogged", logged);
         switch (action) {
-            case "list" -> showAll(req, resp);
             case "add" -> addConsultation(req,resp);
             case "details" -> showDetails(req, resp);
             default -> {
@@ -50,11 +49,6 @@ public class ConsultationServlet extends HttpServlet {
             case "updatePrescription" -> updatePrescription(req, resp);
         }
         doGet(req,resp);
-    }
-
-    private void showAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("consultations", consultationService.getConsultationsByPatientId(Long.parseLong(req.getParameter("id"))));
-        req.getRequestDispatcher("/patient/patientDetails.jsp").forward(req, resp);
     }
 
     private void addConsultation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

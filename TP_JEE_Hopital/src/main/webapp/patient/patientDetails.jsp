@@ -10,7 +10,9 @@
 <main class="container">
     <div>
         <h2>Infos du patient:</h2>
-        <img class="mx-auto d-block " src="${pageContext.request.contextPath}/image/${patient.getPictureName()}" alt="Image patient" width="10%" height="auto"/>
+        <c:if test="${patient.getPictureName() != null}">
+            <img class="mx-auto d-block " src="${pageContext.request.contextPath}/image/${patient.getPictureName()}" alt="${patient.getPictureName()}" width="10%" height="auto"/>
+        </c:if>
     </div>
     <h5>Nom: ${patient.getFirstName() += " " += patient.getLastName()}</h5>
     <h5>Date de naissance: ${patient.getDateOfBirth()}</h5>

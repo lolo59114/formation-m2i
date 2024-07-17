@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.example.tp_jee_hopital.model.Patient;
 import org.example.tp_jee_hopital.service.PatientService;
-import org.example.tp_jee_hopital.util.HibernateSessionFactory;
+import org.example.tp_jee_hopital.util.HibernateSession;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +19,8 @@ public class PatientServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        patientService = new PatientService(HibernateSessionFactory.getSessionFactory());
+        patientService = new PatientService(HibernateSession.getInstance().getSessionFactory());
     }
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +37,6 @@ public class PatientServlet extends HttpServlet {
             }
         }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,7 +62,8 @@ public class PatientServlet extends HttpServlet {
         long patientId = Long.parseLong(req.getParameter("id"));
         Patient patient= patientService.getPatient(patientId);
         req.setAttribute("patient",patient);
-        req.getRequestDispatcher("/hospital/consultation/list").forward(req,resp);
+        req.setAttribute("consultations",patient.getConsultations());
+        req.getRequestDispatcher("/patient/patientDetails.jsp").forward(req, resp);
     }
 
     private String uploadPicture(Part image) throws IOException {
