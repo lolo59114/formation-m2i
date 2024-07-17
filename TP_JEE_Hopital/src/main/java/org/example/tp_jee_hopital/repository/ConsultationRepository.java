@@ -1,7 +1,6 @@
 package org.example.tp_jee_hopital.repository;
 
 import org.example.tp_jee_hopital.model.Consultation;
-import org.example.tp_jee_hopital.model.Patient;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 

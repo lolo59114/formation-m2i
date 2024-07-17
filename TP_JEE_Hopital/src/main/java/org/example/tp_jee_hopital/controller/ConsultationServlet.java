@@ -107,7 +107,7 @@ public class ConsultationServlet extends HttpServlet {
         req.getRequestDispatcher("/consultation/consultationDetails.jsp").forward(req, resp);
     }
 
-    private void noEntityFound(HttpServletRequest req) throws ServletException, IOException {
+    private void noEntityFound(HttpServletRequest req) {
         req.setAttribute("errorName", "La consultation n'a pas été trouvée");
         req.setAttribute("message", "Désolé, nous n'avons pas réussi à retrouver la consultation");
         throw new NoEntityFoundException();

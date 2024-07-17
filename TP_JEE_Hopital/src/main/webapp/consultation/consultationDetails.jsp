@@ -9,7 +9,7 @@
 <c:import url="/WEB-INF/header.jsp" charEncoding="UTF-8"/>
 <main class="container">
     <div>
-        <h2>Patient: ${consultation.getPatient().getFirstName()} ,
+        <h2>Patient: <a href="${pageContext.request.contextPath}/hospital/patient/details?id=${consultation.getPatient().getIdPatient()}">${consultation.getPatient().getFirstName()}</a>  ,
             consultation réf: ${consultation.getIdConsultation()} ,
             Date: ${consultation.getCreateDate()}
         </h2>
