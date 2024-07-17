@@ -40,6 +40,7 @@ public class ConsultationService {
             consultationRepository.create(consultation);
             session.getTransaction().commit();
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             try{
                 session.getTransaction().rollback();
             } catch (Exception e) {
@@ -81,11 +82,18 @@ public class ConsultationService {
 
     public void updateConsultation(Consultation consultation) {
         session = _sessionFactory.openSession();
+        session.beginTransaction();
         consultationRepository = new ConsultationRepository(session);
         try {
             consultationRepository.update(consultation);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            try{
+                session.getTransaction().rollback();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         } finally {
             session.close();
         }

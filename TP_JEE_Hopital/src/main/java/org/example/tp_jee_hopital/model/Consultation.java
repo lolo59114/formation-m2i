@@ -17,7 +17,7 @@ public class Consultation {
     private String careSheet;
     private String prescription;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id-patient")
     private Patient patient;
 

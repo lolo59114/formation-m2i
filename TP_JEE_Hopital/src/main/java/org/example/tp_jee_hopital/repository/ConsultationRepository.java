@@ -24,4 +24,5 @@ public class ConsultationRepository extends BaseRepository<Consultation> {
         query.setParameter("idPatient", idPatient);
         return query.list();
     }
+
 }
