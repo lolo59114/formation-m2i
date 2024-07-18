@@ -22,7 +22,6 @@ public class TodoController {
     public String todoList(Model model) {
         List<Todo> todos = todoService.getTodos();
         model.addAttribute("todos", todos);
-        System.out.println(todos.size());
         return "index";
     }
 
