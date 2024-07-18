@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des TODOs</title>
+</head>
+<body>
+    <main>
+        <div th:if="${todos == null || todos.isEmpty()}">
+            <h1> Aucun todo à afficher</h1>
+        </div>
+        <div th:unless="${todos == null || todos.isEmpty()}">
+            <h1>Ma liste de TODOs</h1>
+            <ul>
+                <li th:each="t : ${todos}"><span th:text="${t.getName()}"></span> : <span th:text="${t.getDescription()}"></span> <input type="checkbox" th:checked="${t.isDone()}"></li>
+            </ul>
+
+        </div>
+    </main>
+
+</body>
+</html>
