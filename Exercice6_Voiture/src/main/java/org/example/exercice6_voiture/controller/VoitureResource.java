@@ -6,24 +6,30 @@ import jakarta.ws.rs.core.MediaType;
 import org.example.exercice6_voiture.entity.Voiture;
 import org.example.exercice6_voiture.service.VoitureService;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @Path("/voiture")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class VoitureResource {
     private final VoitureService voitureService;
 
     @Inject
     public VoitureResource(VoitureService voitureService) {
-        this.voitureService = new VoitureService();
+        this.voitureService = voitureService;
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getAllVoitures() {
-        return voitureService.getAll().toString();
+    public List<Voiture> getAllVoitures() {
+        if (voitureService.getAll().isEmpty()) {
+            return new ArrayList<>();
+        }
+        return voitureService.getAll();
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/add")
     public Voiture addVoiture(Voiture voiture) {
         voitureService.add(voiture);
@@ -31,15 +37,12 @@ public class VoitureResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public Voiture getVoiture(@PathParam("id") int id) {
-        return voitureService.get(id);
+        return voitureService.getById(id);
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/update")
     public Voiture updateVoiture(Voiture voiture) {
         voitureService.update(voiture);
