@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 public class TodoController {
-    TodoService todoService;
+    private final TodoService todoService;
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
