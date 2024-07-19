@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des produits</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body class="container">
+<main>
+    <h1>Liste des produits</h1>
+    <hr>
+    <ul class="list-group" th:if="${!products.isEmpty()}">
+        <li class="list-group-item" th:each="p : ${products}">
+            <a th:href="@{/product/details/{id}(id=${p.getIdProduct()})}"><span th:text="${p.getName()}"></span> : <span th:text="${p.getCategory().toString()}"></span> : <span th:text="${p.getPrice()}"></span></a>
+        </li>
+    </ul>
+</main>
+
+</body>
+</html>

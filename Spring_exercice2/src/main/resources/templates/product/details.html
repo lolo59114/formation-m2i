@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.getName()}"></title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body class="container">
+    <main class="text-bg-dark">
+        <h1>Affichage du détail : </h1>
+        <hr>
+        <p>Nom : <span th:text="${product.getName()}"></span> </p>
+        <p>Catégorie : <span th:text="${product.getCategory().toString()}"></span> </p>
+        <p>Prix : <span th:text="${product.getPrice()}"></span> €</p>
+    </main>
+</body>
+</html>
