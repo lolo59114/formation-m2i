@@ -45,8 +45,6 @@ public class ProductController {
 
     @PostMapping("/product/search")
     public String searchProductsFromPost(@ModelAttribute Product product, Model model) {
-        System.out.println("maxPrice: " + product.getPrice());
-        System.out.println("category: " + product.getCategory());
         List<Product> products = baseProductService.researchProduct(product.getCategory() == null ? null : product.getCategory().name(), product.getPrice());
         model.addAttribute("products", products);
         return "product/list";
