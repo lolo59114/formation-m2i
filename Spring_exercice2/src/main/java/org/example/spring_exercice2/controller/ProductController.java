@@ -5,9 +5,7 @@ import org.example.spring_exercice2.service.BaseProductService;
 import org.example.spring_exercice2.util.Category;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +19,8 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public String homePage() {
+    public String homePage(Model model) {
+        model.addAttribute("product", new Product());
         return "home";
     }
 
@@ -38,23 +37,20 @@ public class ProductController {
     }
 
     @GetMapping("/product/search")
-    public String searchProducts(@RequestParam(value = "category", required = false) String category, @RequestParam(value = "maxPrice", required = false) Double maxPrice, Model model) {
-        System.out.println(category);
-        System.out.println(maxPrice);
-        List<Product> products = null;
-
-        if(category != null && maxPrice != null) {
-            products = baseProductService.compare(baseProductService.getProductsByCategory(Category.valueOf(category)), baseProductService.getProductsByMaxPrice(maxPrice));
-            System.out.println("on compare : " + products.size());
-        } else if (category != null) {
-            products = baseProductService.getProductsByCategory(Category.valueOf(category));
-            System.out.println("by Categ " + products.size());
-        } else if (maxPrice != null) {
-            products = baseProductService.getProductsByMaxPrice(maxPrice);
-            System.out.println("by max price " + products.size());
-        }
-
+    public String searchProductsFromGet(@RequestParam(value = "category", required = false) String category, @RequestParam(value = "maxPrice", required = false) Double maxPrice, Model model) {
+        List<Product> products = baseProductService.researchProduct(category, maxPrice);
         model.addAttribute("products", products);
         return "product/list";
     }
+
+    @PostMapping("/product/search")
+    public String searchProductsFromPost(@ModelAttribute Product product, Model model) {
+        System.out.println("maxPrice: " + product.getPrice());
+        System.out.println("category: " + product.getCategory());
+        List<Product> products = baseProductService.researchProduct(product.getCategory() == null ? null : product.getCategory().name(), product.getPrice());
+        model.addAttribute("products", products);
+        return "product/list";
+    }
+
+
 }

@@ -33,16 +33,33 @@ public class ProductService implements BaseProductService{
     }
 
     @Override
-    public List<Product> getProductsByCategory(Category category) {
+    public List<Product> researchProduct(String category, Double maxPrice) {
+        List<Product> products = null;
+        if(category != null && maxPrice != null) {
+            products = compare(getProductsByCategory(Category.valueOf(category)), getProductsByMaxPrice(maxPrice));
+            System.out.println("on compare : " + products.size());
+        } else if (category != null) {
+            products = getProductsByCategory(Category.valueOf(category));
+            System.out.println("by Categ " + products.size());
+        } else if (maxPrice != null) {
+            products = getProductsByMaxPrice(maxPrice);
+            System.out.println("by max price " + products.size());
+        }
+
+        return products;
+    }
+
+    private List<Product> getProductsByCategory(Category category) {
         return products.stream().filter(p -> p.getCategory() == category).toList();
     }
 
-    @Override
-    public List<Product> getProductsByMaxPrice(double maxPrice) {
+    private List<Product> getProductsByMaxPrice(double maxPrice) {
         return products.stream().filter(p -> p.getPrice() <= maxPrice).toList();
     }
 
-    public List<Product> compare(List<Product> products1, List<Product> products2) {
+    private List<Product> compare(List<Product> products1, List<Product> products2) {
         return products1.stream().filter(products2::contains).toList();
     }
+
+
 }

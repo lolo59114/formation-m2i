@@ -12,9 +12,15 @@
         <a class="btn btn-primary" th:href="@{/product/list}">Afficher la liste de tous les produits</a>
         <hr>
         <h2>Formulaire de recherche</h2>
-<!--        <form th:action="@{/product/details}">-->
-            TODO : input avec recherche à la place de la recherche dans l'url
-<!--        </form>-->
+        <form th:action="@{/product/search}" method="post" th:object="${product}">
+            <label for="price">Prix maximum : </label>
+            <input th:field="*{price}" id="price" type="number" step="2"/>
+            <select class="form-select" th:field="*{category}" aria-label="Catégorie">
+                <option th:value="${null}">Choisissez une catégorie</option>
+                <option th:each="c : ${T(org.example.spring_exercice2.util.Category).values()}" th:text="${c}" th:value="${c}"></option>
+            </select>
+            <button>Rechercher</button>
+        </form>
     </main>
 </body>
 </html>

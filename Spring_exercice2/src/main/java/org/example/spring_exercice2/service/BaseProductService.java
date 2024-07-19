@@ -9,7 +9,5 @@ import java.util.UUID;
 public interface BaseProductService {
     Product getProductById(UUID id);
     List<Product> getAllProducts();
-    List<Product> getProductsByCategory(Category category);
-    List<Product> getProductsByMaxPrice(double maxPrice);
-    List<Product> compare(List<Product> products1, List<Product> products2);
+    List<Product> researchProduct(String category, Double maxPrice);
 }
