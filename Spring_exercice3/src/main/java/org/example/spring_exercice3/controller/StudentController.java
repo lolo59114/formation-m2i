@@ -33,8 +33,8 @@ public class StudentController {
     }
 
     @GetMapping("/student/add")
-    public String formAddStudent(@RequestParam(name = "id", required = false) int id, Model model) {
-        if (id > 0) {
+    public String formAddStudent(@RequestParam(name = "id", required = false) Integer id, Model model) {
+        if (id != null && id > 0) {
             model.addAttribute("student", studentService.getStudentById(id));
         } else {
             model.addAttribute("student", new Student());
@@ -55,10 +55,10 @@ public class StudentController {
         return "redirect:/student/list";
     }
 
-    @PostMapping("/student/search")
-    public String searchStudent(@ModelAttribute("student") Student student, Model model) {
-        model.addAttribute("searchName", student.getLastName());
-        model.addAttribute("students", studentService.getStudentsByName(student.getLastName()));
+    @GetMapping("/student/search")
+    public String searchStudent(String studentName, Model model) {
+        model.addAttribute("searchName", studentName);
+        model.addAttribute("students", studentService.getStudentsByName(studentName));
         model.addAttribute("mode", "search");
         return "student/list";
     }

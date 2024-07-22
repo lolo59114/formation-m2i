@@ -5,13 +5,12 @@ import org.example.spring_exercice3.model.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
 @Service
 public class StudentService {
-    private int idCounter = 0;
+    private int idCounter;
     private List<Student> students;
 
     public StudentService() {
@@ -28,7 +27,7 @@ public class StudentService {
     }
 
     public List<Student> getStudentsByName(String name) {
-        return students.stream().filter(s -> s.getLastName().equals(name)).toList();
+        return students.stream().filter(s -> s.getLastName().equalsIgnoreCase(name) || s.getFirstName().equalsIgnoreCase(name)).toList();
     }
 
     public Student getStudentById(int id) {

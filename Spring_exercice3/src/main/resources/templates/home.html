@@ -14,9 +14,9 @@
         <a class="btn btn-primary" th:href="@{/student/add}">Vers le formulaire d'inscription</a>
         <hr>
         <h2>Formulaire de recherche</h2>
-        <form th:action="@{/student/search}" method="post" th:object="${student}">
-            <label for="name">Nom de l'étudiant : </label>
-            <input th:field="*{lastName}" id="name" type="text" />
+        <form th:action="@{/student/search}" method="get">
+            <label for="studentName">Nom de l'étudiant : </label>
+            <input th:value="${studentName}" id="studentName" name="studentName" type="text" />
             <button class="btn btn-success">Rechercher</button>
         </form>
     </main>
