@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+<main class="container">
+    <h1>Formulaire d'inscription</h1>
+    <form th:action="@{/student/add}" method="post" th:object="${student}">
+        <div class="form-group my-2">
+            <input th:field="*{id}" type="hidden"/>
+            <label for="firstname">Prénom de l'étudiant : </label>
+            <input class="form-control" th:field="*{firstName}" id="firstname" type="text" />
+            <label for="name">Nom de l'étudiant : </label>
+            <input class="form-control" th:field="*{lastName}" id="name" type="text" />
+            <label for="age">Age de l'étudiant : </label>
+            <input class="form-control" th:field="*{age}" id="age" type="number" />
+            <label for="email">Email de l'étudiant : </label>
+            <input class="form-control" th:field="*{email}" id="email" type="email" />
+        </div>
+        <button class="btn btn-success">Valider</button>
+    </form>
+</main>
+
+</body>
+</html>

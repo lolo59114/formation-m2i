@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des étudiants</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body class="container">
+<main>
+    <h1 th:if='${mode == null || mode.equals("all")}'>Liste de tous les étudiants</h1>
+    <h1 th:if='${mode != null && mode.equals("search")}' th:text="|Recherche par nom (${searchName}) :|"></h1>
+    <hr>
+    <ul class="list-group col-8 my-2" th:if="${students != null && !students.isEmpty()}">
+        <li class="list-group-item" th:each="s : ${students}">
+            <span th:text="${s.getFirstName()}"></span>
+            <span th:text="${s.getLastName()}"></span>
+            <a class="btn btn-success" th:href="@{/student/details/{id}(id=${s.getId()})}">Voir détails</a>
+            <a class="btn btn-danger" th:href="@{/student/delete(id=${s.getId()})}"> Supprimer </a>
+        </li>
+    </ul>
+    <p th:unless="${students != null && !students.isEmpty()}"> Aucun résultat trouvé </p>
+    <a class="btn btn-primary" th:href="@{/student}">Retour à l'accueil</a>
+</main>
+</body>
+</html>

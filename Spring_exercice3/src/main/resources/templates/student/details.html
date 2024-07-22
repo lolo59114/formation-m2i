@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${student.getFirstName()} ${student.getLastName()}|"></title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+    <main class="container">
+        <div class="text-bg-dark col-10 m-2 p-2">
+            <h1>Affichage du détail : </h1>
+            <hr>
+            <p>Nom : <span th:text="|${student.getFirstName()} ${student.getLastName()}|"></span> </p>
+            <p>Age : <span th:text="${student.getAge()}"></span> </p>
+            <p>Email : <span th:text="${student.getEmail()}"></span></p>
+            <a class="btn btn-success" th:href="@{/student/add(id=${student.getId()})}">Modifier</a>
+        </div>
+        <a class="btn btn-primary" th:href="@{/student/list}">Afficher la liste de tous les étudiants</a>
+        <a class="btn btn-primary" th:href="@{/student}">Retour à l'accueil</a>
+    </main>
+</body>
+</html>
