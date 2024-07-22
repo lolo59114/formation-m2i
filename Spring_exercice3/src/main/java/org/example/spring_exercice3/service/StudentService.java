@@ -21,7 +21,6 @@ public class StudentService {
     }
 
     public void addStudent(Student student) {
-        System.out.println(student);
         student.setId(++idCounter);
         students.add(student);
     }

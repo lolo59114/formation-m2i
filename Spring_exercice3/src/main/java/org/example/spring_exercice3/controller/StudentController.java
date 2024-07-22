@@ -14,8 +14,7 @@ public class StudentController {
     }
 
     @GetMapping("/student")
-    public String homePage(Model model) {
-        model.addAttribute("student", new Student());
+    public String homePage(String studentName, Model model) {
         return "home";
     }
 
