@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des catégories</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+<span th:replace="~{home :: navbar}"></span>
+<main class="container">
+    <h1>Liste des catégories</h1>
+    <hr>
+    <table class="table" th:unless="${categories.isEmpty()}">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Description</th>
+            <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+        <tbody th:each="c : ${categories}">
+        <tr>
+            <td th:text="${c.getId()}"></td>
+            <td th:text="${c.getName()}"></td>
+            <td th:text="${c.getDescription()}"></td>
+            <td><a th:href="@{/category/update/{id}(id=${c.getId()})}" class="btn btn-outline-success">Modifier</a></td>
+            <td><a th:href="@{/category/delete/{id}(id=${c.getId()})}" class="btn btn-outline-danger">Supprimer</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <p th:unless="${categories != null && !categories.isEmpty()}"> Aucun résultat trouvé </p>
+</main>
+</body>
+</html>

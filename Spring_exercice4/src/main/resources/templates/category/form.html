@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+<span th:replace="~{home :: navbar}"></span>
+<main class="container">
+    <h1>Formulaire catégorie</h1>
+    <hr>
+    <div class="col-8 text-bg-dark p-3">
+        <form th:action="@{/category/form}" method="post" th:object="${categorie}">
+            <input th:field="*{id}" hidden>
+            <div class="mb-3">
+                <label for="catName" class="form-label">Nom :</label>
+                <input th:field="*{name}" type="text" class="form-control" id="catName">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="catDesc" class="form-label">Description :</label>
+                <textarea th:field="*{description}" type="text" class="form-control" id="catDesc"></textarea>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" th:text="${categorie.getId() != null ? 'Modifier' : 'Ajouter'}"></button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
