@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page non trouvée</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+    <main class="container">
+        <h1>Oups ! La page demandée n'a pas été trouvé.</h1>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Pas de page pour le chemin : <span class="text-info" th:text="${path}"></span></li>
+            <li class="list-group-item">Le status est : <span class="text-info" th:text="${status}"></span></li>
+            <li class="list-group-item">L'erreur : <span class="text-info" th:text="${error}"></span></li>
+            <li class="list-group-item">Le message : <span class="text-info" th:text="${message}"></span></li>
+        </ul>
+    </main>
+</body>
+</html>

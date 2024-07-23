@@ -7,22 +7,32 @@
 </head>
 <body>
 <main class="container">
-    <h1>Formulaire d'inscription</h1>
     <form th:action="@{/student/add}" method="post" th:object="${student}">
+        <h1 th:if="*{id == null || id == 0}">Formulaire d'inscription</h1>
+        <h1 th:if="*{id != null && id > 0}">Modification d'un étudiant</h1>
         <div class="form-group my-2">
             <input th:field="*{id}" type="hidden"/>
+
             <label for="firstname">Prénom de l'étudiant : </label>
             <input class="form-control" th:field="*{firstName}" id="firstname" type="text" />
+            <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+
             <label for="name">Nom de l'étudiant : </label>
             <input class="form-control" th:field="*{lastName}" id="name" type="text" />
+            <div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:error="*{lastName}"></div>
+
             <label for="age">Age de l'étudiant : </label>
             <input class="form-control" th:field="*{age}" id="age" type="number" />
+            <div class="text-danger" th:if="${#fields.hasErrors('age')}" th:error="*{age}"></div>
+
             <label for="email">Email de l'étudiant : </label>
             <input class="form-control" th:field="*{email}" id="email" type="email" />
+            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         </div>
         <button class="btn btn-success">Valider</button>
+        <a class="btn btn-primary" th:href="@{/student}">Retour à l'accueil</a>
     </form>
-    <a class="btn btn-primary" th:href="@{/student}">Retour à l'accueil</a>
+
 </main>
 
 </body>
