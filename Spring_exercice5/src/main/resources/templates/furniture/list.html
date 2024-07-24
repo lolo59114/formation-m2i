@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des meubles</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+<span th:replace="~{home :: navbar}"></span>
+<main class="container">
+    <h1>Liste des meubles</h1>
+    <hr>
+    <table class="table" th:unless="${furnitures.isEmpty()}">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Description</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Stock</th>
+            <th scope="col" colspan="3">Actions</th>
+        </tr>
+        </thead>
+        <tbody th:each="c : ${furnitures}">
+        <tr>
+            <td th:text="${c.getId()}"></td>
+            <td th:text="${c.getName()}"></td>
+            <td th:text="${c.getDescription()}"></td>
+            <td th:text="${c.getPrice()}"></td>
+            <td th:text="${c.getStock()}"></td>
+            <td><a th:href="@{/cart/add-to-cart(id=${c.getId()})}" class="btn btn-outline-success">Ajouter au panier</a></td>
+            <td><a th:href="@{/furniture/update(id=${c.getId()})}" class="btn btn-outline-info">Modifier</a></td>
+            <td><a th:href="@{/furniture/delete(id=${c.getId()})}" class="btn btn-outline-danger">Supprimer</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <p th:unless="${furnitures != null && !furnitures.isEmpty()}"> Aucun résultat trouvé </p>
+</main>
+</body>
+</html>

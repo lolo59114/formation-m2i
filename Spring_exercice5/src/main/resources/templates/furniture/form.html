@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+<span th:replace="~{home :: navbar}"></span>
+<main class="container">
+    <h1>Formulaire meubles</h1>
+    <hr>
+    <div class="col-8 text-bg-dark p-3">
+        <form th:action="@{/furniture/form}" method="post" th:object="${furniture}">
+            <input th:field="*{id}" hidden>
+            <div class="mb-3">
+                <label for="furnitureName" class="form-label">Nom :</label>
+                <input th:field="*{name}" type="text" class="form-control" id="furnitureName">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="furnitureDesc" class="form-label">Description :</label>
+                <textarea th:field="*{description}" class="form-control" id="furnitureDesc"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="furniturePrice" class="form-label">Prix :</label>
+                <input th:field="*{price}" type="number" class="form-control" id="furniturePrice"></input>
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+            </div>
+            <div class="mb-3">
+                <label for="furnitureStock" class="form-label">Stock :</label>
+                <input th:field="*{stock}" type="number" class="form-control" id="furnitureStock"></input>
+                <span th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" th:text="${furniture.getId() != null ? 'Modifier' : 'Ajouter'}"></button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
