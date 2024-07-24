@@ -6,12 +6,10 @@ import org.example.spring_exercice4.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -19,19 +17,19 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/category")
+    @GetMapping("")
     public String categoryList(Model model) {
         model.addAttribute("categories", categoryService.getAll());
         return "category/list";
     }
 
-    @GetMapping("/category/form")
+    @GetMapping("/form")
     public String categoryForm(Model model) {
         model.addAttribute("categorie", new Category());
         return "category/form";
     }
 
-    @PostMapping("/category/form")
+    @PostMapping("/form")
     public String categoryFormSubmit(@Valid @ModelAttribute("categorie") Category category, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "category/form";
@@ -44,13 +42,13 @@ public class CategoryController {
         return "redirect:/category";
     }
 
-    @GetMapping("/category/update/{id}")
+    @GetMapping("/update/{id}")
     public String categoryUpdate(@PathVariable("id") Long id, Model model) {
         model.addAttribute("categorie", categoryService.getById(id));
         return "category/form";
     }
 
-    @GetMapping("/category/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String categoryDelete(@PathVariable("id") Long id) {
         categoryService.delete(categoryService.getById(id));
         return "redirect:/category";
