@@ -34,14 +34,13 @@
             </div>
             <div class="mb-3">
                 <label for="recipeInstructions" class="form-label">Instructions :</label>
-                <textarea th:field="*{instructions}" type="text" class="form-control" id="recipeInstructions"></textarea>
+                <textarea th:field="*{instructions}" type="text" class="form-control" id="recipeInstructions" rows="4"></textarea>
                 <span th:if="${#fields.hasErrors('instructions')}" th:errors="*{instructions}"></span>
             </div>
             <div class="mb-3">
-                <select class="form-select" th:field="*{categoryId}" aria-label="Catégorie">
+                <select class="form-select" th:field="*{categoryId}" aria-label="Catégorie" >
                     <option th:value="${null}">Choisissez une catégorie</option>
-                    <option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}" ></option>
-<!--                    th:selected="${c.getId()==recipe.category.getId()}"-->
+                    <option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}"></option>
                 </select>
                 <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
             </div>

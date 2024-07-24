@@ -39,9 +39,9 @@ public class RecipeController {
     }
 
     @PostMapping(value ="/recipe/form")
-    public String recipeFormSubmit(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult) {
-        System.out.println("je passe");
+    public String recipeFormSubmit(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryService.getAll());
             return "recipe/form";
         }
 
@@ -67,7 +67,6 @@ public class RecipeController {
                 recipe.getIngredients().add("");
             }
         }
-        model.addAttribute("recipe", recipe);
         model.addAttribute("categories", categoryService.getAll());
         return "/recipe/form";
     }
@@ -75,14 +74,20 @@ public class RecipeController {
     @PostMapping(value = "/recipe/form", params = {"removeIngredient"})
     public String removeIngredient(Recipe recipe, BindingResult bindingResult, String removeIngredient, Model model){
         recipe.getIngredients().remove(Integer.parseInt(removeIngredient));
-        model.addAttribute("recipe", recipe);
         model.addAttribute("categories", categoryService.getAll());
         return "/recipe/form";
+    }
+
+    @GetMapping("/recipe/detail/{id}")
+    public String recipeDetail(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("recipe", recipeService.getById(id));
+        return "recipe/detail";
     }
 
     @GetMapping("/recipe/update/{id}")
     public String recipeUpdate(@PathVariable("id") Long id, Model model) {
         model.addAttribute("recipe", recipeService.getById(id));
+        model.addAttribute("categories", categoryService.getAll());
         return "recipe/form";
     }
 

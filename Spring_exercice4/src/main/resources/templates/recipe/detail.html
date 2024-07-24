@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails</title>
+    <link th:replace="~{home :: bootstrapImport}">
+</head>
+<body>
+<span th:replace="~{home :: navbar}"></span>
+<main class="container">
+    <h1>Détail de la recette : <span th:text="${recipe.getName()}"></span></h1>
+    <hr>
+    <div class="text-bg-dark p-3">
+        <div>
+            <p class="fs-3">Liste des ingrédients :
+            <ul th:if="${recipe.getIngredients() != null}">
+                <li th:each="i : ${recipe.getIngredients()}">
+                    <span th:text="${i}"></span>
+                </li>
+            </ul>
+            </p>
+        </div>
+
+        <div>
+            <p class="fs-3">Instructions :
+                <div class="text-wrap lh-sm" th:text="${recipe.getInstructions()}"></div>
+            </p>
+        </div>
+
+        <div>
+            <p class="fs-3">Catégorie :</p>
+            <p class="ps-3"><span class="fs-5"> Nom : </span><span th:text="${recipe.getCategory().getName()}"></span></p>
+            <p class="ps-3"><span class="fs-5"> Description : </span><span th:text="${recipe.getCategory().getDescription()}"></span></p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

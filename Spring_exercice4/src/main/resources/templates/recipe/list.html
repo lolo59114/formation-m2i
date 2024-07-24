@@ -16,16 +16,17 @@
             <th scope="col">#</th>
             <th scope="col">Nom</th>
             <th scope="col">Catégorie</th>
-            <th scope="col" colspan="2">Actions</th>
+            <th scope="col" colspan="3">Actions</th>
         </tr>
         </thead>
-        <tbody th:each="c : ${recipes}">
+        <tbody th:each="r : ${recipes}">
         <tr>
-            <td th:text="${c.getId()}"></td>
-            <td th:text="${c.getName()}"></td>
-            <td th:text="${c.getCategory().getName()}"></td>
-            <td><a th:href="@{/category/update/{id}(id=${c.getId()})}" class="btn btn-outline-success">Modifier</a></td>
-            <td><a th:href="@{/category/delete/{id}(id=${c.getId()})}" class="btn btn-outline-danger">Supprimer</a></td>
+            <td th:text="${r.getId()}"></td>
+            <td th:text="${r.getName()}"></td>
+            <td th:text="${r.getCategory().getName()}"></td>
+            <td><a th:href="@{/recipe/detail/{id}(id=${r.getId()})}" class="btn btn-outline-info">Détails</a></td>
+            <td><a th:href="@{/recipe/update/{id}(id=${r.getId()})}" class="btn btn-outline-success">Modifier</a></td>
+            <td><a th:href="@{/recipe/delete/{id}(id=${r.getId()})}" class="btn btn-outline-danger">Supprimer</a></td>
         </tr>
         </tbody>
     </table>
