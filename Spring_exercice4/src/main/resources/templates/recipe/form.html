@@ -38,9 +38,9 @@
                 <span th:if="${#fields.hasErrors('instructions')}" th:errors="*{instructions}"></span>
             </div>
             <div class="mb-3">
-                <select class="form-select" th:field="*{categoryId}" aria-label="Catégorie" >
+                <select class="form-select" th:field="*{category.id}" aria-label="Catégorie" >
                     <option th:value="${null}">Choisissez une catégorie</option>
-                    <option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}"></option>
+                    <option th:each="c : ${categories}" th:text="${c.getName()}" th:value="${c.getId()}"></option>
                 </select>
                 <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
             </div>

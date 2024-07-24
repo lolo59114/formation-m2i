@@ -21,7 +21,6 @@ public class Recipe {
     private List<String> ingredients;
     @NotEmpty(message = "La recette doit comporter des instructions")
     private String instructions;
-    private Category category;
     @NotNull(message = "La recette doit appartenir à une catégorie")
-    private Long categoryId;
+    private Category category;
 }

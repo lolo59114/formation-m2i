@@ -10,17 +10,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Controller
 @RequestMapping("/recipe")
 public class RecipeController {
     private final RecipeService recipeService;
-    private final CategoryService categoryService;
-    public RecipeController(RecipeService recipeService, CategoryService categoryService) {
+
+    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.categoryService = categoryService;
     }
 
     @GetMapping("")
@@ -32,22 +30,20 @@ public class RecipeController {
     @GetMapping("/form")
     public String recipeForm(Model model) {
         model.addAttribute("recipe", new Recipe());
-        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("categories", recipeService.getCategoryService().getAll());
         return "recipe/form";
     }
 
     @PostMapping(value ="/form")
     public String recipeFormSubmit(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryService.getAll());
+            model.addAttribute("categories", recipeService.getCategoryService().getAll());
             return "recipe/form";
         }
 
         if(recipe.getId() != null && recipe.getId() > 0) {
-            recipe.setCategory(categoryService.getById(recipe.getCategoryId()));
             recipeService.update(recipe);
         } else {
-            recipe.setCategory(categoryService.getById(recipe.getCategoryId()));
             recipeService.create(recipe);
         }
 
@@ -65,14 +61,14 @@ public class RecipeController {
                 recipe.getIngredients().add("");
             }
         }
-        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("categories", recipeService.getCategoryService().getAll());
         return "/recipe/form";
     }
 
     @PostMapping(value = "/form", params = {"removeIngredient"})
     public String removeIngredient(Recipe recipe, BindingResult bindingResult, String removeIngredient, Model model){
         recipe.getIngredients().remove(Integer.parseInt(removeIngredient));
-        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("categories", recipeService.getCategoryService().getAll());
         return "/recipe/form";
     }
 
@@ -85,7 +81,7 @@ public class RecipeController {
     @GetMapping("/update/{id}")
     public String recipeUpdate(@PathVariable("id") Long id, Model model) {
         model.addAttribute("recipe", recipeService.getById(id));
-        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("categories", recipeService.getCategoryService().getAll());
         return "recipe/form";
     }
 

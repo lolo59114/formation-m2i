@@ -1,5 +1,6 @@
 package org.example.spring_exercice4.service;
 
+import lombok.Getter;
 import org.example.spring_exercice4.model.Recipe;
 import org.springframework.stereotype.Service;
 
@@ -7,11 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Getter
 public class RecipeService implements ICRUDService<Recipe>{
     private List<Recipe> recipes;
     private Long recipeCounter;
+    private final CategoryService categoryService;
 
-    public RecipeService() {
+    public RecipeService(CategoryService categoryService) {
+        this.categoryService = categoryService;
         this.recipes = new ArrayList<>();
         this.recipeCounter = 1L;
     }
@@ -19,6 +23,7 @@ public class RecipeService implements ICRUDService<Recipe>{
     @Override
     public void create(Recipe recipe) {
         recipe.setId(recipeCounter++);
+        recipe.setCategory(categoryService.getById(recipe.getCategory().getId()));
         recipes.add(recipe);
     }
 
@@ -26,6 +31,7 @@ public class RecipeService implements ICRUDService<Recipe>{
     public void update(Recipe recipe) {
         Recipe recipeUpdate = getById(recipe.getId());
         int index = recipes.indexOf(recipeUpdate);
+        recipe.setCategory(categoryService.getById(recipe.getCategory().getId()));
         recipes.set(index, recipe);
     }
 
