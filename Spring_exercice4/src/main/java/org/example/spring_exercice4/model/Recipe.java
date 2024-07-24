@@ -17,7 +17,7 @@ public class Recipe {
     private Long id;
     @NotEmpty(message = "Le nom de la recette ne peut pas être vide")
     private String name;
-    @NotEmpty(message = "La recette doit comporter au moins un ingrédiant")
+    @NotEmpty(message = "La recette doit comporter au moins un ingrédient")
     private List<String> ingredients;
     @NotEmpty(message = "La recette doit comporter des instructions")
     private String instructions;
