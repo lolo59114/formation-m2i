@@ -4,6 +4,7 @@ import org.example.spring_exercice5.entity.Furniture;
 import org.example.spring_exercice5.repository.FurnitureRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -16,15 +17,15 @@ public class FurnitureService {
     }
 
     public List<Furniture> getAllFurnitures() {
-        return furnitureRepository.findAll();
+        return furnitureRepository.findAllByOrderByName();
     }
 
     public Furniture getFurnitureById(Long id) {
         return furnitureRepository.getReferenceById(id);
     }
 
-    public Furniture saveFurniture(Furniture furniture) {
-        return furnitureRepository.save(furniture);
+    public void saveFurniture(Furniture furniture) {
+        furnitureRepository.save(furniture);
     }
 
     public void deleteFurnitureById(Long id) {

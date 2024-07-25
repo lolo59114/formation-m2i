@@ -1,9 +1,6 @@
 package org.example.spring_exercice5.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -17,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Furniture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_furniture")
     private Long id;
     @NotEmpty
     private String name;
@@ -25,4 +23,6 @@ public class Furniture {
     private double price;
     @Min(0)
     private int stock;
+    @OneToOne(mappedBy = "furniture", cascade = CascadeType.REMOVE)
+    private CartItem cartItem;
 }

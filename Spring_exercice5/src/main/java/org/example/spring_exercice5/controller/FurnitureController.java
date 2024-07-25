@@ -1,6 +1,7 @@
 package org.example.spring_exercice5.controller;
 
 import jakarta.validation.Valid;
+import org.example.spring_exercice5.entity.CartItem;
 import org.example.spring_exercice5.entity.Furniture;
 import org.example.spring_exercice5.service.FurnitureService;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class FurnitureController {
     @GetMapping("/furniture")
     public String furnitureList(Model model) {
         model.addAttribute("furnitures", furnitureService.getAllFurnitures());
+        model.addAttribute("cartItem", new CartItem());
         return "furniture/list";
     }
 

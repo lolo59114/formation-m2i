@@ -10,14 +10,14 @@
 <main class="container">
     <h1>Liste des meubles</h1>
     <hr>
-    <table class="table" th:unless="${furnitures.isEmpty()}">
+    <table class="table align-middle" th:unless="${furnitures == null || furnitures.isEmpty()}">
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nom</th>
             <th scope="col">Description</th>
             <th scope="col">Prix</th>
-            <th scope="col">Stock</th>
+            <th scope="col">Stock (Nb dans panier)</th>
             <th scope="col" colspan="3">Actions</th>
         </tr>
         </thead>
@@ -27,8 +27,17 @@
             <td th:text="${c.getName()}"></td>
             <td th:text="${c.getDescription()}"></td>
             <td th:text="${c.getPrice()}"></td>
-            <td th:text="${c.getStock()}"></td>
-            <td><a th:href="@{/cart/add-to-cart(id=${c.getId()})}" class="btn btn-outline-success">Ajouter au panier</a></td>
+            <td th:if="${c.getCartItem() != null}" th:text="|${c.getStock()} (${c.getCartItem().getQuantity()})|"></td>
+            <td th:if="${c.getCartItem() == null}" th:text="${c.getStock()}"></td>
+            <td>
+                <form th:action="@{/cart/add-to-cart}" method="post" th:object="${cartItem}">
+                    <input type="hidden" name="furnitureId" th:value="${c.getId()}">
+                    <label for="cartQty" class="form-label">Nbr :</label>
+                    <input th:field="*{quantity}" class="form-control-sm" type="number" id="cartQty" th:max="${c.stock}" th:min="0">
+                    <span class="text-danger-sm" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>
+                    <button class="btn btn-outline-success">Ajouter au panier</button>
+                </form>
+            </td>
             <td><a th:href="@{/furniture/update(id=${c.getId()})}" class="btn btn-outline-info">Modifier</a></td>
             <td><a th:href="@{/furniture/delete(id=${c.getId()})}" class="btn btn-outline-danger">Supprimer</a></td>
         </tr>
