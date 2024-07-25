@@ -3,9 +3,9 @@ package org.example.spring_exercice5.service;
 import org.example.spring_exercice5.entity.CartItem;
 import org.example.spring_exercice5.entity.Furniture;
 import org.example.spring_exercice5.repository.CartItemRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -19,7 +19,8 @@ public class CartService {
     }
 
     public List<CartItem> getAllCartItems() {
-        return cartItemRepository.findAllByOrderByFurniture_Name();
+        return cartItemRepository.findAll(Sort.by(Sort.Direction.ASC, "Furniture.name"));
+//        return cartItemRepository.findAllByOrderByFurniture_Name();
     }
 
     public CartItem getCartItemByFurnitureId(Long id) {
@@ -45,11 +46,19 @@ public class CartService {
     public void removeCartItemById(Long id) {
         CartItem cartItem = cartItemRepository.getReferenceById(id);
         cartItem.getFurniture().setStock(cartItem.getFurniture().getStock() + cartItem.getQuantity());
-        furnitureService.saveFurniture(cartItem.getFurniture());
         cartItemRepository.deleteById(id);
     }
 
     public void clearCartItems() {
         getAllCartItems().forEach(cartItem -> removeCartItemById(cartItem.getId()));
+    }
+
+    public double totalCart() {
+        List<CartItem> cartItems = cartItemRepository.findAll();
+        double total = 0.0;
+        for(CartItem cart : cartItems) {
+            total += cart.getQuantity() * cart.getFurniture().getPrice();
+        }
+        return total;
     }
 }

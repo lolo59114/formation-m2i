@@ -10,7 +10,7 @@
 <main class="container">
     <h1>Liste des meubles</h1>
     <hr>
-    <table class="table align-middle" th:unless="${furnitures == null || furnitures.isEmpty()}">
+    <table class="table table-striped table-light table-bordered align-middle text-center" th:unless="${furnitures == null || furnitures.isEmpty()}">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -21,20 +21,19 @@
             <th scope="col" colspan="3">Actions</th>
         </tr>
         </thead>
-        <tbody th:each="c : ${furnitures}">
-        <tr>
+        <tbody>
+        <tr  th:each="c : ${furnitures}">
             <td th:text="${c.getId()}"></td>
             <td th:text="${c.getName()}"></td>
             <td th:text="${c.getDescription()}"></td>
-            <td th:text="${c.getPrice()}"></td>
+            <td th:text="${#numbers.formatDecimal(c.getPrice(), 1, 2)} + ' €'"></td>
             <td th:if="${c.getCartItem() != null}" th:text="|${c.getStock()} (${c.getCartItem().getQuantity()})|"></td>
             <td th:if="${c.getCartItem() == null}" th:text="${c.getStock()}"></td>
             <td>
-                <form th:action="@{/cart/add-to-cart}" method="post" th:object="${cartItem}">
+                <form th:action="@{/cart/add-to-cart}" method="post" th:object="${cartItem}" th:if="${c.getStock()} > 0">
                     <input type="hidden" name="furnitureId" th:value="${c.getId()}">
                     <label for="cartQty" class="form-label">Nbr :</label>
-                    <input th:field="*{quantity}" class="form-control-sm" type="number" id="cartQty" th:max="${c.stock}" th:min="0">
-                    <span class="text-danger-sm" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span>
+                    <input th:field="*{quantity}" class="form-control-sm" type="number" id="cartQty" th:min="1" th:max="${c.stock}">
                     <button class="btn btn-outline-success">Ajouter au panier</button>
                 </form>
             </td>
