@@ -7,7 +7,7 @@ do {
     nbAnnees++;
     popCalc = popIni * Math.pow(1 + taux, nbAnnees);
     console.log("Nombre d'années : " + nbAnnees + " ; Pop initial = " + Math.round(popIni) + " ; Nouvelle pop = " + Math.round(popCalc));
-} while (popFinal >= popCalc);
+} while (popFinal > popCalc);
 
 annee += nbAnnees;
 console.log("Le nombre d'années nécessaires pour atteindre " + popFinal + "  est de " + nbAnnees + " ans");
