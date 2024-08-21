@@ -1,5 +1,6 @@
 function isPalindrome(phrase) {
-    return phrase.trim().toLowerCase() == phrase.trim().toLowerCase().split("").reverse().join("");
+    phrase = phrase.replaceAll(" ", "").toLowerCase();
+    return phrase == phrase.split("").reverse().join("");
 }
 
 let saisie = prompt("Saisissez un mot ou une phrase: ");
