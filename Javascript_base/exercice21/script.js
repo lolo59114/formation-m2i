@@ -5,7 +5,7 @@ let tab = []
 let nbrElements = Number(prompt("Saisissez le nombre d'éléments du tableau : "));
 if(nbrElements > 0) {
     for(let i = 0; i < nbrElements; i++){
-        tab[i] = Math.round(Math.random() * 50);
+        tab[i] = Math.round(1 + Math.random() * 49);
     }
 }
 
