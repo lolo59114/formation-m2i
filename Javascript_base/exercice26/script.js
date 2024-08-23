@@ -1,3 +1,7 @@
+const output = document.getElementById("selectOutput");
+const textOutput = document.createElement("p");
+output.appendChild(textOutput);
+
 function addChien({nom, race, age}, list) {
     let newId = 1;
     if (list.length > 0) {
@@ -23,16 +27,18 @@ function formCreateChien() {
 
 function refillSelect(listeChiens) {
     const dogSelect = document.getElementById("dog-select");
-    const newDogSelect = dogSelect.cloneNode();
     const dogHeaderOption = dogSelect.firstElementChild;
-    newDogSelect.appendChild(dogHeaderOption);
+    let options = [];
+    options.push(dogHeaderOption);
     for(const chien of listeChiens) {
         const chienOption = document.createElement("option");
         chienOption.value = chien.id;
         chienOption.textContent = chien.nom;
-        newDogSelect.appendChild(chienOption);
+        options.push(chienOption);
     }
-    dogSelect.replaceWith(newDogSelect);
+    dogSelect.replaceChildren(...options)
+    dogSelect.value = "0";
+    textOutput.textContent = "";
 }
 
 let listeChiens = [];
@@ -54,4 +60,12 @@ document.getElementById("btn-submit").addEventListener("click", () => {
     let newChien = formCreateChien();
     addChien(newChien, listeChiens);
     refillSelect(listeChiens);
+});
+
+document.getElementById("dog-select").addEventListener("change", (e) => {
+    let text = "";
+    if (e.target.value != "0") {
+        text = `Vous avez sélectionné le chien avec l'ID : ${e.target.value}`;
+    }
+    textOutput.textContent = text;
 });
