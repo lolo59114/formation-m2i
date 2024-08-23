@@ -52,6 +52,7 @@ let chien2 = {
     race: "Bulldog",
     age: 15
 }
+
 addChien(chien, listeChiens);
 addChien(chien2, listeChiens);
 refillSelect(listeChiens);
