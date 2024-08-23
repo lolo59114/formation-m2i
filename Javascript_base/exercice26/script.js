@@ -14,9 +14,9 @@ function addChien({nom, race, age}, list) {
 
 function formCreateChien() {
     let chien = {
-        nom: document.getElementById("dog-name"),
-        race: document.getElementById("dog-breed"),
-        age: document.getElementById("dog-age"),
+        nom: document.getElementById("dog-name").value,
+        race: document.getElementById("dog-breed").value,
+        age: document.getElementById("dog-age").value,
     }
     return chien;
 }
@@ -53,4 +53,5 @@ refillSelect(listeChiens);
 document.getElementById("btn-submit").addEventListener("click", () => {
     let newChien = formCreateChien();
     addChien(newChien, listeChiens);
+    refillSelect(listeChiens);
 });
