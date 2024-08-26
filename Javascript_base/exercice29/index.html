@@ -27,6 +27,7 @@
             </tbody>
           </table>
           <hr>
+          <h3 class="text-center">Ajouter contact</h3>
           <form>
             <div class="input-group mb-3">
                 <div class="form-check form-check-inline">
@@ -39,13 +40,13 @@
                 </div>
             </div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="nom" aria-label="firstname" id="firstname">
-                <input type="text" class="form-control" placeholder="prenom" aria-label="lastname" id="lastname">
+                <input type="text" class="form-control" placeholder="nom" aria-label="firstname" name="firstname" required>
+                <input type="text" class="form-control" placeholder="prenom" aria-label="lastname" name="lastname" required>
             </div>
             <div class="input-group mb-3">
-                <input type="date" class="form-control" aria-describedby="jj/mm/aaaa" id="birthdate">
-                <input type="text" class="form-control" placeholder="Telephone" aria-label="phone-number" id="phone-number">
-                <input type="text" class="form-control" placeholder="Email" aria-label="email" id="email">
+                <input type="date" class="form-control" aria-describedby="jj/mm/aaaa" name="birthdate" required>
+                <input type="text" class="form-control" placeholder="Telephone" aria-label="phone-number" name="phone-number">
+                <input type="email" class="form-control" placeholder="Email" aria-label="email" name="email">
             </div>
             <button type="submit" class="btn btn-success col-12">Ajouter</button>
           </form>
