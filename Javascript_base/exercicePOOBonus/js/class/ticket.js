@@ -5,6 +5,6 @@ export default class Ticket {
     }
 
     toString() {
-        return `${this.immatriculation}`;
+        return `${this.immatriculation},${this.arrivalDate.getTime()}`;
     }
 }
