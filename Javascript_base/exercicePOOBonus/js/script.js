@@ -2,6 +2,8 @@ import Ticket from "./class/ticket.js";
 
 let listTickets = [];
 const messageInfo = document.getElementById("message-info");
+const messageInfoInitClass = [...messageInfo.classList].toString().replaceAll(",", " ");
+console.log(messageInfoInitClass)
 
 function checkImmatriculation(immat) {
     return immat.length == 10;
@@ -23,7 +25,8 @@ function getPriceFromTicket(ticket) {
 function displayMessage(message, type="INFO", timer=5000) {
     clearTimeout(window.timeout);
     messageInfo.textContent = message;
-    messageInfo.classList = "text-center p-3 mb-3";
+    // messageInfo.classList = "text-center p-3 mb-3";
+    messageInfo.classList = messageInfoInitClass;
     switch(type) {
         case "ERROR":
             messageInfo.classList.add("bg-danger");
@@ -54,6 +57,7 @@ function payTicket(immat) {
     } else {
         let price = getPriceFromTicket(ticket);
         displayMessage(`Le prix à payer pour le véhicule ${immat} est de ${price} €`, "WARNING");
+        listTickets = listTickets.filter(ticket => ticket.immatriculation !== immat);
     }
 }
 
