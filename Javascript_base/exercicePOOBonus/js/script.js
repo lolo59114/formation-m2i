@@ -2,8 +2,7 @@ import Ticket from "./class/ticket.js";
 
 let listTickets = [];
 const messageInfo = document.getElementById("message-info");
-const messageInfoInitClass = [...messageInfo.classList].toString().replaceAll(",", " ");
-console.log(messageInfoInitClass)
+const messageInfoInitClass = [...messageInfo.classList].join(" ");
 
 function checkImmatriculation(immat) {
     return immat.length == 10;
@@ -57,7 +56,8 @@ function payTicket(immat) {
     } else {
         let price = getPriceFromTicket(ticket);
         displayMessage(`Le prix à payer pour le véhicule ${immat} est de ${price} €`, "WARNING");
-        listTickets = listTickets.filter(ticket => ticket.immatriculation !== immat);
+        // same as : listTickets = listTickets.filter(ticket => ticket.immatriculation !== immat);
+        listTickets.splice(listTickets.indexOf(ticket), 1);
     }
 }
 
