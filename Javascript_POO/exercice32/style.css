@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+#background {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwoLIxGSdDVUhAoJ2kuHAcIiGLdC7Nf_KRjQ&s");
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
