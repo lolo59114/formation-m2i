@@ -1,12 +1,12 @@
 import Pokemon from "./class/pokemon.js";
 
-const CSS_CARD_STYLE = "col-6 bg-secondary rounded p-3";
+const CSS_CARD_STYLE = "card text-white bg-secondary rounded p-3";
 const API_URL = "https://pokeapi.co/api/v2/pokemon";
 const IMG_SPRITE_DEFAULT = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1200px-Pok%C3%A9_Ball_icon.svg.png";
 
 // document element constants
 const imgSpriteElement = document.getElementById("pokemon-sprite");
-const cardTitle = document.querySelector(".card-header");
+const headerElement = document.getElementById("pokemon-header");
 const weightElement = document.getElementById("pokemon-weight");
 const heightElement = document.getElementById("pokemon-height");
 const typesElement = document.getElementById("pokemon-types");
@@ -15,8 +15,8 @@ const searchInputElement = document.getElementById("pokemon-search-input");
 
 function init() {
     imgSpriteElement.src = IMG_SPRITE_DEFAULT;
-    cardTitle.textContent = "Aucun pokémon sélectionné";
-    cardTitle.dataset.id = 0;
+    headerElement.textContent = "Aucun pokémon sélectionné";
+    headerElement.dataset.id = 0;
     weightElement.textContent = "";
     heightElement.textContent = "";
     typesElement.textContent = "";
@@ -27,8 +27,8 @@ function init() {
 function displayPokemon(pokemon = new Pokemon()) {
     init();
     imgSpriteElement.src = pokemon.spriteUrl;
-    cardTitle.textContent = `${pokemon.name} #${pokemon.id}`;
-    cardTitle.dataset.id = pokemon.id;
+    headerElement.textContent = `${pokemon.name} #${pokemon.id}`;
+    headerElement.dataset.id = pokemon.id;
     weightElement.textContent = pokemon.weight + " lbs";
     heightElement.textContent = pokemon.height + "\"";
     for(const type of pokemon.types) {
@@ -75,10 +75,10 @@ document.getElementById("pokemon-search-button").addEventListener("click", () =>
     searchPokemon(searchInputElement.value);
 });
 document.getElementById("pokemon-next").addEventListener("click", () => {
-    searchPokemon(parseInt(cardTitle.dataset.id) + 1);
+    searchPokemon(parseInt(headerElement.dataset.id) + 1);
 });
 document.getElementById("pokemon-previous").addEventListener("click", () => {
-    searchPokemon(parseInt(cardTitle.dataset.id) - 1)
+    searchPokemon(parseInt(headerElement.dataset.id) - 1)
 });
 
 init();
