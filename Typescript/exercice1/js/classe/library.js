@@ -7,7 +7,9 @@ export default class Library {
     }
     removeBook(title) {
         let index = this.books.findIndex((book) => book.title == title);
-        this.books.splice(index, 1);
+        if(index > -1) {
+            this.books.splice(index, 1);
+        }
     }
     findBookByTitle(title) {
         return this.books.find((book) => book.title == title);
