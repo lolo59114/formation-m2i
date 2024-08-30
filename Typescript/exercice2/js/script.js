@@ -28,12 +28,25 @@ let products = [
 let orders = [
     { quantity: 3, product: products[0] },
     { quantity: 2, product: products[1] },
+    { quantity: 1, product: products[2] },
+    { quantity: 1, product: products[3] }
 ];
 let orderManager = new OrderManager();
 let order = createOrder(loic, [orders[0], orders[1]]);
-let order2 = createOrder(loic, []);
-console.log(JSON.stringify(order));
+let order2 = createOrder(loic, [orders[2], orders[3]]);
+console.log(order);
 console.log(calculateTotal(order).toFixed(2));
+console.log(order2);
+console.log(calculateTotal(order2).toFixed(2));
 console.log("livre : " + JSON.stringify(products[1]));
 orderManager.addOrder(order);
+console.log(orderManager);
+orderManager.addOrder(order2);
+console.log(orderManager);
+console.log("récup de la commande 1: " + JSON.stringify(orderManager.getOrderById("1")));
+orderManager.updateOrderStatus("1", "expédiée");
+console.log("expédition de la commande 1...");
+console.log("liste des commandes expédiées: " + JSON.stringify(orderManager.listOrdersByStatus("expédiée")));
+orderManager.removeOrder("1");
+console.log("order 1 bien supprimé !");
 console.log(orderManager);

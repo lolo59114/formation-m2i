@@ -1,10 +1,8 @@
 import OrderManager from "./classe/orderManager.js";
 import Customer from "./interface/customer.js";
-import Order from "./interface/order.js";
+import Order, { Status } from "./interface/order.js";
 import OrderItem from "./interface/orderItem.js";
 import Product from "./interface/product.js";
-
-
 
 let orderCpt: number = 0;
 function createOrder(customer: Customer, items: OrderItem[]): Order {
@@ -20,7 +18,7 @@ function createOrder(customer: Customer, items: OrderItem[]): Order {
 }
 
 function calculateTotal(order: Order): number {
-    return order.items.reduce((acc, curr) => acc + curr.quantity * curr.product.price, 0);
+    return order.items.reduce((acc: number, curr: OrderItem) => acc + curr.quantity * curr.product.price, 0);
 }
 
 let loic: Customer = {
@@ -39,14 +37,28 @@ let products: Product[] = [
 let orders: OrderItem[] = [
     {quantity: 3, product: products[0]},
     {quantity: 2, product: products[1]},
+    {quantity: 1, product: products[2]},
+    {quantity: 1, product: products[3]}
 ]
 
 let orderManager: OrderManager = new OrderManager();
 let order: Order = createOrder(loic, [orders[0], orders[1]]);
-let order2: Order = createOrder(loic, [])
-console.log(JSON.stringify(order));
+let order2: Order = createOrder(loic, [orders[2], orders[3]])
+console.log(order);
 console.log(calculateTotal(order).toFixed(2));
+console.log(order2);
+console.log(calculateTotal(order2).toFixed(2));
 console.log("livre : " + JSON.stringify(products[1]));
 orderManager.addOrder(order);
+console.log(orderManager);
+orderManager.addOrder(order2);
+console.log(orderManager);
+console.log("récup de la commande 1: " + JSON.stringify(orderManager.getOrderById("1")));
 
+orderManager.updateOrderStatus("1", "expédiée");
+console.log("expédition de la commande 1...");
+console.log("liste des commandes expédiées: " + JSON.stringify(orderManager.listOrdersByStatus("expédiée")));
+
+orderManager.removeOrder("1");
+console.log("order 1 bien supprimé !");
 console.log(orderManager);

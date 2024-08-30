@@ -1,11 +1,7 @@
 import Order, { Status } from "../interface/order.js";
 
 export default class OrderManager {
-    private orders: Order[];
-
-    constructor() {
-        this.orders = [];
-    }
+    private orders: Order[] = [];
 
     public addOrder(order: Order) {
         this.orders.push(order);
