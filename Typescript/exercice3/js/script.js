@@ -15,23 +15,17 @@ function calculate_age(dateOfBirth) {
     return Math.abs(age_dt.getUTCFullYear() - 1970);
 }
 function displayContact(idContact) {
-    console.log("mon id = " + idContact);
     let contact = contactList.find(c => c.getId() === idContact);
     console.log(contact);
     if (contact) {
-        const formData = new FormData(displayForm);
         const ageSpan = document.getElementById("text-age");
+        const formInputs = displayForm.querySelectorAll("input");
         const formattedBirthday = `${contact.getBirthDay().getFullYear()}-${contact.getBirthDay().getMonth()}-${contact.getBirthDay().getDate()}`;
-        formData.set("lastname", contact.getLastname());
-        formData.set("firstname", contact.getFirstname());
-        formData.set("birthday", formattedBirthday);
-        formData.set("email", contact.getEmail());
-        formData.set("phoneNumber", contact.getPhoneNumber());
-        console.log(formattedBirthday);
-        formData.forEach((value, key) => {
-            const formInput = document.getElementsByName(key)[0];
-            formInput.value = value.toString();
-        });
+        formInputs[0].value = contact.getLastname();
+        formInputs[1].value = contact.getFirstname();
+        formInputs[2].value = formattedBirthday;
+        formInputs[3].value = contact.getEmail();
+        formInputs[4].value = contact.getPhoneNumber();
         ageSpan.textContent = `${calculate_age(contact.getBirthDay())} yo`;
     }
 }
