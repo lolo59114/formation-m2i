@@ -8,6 +8,7 @@ function addEventInfo(message, isPlayer = true) {
     messageElement.textContent = message;
     messageElement.style.color = isPlayer ? "lightgreen" : "orange";
     eventInfoElement.appendChild(messageElement);
+    eventInfoElement.scrollTo(0, eventInfoElement.scrollHeight);
 }
 export function displayAttack(attack, damageDone, diceResult, name, isPlayer = true) {
     let message = "";

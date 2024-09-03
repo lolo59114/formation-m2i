@@ -13,6 +13,7 @@ function addEventInfo(message: string, isPlayer: boolean = true): void {
     messageElement.textContent = message; 
     messageElement.style.color = isPlayer ? "lightgreen" : "orange";
     eventInfoElement.appendChild(messageElement);
+    eventInfoElement.scrollTo(0, eventInfoElement.scrollHeight);
 }
 
 export function displayAttack(attack: number, damageDone: number, diceResult: DiceResultType, name: string, isPlayer: boolean = true): void {
