@@ -1,0 +1,8 @@
+<h3>Liste des séries :</h3>
+<ul>
+  @for (serie of series; track serie) {
+    <li>{{ serie }} <button (click)="remove($index)">Supprimer</button></li>
+  } @empty {
+    <p>Il y a rien dans la liste !</p>
+  }
+</ul>

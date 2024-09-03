@@ -1,0 +1,4 @@
+<main>
+  <p [style]="{color: (cpt % 2 == 0 ? 'green' : 'red')}">Nombre de compteur : {{ cpt }}</p>
+  <button (click)="addCounter()">+</button><button (click)="removeCounter()">-</button>
+</main>

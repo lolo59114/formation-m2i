@@ -1,0 +1,18 @@
+  nav {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    border: dotted;
+    background: linear-gradient(90deg, rgba(36,2,0,0.3169642857142857) 0%, rgba(103,121,9,0.7847514005602241) 35%, rgba(51,0,255,0.27494747899159666) 100%);
+  }
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    gap: 20px;
+    padding: 20px 0;
+    flex-wrap: wrap;
+  }
