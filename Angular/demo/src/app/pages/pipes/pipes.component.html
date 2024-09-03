@@ -1,0 +1,31 @@
+<h2>Les Pipes</h2>
+<h3>Texte</h3>
+<ul>
+  <li>{{ message }}</li>
+  <li>{{ message | uppercase }}</li>
+  <li>{{ message | lowercase }}</li>
+  <li>{{ message | titlecase }}</li>
+</ul>
+<h3>Nombres</h3>
+<ul>
+  <li>{{ pi }}</li>
+  <li>{{ pi | number }}</li>
+  <li>{{ pi | number:'1.0-2' }}</li>
+  <li>{{ pi | number:'1.2-2' }}</li>
+</ul>
+<h3>Date</h3>
+<ul>
+  <li>{{ today }}</li>
+  <li>{{ today | date: 'short' }}</li>
+  <li>{{ today | date: 'long' }}</li>
+  <li>{{ today | date: 'medium' }}</li>
+  <li>{{ today | date: 'dd-MM-YYYY' }}</li>
+</ul>
+<h3>Mon Pipe Rainbow</h3>
+<ul>
+  <li>{{ message | rainbow | uppercase}}</li>
+</ul>
+<h3>Mon Pipe UpperTable</h3>
+<ul>
+  <li>{{ trucs | uppertable }}</li>
+</ul>

@@ -1,1 +1,7 @@
-<p>blocks works!</p>
+<ul>
+  @for (serie of listes; track serie) {
+    <li>{{ serie }} <button (click)="remove($index)">Supprimer</button></li>
+  } @empty {
+    <p>Il y a rien dans la liste !</p>
+  }
+</ul>

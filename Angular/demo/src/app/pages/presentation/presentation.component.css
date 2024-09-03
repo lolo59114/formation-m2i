@@ -1,3 +1,13 @@
 .red {
   color: red;
 }
+
+.container {
+  position: relative;
+  width: 50%;
+  aspect-ratio: 16/9;
+}
+
+.container img {
+  object-fit: contain;
+}

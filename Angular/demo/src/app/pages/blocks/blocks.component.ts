@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 
+let listes: string[] = [
+  "test",
+  "test",
+  "test",
+  "test",
+];
+
 @Component({
   selector: 'app-blocks',
   standalone: true,
@@ -8,5 +15,8 @@ import { Component } from '@angular/core';
   styleUrl: './blocks.component.css'
 })
 export class BlocksComponent {
-
+  listes: string[] = listes;
+  remove(index: number) {
+    listes.splice(index, 1);
+  }
 }

@@ -4,7 +4,7 @@
   <p>{{ isLoggedIn ? "Vous êtes connecté" : "Veuillez vous connecter" }}</p>
   <section>
     <h2>Data binding / attribute binding</h2>
-<!--    <p><img [src]="galaxy"></p>-->
+    <div class="container"><img [ngSrc]="galaxy" alt="" fill priority></div>
     <p [style]="{backgroundColor: color, fontSize: size}">Mon paragraphe stylé</p>
     <p [style]="myStyle">Un autre p stylé</p>
     <p [ngClass]="{'red': isLoggedIn}">Je change de style</p>
