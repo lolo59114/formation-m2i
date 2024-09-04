@@ -1,0 +1,12 @@
+<h3>Liste des livres :</h3>
+<ul>
+  @for (book of books ; track book) {
+
+    <li>
+      {{ book.title | titlecase }} : {{ book.author | uppercase }} {{ book.isRead | thumb }}
+      <input type="checkbox" (click)="toggleRead($index)" [checked]="book.isRead">
+    </li>
+  } @empty {
+    <p>Il y a rien dans la liste !</p>
+  }
+</ul>
