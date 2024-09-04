@@ -28,3 +28,86 @@
     </form>
   </div>
 </section>
+
+<section>
+  <h3>Reactive Forms</h3>
+  <div>
+    <form (ngSubmit)="saveBook()">
+      <p>
+        <label for="book">Titre du livre</label>
+        <input id="book" name="book" [formControl]="book_control" type="text">
+      </p>
+      @if (book_control.invalid && !book_control.untouched) {
+        @if(book_control.hasError('required')) {
+          <small>Champ obligatoire</small>
+        } @else if (book_control.hasError('minlength')) {
+          <small>Trop court</small>
+        } @else {
+          <small>erreur lors de la saisie</small>
+        }
+      }
+      <p>
+        <button>Save</button>
+      </p>
+    </form>
+  </div>
+</section>
+<section>
+  <h3>Forms Groups</h3>
+  <form [formGroup]="formationForm" (ngSubmit)="saveFormation()">
+    <p>
+      <label for="title">Titre:</label>
+      <input id="title" formControlName="title" type="text">
+      @if (!title.untouched) {
+        @if (title.hasError("required")) {
+          <small>Veuillez entrer un titre</small>
+        }
+      }
+    </p>
+    <p>
+      <label for="duration">Durée:</label>
+      <input id="duration" formControlName="duration" type="number">
+      @if (!duration.untouched) {
+        @if (duration.hasError("min")) {
+          <small>Veuillez entrer un nombre supérieur à 0</small>
+        }
+      }
+    </p>
+    <fieldset formGroupName="trainer">
+      <legend>Formateur</legend>
+      <p>
+        <label for="firstname">Prénom:</label>
+        <input id="firstname" formControlName="firstname" type="text">
+        @if (!firstname.untouched) {
+          @if (firstname.hasError("required")) {
+            <small>Veuillez entrer un prénom</small>
+          }
+        }
+      </p>
+      <p>
+        <label for="lastname">Nom:</label>
+        <input id="lastname" formControlName="lastname" type="text">
+        @if (!lastname.untouched) {
+          @if (lastname.hasError("required")) {
+            <small>Veuillez entrer un nom</small>
+          }
+        }
+      </p>
+
+    </fieldset>
+    <fieldset formArrayName="modules">
+      <legend>Modules</legend>
+      @for (control of modules.controls; track control) {
+        <p>
+          <label [for]="'module' + $index">Module{{ $index + 1 }} : </label>
+          <input [id]="'module' + $index" [formControlName]="$index">
+        </p>
+      }
+      <button type="button" (click)="addModule()">Ajouter un module</button>
+      <button type="button" (click)="deleteModule()">Supprimer un module</button>
+    </fieldset>
+    <p>
+      <button>Ajouter</button>
+    </p>
+  </form>
+</section>

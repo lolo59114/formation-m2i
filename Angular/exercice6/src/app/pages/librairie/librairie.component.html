@@ -1,0 +1,30 @@
+<h3>Liste des livres :</h3>
+<div>
+  <ul>
+    @for (book of books ; track book) {
+
+      <li>
+        {{ book.title | titlecase }} : {{ book.author | uppercase }} {{ book.isRead | thumb }}
+        <input type="checkbox" (click)="toggleRead($index)" [checked]="book.isRead">
+      </li>
+    } @empty {
+      <p>Il y a rien dans la liste !</p>
+    }
+  </ul>
+</div>
+<h3>Formulaire de création</h3>
+<div>
+  <form (ngSubmit)="submitBook()">
+    <label for="title">Titre</label>
+    <input id="title" name="title" [(ngModel)]="book.title" type="text">
+    <label for="author">Auteur</label>
+    <input id="author" name="author" [(ngModel)]="book.author" type="text">
+    <label for="isRead">Déjà lu ?</label>
+    <input id="isRead" name="isRead" [(ngModel)]="book.isRead" type="checkbox">
+    @if (bookHasError) {
+      <small>erreur livre</small>
+    }
+
+    <button>Ajouter</button>
+  </form>
+</div>
