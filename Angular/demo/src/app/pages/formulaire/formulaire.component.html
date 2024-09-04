@@ -1,0 +1,30 @@
+<h2>Les formulaires</h2>
+<section>
+  <h3>Template Driven Forms</h3>
+  <div>
+    <label for="msg">Message avec eventListener:</label>
+    <input id="msg" type="text" (input)="updateMessage($event)">
+    <p>{{ message }}</p>
+  </div>
+  <div>
+    <label for="msg2">Message avec ngModel:</label>
+    <input [(ngModel)]="message2" id="msg2" type="text">
+    <p>{{ message2 }}</p>
+  </div>
+  <div>
+    <form (ngSubmit)="submitUser()">
+      <label for="name">Nom</label>
+      <input id="name" name="name" [(ngModel)]="user.name" type="text">
+      <label for="email">Email</label>
+      <input id="email" name="email" [(ngModel)]="user.email" type="text">
+      <label for="password">Password</label>
+      <input id="password" name="password" [(ngModel)]="user.password" type="text">
+      @if (passwordHasError) {
+        <small class="error">Trop court</small>
+      }
+      <p>
+        <button>S'inscrire</button>
+      </p>
+    </form>
+  </div>
+</section>
