@@ -1,0 +1,11 @@
+<h3>Liste des séries :</h3>
+<ul>
+  @for (serie of series | ordertable: order ; track serie) {
+    <li>{{ serie | titlecase }}</li>
+  } @empty {
+    <p>Il y a rien dans la liste !</p>
+  }
+</ul>
+<div>
+  <button (click)="toggleOrder()">{{ order }}</button>
+</div>

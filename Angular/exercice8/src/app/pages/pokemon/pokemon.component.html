@@ -1,0 +1,91 @@
+<section>
+  <h3>Forms Groups</h3>
+  <form [formGroup]="pokemonForm" (ngSubmit)="savePokemon()">
+    <p>
+      <label for="pokemonName">Nom du pokémon:</label>
+    </p>
+    <p>
+      <input id="pokemonName" formControlName="name" type="text">
+      @if (!name.untouched) {
+        @if (name.hasError("required")) {
+          <small>Veuillez entrer un nom</small>
+        }
+      }
+    </p>
+
+    <p><label for="pokemonDesc">Description du pokémon:</label></p>
+    <p>
+      <textarea id="pokemonDesc" formControlName="description"></textarea>
+      @if (!description.untouched) {
+        @if (description.hasError("required")) {
+          <small>Veuillez entrer une description</small>
+        }
+      }
+    </p>
+
+    <fieldset formArrayName="attacks">
+      <legend>Attaques</legend>
+      @for (attack of attacks.controls; track attack; let i = $index) {
+        <fieldset [formGroupName]="i">
+          <legend>Attaque n° {{ i + 1 }}</legend>
+          <p>
+            <label [for]="'name' + i">Nom : </label>
+            <input [id]="'name' + i" formControlName="name">
+          </p>
+          <p>
+            <label [for]="'description' + i">Description : </label>
+            <input [id]="'description' + i" formControlName="description">
+          </p>
+          <p>
+            <label [for]="'damage' + i">Dégâts : </label>
+            <input [id]="'damage' + i" formControlName="damage" type="number">
+          </p>
+        </fieldset>
+      }
+      <button type="button" (click)="addAttack()">Ajouter une attaque</button>
+      <button type="button" (click)="removeAttack()">Retirer une attaque</button>
+    </fieldset>
+
+    <fieldset formArrayName="types">
+      <legend>Types</legend>
+      @for (type of types.controls; track type) {
+        <p>
+          <label [for]="'type' + $index">Type {{ $index + 1 }} : </label>
+          <input [id]="'type' + $index" [formControlName]="$index">
+        </p>
+      }
+      <button type="button" (click)="addType()">Ajouter un type</button>
+      <button type="button" (click)="removeType()">Supprimer un type</button>
+    </fieldset>
+    <fieldset formGroupName="area">
+      <legend>Zone</legend>
+      <p>
+        <label for="areaName">Nom de la zone:</label>
+        <input id="areaName" formControlName="name" type="text">
+        @if (!area.controls.name.untouched) {
+          @if (area.controls.name.hasError("required")) {
+            <small>Veuillez entrer un nom de zone</small>
+          }
+        }
+      </p>
+      <p>
+        <label for="areaRegion">Région:</label>
+        <input id="areaRegion" formControlName="region" type="text">
+        @if (!area.controls.region.untouched) {
+          @if (area.controls.region.hasError("required")) {
+            <small>Veuillez entrer une région</small>
+          }
+        }
+      </p>
+    </fieldset>
+    <p>
+      <button>Sauvegarder</button>
+    </p>
+  </form>
+</section>
+<section class="grid">
+  @for (pokemon of pokemons; track pokemon) {
+    <app-pokemon-card [pokemon]="pokemon" (pokemonRemove)="removePokemon($event)"></app-pokemon-card>
+  }
+</section>
+

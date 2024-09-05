@@ -16,3 +16,7 @@ ul {
   padding: 20px 0;
   flex-wrap: wrap;
 }
+
+a {
+  color: whitesmoke;
+}

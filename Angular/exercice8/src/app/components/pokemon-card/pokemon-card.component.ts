@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Pokemon} from "../../utils/types/pokemon";
 import {UpperCasePipe} from "@angular/common";
 
@@ -13,4 +13,9 @@ import {UpperCasePipe} from "@angular/common";
 })
 export class PokemonCardComponent {
   @Input() pokemon!: Pokemon;
+  @Output() pokemonRemove = new EventEmitter<Pokemon>();
+
+  removePokemon() {
+    this.pokemonRemove.emit(this.pokemon);
+  }
 }

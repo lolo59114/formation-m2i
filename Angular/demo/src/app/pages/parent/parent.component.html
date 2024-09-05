@@ -8,3 +8,11 @@
 @for(user of users; track user) {
   <app-user-card [user]="user"></app-user-card>
 }
+
+<h2>Slots</h2>
+<p>
+  <app-button (clickEvent)="buttonClick()">Contenu bouton</app-button>
+</p>
+
+<h2>Counter</h2>
+<app-counter [count]="counter" (counterChanged)="modifyCounter($event)"></app-counter>

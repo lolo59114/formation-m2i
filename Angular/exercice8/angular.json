@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "exercice7": {
+    "exercice8": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/exercice7",
+            "outputPath": "dist/exercice8",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "exercice7:build:production"
+              "buildTarget": "exercice8:build:production"
             },
             "development": {
-              "buildTarget": "exercice7:build:development"
+              "buildTarget": "exercice8:build:development"
             }
           },
           "defaultConfiguration": "development"
