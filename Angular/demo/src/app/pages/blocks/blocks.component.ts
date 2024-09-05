@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 let listes: string[] = [
-  "test",
-  "test",
-  "test",
-  "test",
+  "test1",
+  "test2",
+  "test3",
+  "test4",
 ];
 
 @Component({

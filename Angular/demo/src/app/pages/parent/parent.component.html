@@ -1,0 +1,10 @@
+<h1>Composant parent</h1>
+<h2>Pokemons</h2>
+<app-pokemon-card pokemon="Salamèche"/>
+@for(poke of pokemons; track poke) {
+  <app-pokemon-card [pokemon]="poke"/>
+}
+<h2>Users</h2>
+@for(user of users; track user) {
+  <app-user-card [user]="user"></app-user-card>
+}

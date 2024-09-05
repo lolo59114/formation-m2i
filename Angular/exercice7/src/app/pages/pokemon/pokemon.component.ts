@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UpperCasePipe} from "@angular/common";
 import {Pokemon} from "../../utils/types/pokemon";
+import {PokemonCardComponent} from "../../components/pokemon-card/pokemon-card.component";
 
 @Component({
   selector: 'app-pokemon',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    UpperCasePipe
+    UpperCasePipe,
+    PokemonCardComponent
   ],
   templateUrl: './pokemon.component.html',
   styleUrl: './pokemon.component.css'
