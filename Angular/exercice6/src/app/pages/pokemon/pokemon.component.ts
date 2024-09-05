@@ -1,21 +1,8 @@
 import { Component } from '@angular/core';
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UpperCasePipe} from "@angular/common";
-export type Pokemon = Partial<{
-  name: string | null | undefined,
-  description: string | null | undefined,
-  attacks:
-    Partial<{
-      name: string | null | undefined,
-      description: string | null | undefined,
-      damage: number | null | undefined,
-    }>[] | undefined,
-  types: (string|null)[] | null | undefined,
-  area: Partial<{
-    name: string | null | undefined,
-    region: string | null | undefined,
-  }> | undefined,
-}>
+import {Pokemon} from "../../utils/types/pokemon";
+
 @Component({
   selector: 'app-pokemon',
   standalone: true,
@@ -28,6 +15,13 @@ export type Pokemon = Partial<{
 })
 export class PokemonComponent {
   pokemons: Pokemon[] = [];
+
+  constructor() {
+    let stored = localStorage.getItem('pokemon');
+    if(stored) {
+      this.pokemons = JSON.parse(stored);
+    }
+  }
 
   pokemonForm = new FormGroup({
     name: new FormControl("", [Validators.required]),
@@ -70,8 +64,8 @@ export class PokemonComponent {
 
   savePokemon(): void {
     if(this.pokemonForm.valid) {
-      let pokemon: Pokemon = {...this.pokemonForm.value}
-      this.pokemons.push(pokemon);
+      this.pokemons.push(this.pokemonForm.value as Pokemon);
+      localStorage.setItem("pokemons", JSON.stringify(this.pokemons));
       this.pokemonForm.reset();
     }
   }
