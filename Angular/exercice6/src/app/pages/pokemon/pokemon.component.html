@@ -1,7 +1,9 @@
 <section>
   <h3>Forms Groups</h3>
   <form [formGroup]="pokemonForm" (ngSubmit)="savePokemon()">
-    <p><label for="pokemonName">Nom du pokémon:</label></p>
+    <p>
+      <label for="pokemonName">Nom du pokémon:</label>
+    </p>
     <p>
       <input id="pokemonName" formControlName="name" type="text">
       @if (!name.untouched) {
@@ -19,6 +21,7 @@
           <small>Veuillez entrer une description</small>
         }
       }
+    </p>
 
     <fieldset formArrayName="attacks">
       <legend>Attaques</legend>
@@ -38,9 +41,9 @@
             <input [id]="'damage' + i" formControlName="damage" type="number">
           </p>
         </fieldset>
-
       }
       <button type="button" (click)="addAttack()">Ajouter une attaque</button>
+      <button type="button" (click)="removeAttack()">Retirer une attaque</button>
     </fieldset>
 
     <fieldset formArrayName="types">
@@ -79,4 +82,30 @@
       <button>Sauvegarder</button>
     </p>
   </form>
+</section>
+<section>
+  @for (pokemon of pokemons; track pokemon) {
+    <h3>{{ pokemon.name }}</h3>
+    <p>{{ pokemon.description }}</p>
+    <fieldset>
+      <legend>Types</legend>
+      @for (type of pokemon.types; track type) {
+        <p>{{ type | uppercase }} </p>
+      }
+    </fieldset>
+    <fieldset>
+      <legend>Attaques</legend>
+      @for (attack of pokemon.attacks; track attack) {
+        <p>{{ attack.name }}</p>
+        <p>{{ attack.description }}</p>
+        <p>{{ attack.damage?.toString() }}</p>
+      }
+    </fieldset>
+    <fieldset>
+      <legend>Zone</legend>
+      <p>{{ pokemon.area?.name }}</p>
+      <p>{{ pokemon.area?.region }}</p>
+    </fieldset>
+
+  }
 </section>
