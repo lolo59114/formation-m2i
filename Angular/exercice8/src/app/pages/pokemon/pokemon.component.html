@@ -85,7 +85,7 @@
 </section>
 <section class="grid">
   @for (pokemon of pokemons; track pokemon) {
-    <app-pokemon-card [pokemon]="pokemon" (pokemonRemove)="removePokemon($event)"></app-pokemon-card>
+    <app-pokemon-card [pokemon]="pokemon" [addButtons]="true" (pokemonRemove)="removePokemonFromPokedex($event)" (pokemonAdd)="addPokemonToPokedex($event)"></app-pokemon-card>
   }
 </section>
 

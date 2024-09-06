@@ -13,9 +13,15 @@ import {UpperCasePipe} from "@angular/common";
 })
 export class PokemonCardComponent {
   @Input() pokemon!: Pokemon;
+  @Input() addButtons: boolean = false;
   @Output() pokemonRemove = new EventEmitter<Pokemon>();
+  @Output() pokemonAdd = new EventEmitter<Pokemon>();
 
   removePokemon() {
     this.pokemonRemove.emit(this.pokemon);
+  }
+
+  addPokemon() {
+    this.pokemonAdd.emit(this.pokemon);
   }
 }

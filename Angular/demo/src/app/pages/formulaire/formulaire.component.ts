@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormationService} from "../../utils/services/formation.service";
+import {Formation} from "../../utils/types/formation";
 
 @Component({
   selector: 'app-formulaire',
@@ -20,6 +22,9 @@ export class FormulaireComponent {
     password: "",
   }
   isSubmitted: boolean = false;
+
+  constructor(private formationService: FormationService) {
+  }
 
   updateMessage(e: Event) {
     const inputMessage = e.target as HTMLInputElement;
@@ -105,6 +110,7 @@ export class FormulaireComponent {
   saveFormation(): void {
     if(this.formationForm.valid) {
       console.log(this.formationForm.value);
+      this.formationService.addFormation((this.formationForm.value as Formation))
       this.formationForm.reset();
     }
   }

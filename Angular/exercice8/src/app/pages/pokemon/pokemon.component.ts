@@ -3,6 +3,7 @@ import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from
 import {UpperCasePipe} from "@angular/common";
 import {Pokemon} from "../../utils/types/pokemon";
 import {PokemonCardComponent} from "../../components/pokemon-card/pokemon-card.component";
+import {PokedexService} from "../../utils/services/pokedex.service";
 
 @Component({
   selector: 'app-pokemon',
@@ -18,7 +19,7 @@ import {PokemonCardComponent} from "../../components/pokemon-card/pokemon-card.c
 export class PokemonComponent {
   pokemons: Pokemon[] = [];
 
-  constructor() {
+  constructor(private pokedexService: PokedexService) {
     let stored = localStorage.getItem('pokemons');
     if(stored) {
       this.pokemons = JSON.parse(stored);
@@ -68,8 +69,18 @@ export class PokemonComponent {
     if(this.pokemonForm.valid) {
       this.pokemons.push(this.pokemonForm.value as Pokemon);
       localStorage.setItem("pokemons", JSON.stringify(this.pokemons));
+
       this.pokemonForm.reset();
     }
+  }
+
+  removePokemonFromPokedex(pokemon: Pokemon) {
+    console.log(pokemon);
+    this.pokedexService.removePokemon(pokemon);
+  }
+
+  addPokemonToPokedex(pokemon: Pokemon) {
+    this.pokedexService.addPokemon(pokemon);
   }
 
   addType(): void {
@@ -92,8 +103,4 @@ export class PokemonComponent {
     this.attacks.removeAt(this.attacks.length - 1);
   }
 
-  removePokemon($event: Pokemon) {
-    this.pokemons.splice(this.pokemons.indexOf($event), 1);
-    localStorage.setItem("pokemons", JSON.stringify(this.pokemons));
-  }
 }

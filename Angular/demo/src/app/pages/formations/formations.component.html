@@ -1,0 +1,20 @@
+<h1>Formations</h1>
+<div class="grid">
+  @for (form of formations; track form) {
+    <div class="card">
+      <h2>{{ form.title }}</h2>
+      <p>Durée: {{ form.duration }}</p>
+      <fieldset>
+        <legend>Formateur</legend>
+        <p>{{ form.trainer.firstname }} {{ form.trainer.lastname }}</p>
+      </fieldset>
+      <h3>Modules</h3>
+      <ul>
+        @for (module of form.modules; track module) {
+          <li>{{ module }}</li>
+        }
+      </ul>
+    </div>
+  }
+</div>
+

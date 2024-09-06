@@ -20,7 +20,10 @@
     <p>{{ pokemon.area.name }}</p>
     <p>{{ pokemon.area.region }}</p>
   </fieldset>
-  <button (click)="removePokemon()">Supprimer</button>
+  @if (addButtons) {
+    <button (click)="addPokemon()">Ajouter au pokédex</button>
+    <button (click)="removePokemon()">Supprimer du pokédex</button>
+  }
 </article>
 
 
