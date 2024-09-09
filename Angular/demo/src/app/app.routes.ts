@@ -8,7 +8,11 @@ import {AdminComponent} from "./pages/admin/admin.component";
 import {AddComponent} from "./pages/admin/add/add.component";
 import {ParentComponent} from "./pages/parent/parent.component";
 import {FormationsComponent} from "./pages/formations/formations.component";
-import {RxjsComponent} from "./rxjs/rxjs.component";
+import {RxjsComponent} from "./pages/rxjs/rxjs.component";
+import {HttpComponent} from "./pages/rxjs/http/http.component";
+import {TrashbagComponent} from "./pages/trashbag/trashbag.component";
+import {ListComponent} from "./pages/trashbag/list/list.component";
+import {AddComponent as TrashAddComponent} from "./pages/trashbag/add/add.component";
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,6 +25,11 @@ export const routes: Routes = [
     {path: 'add', component: AddComponent},
     ]},
   {path: 'rxjs', component: RxjsComponent},
+  {path: 'http', component: HttpComponent},
+  {path: 'trash', component: TrashbagComponent, children: [
+      {path: '', component: ListComponent},
+      {path: 'add', component: TrashAddComponent},
+    ]},
   {path: 'parent', component: ParentComponent},
   {path: 'accueil', redirectTo: ''},
   {path: '**', component: NotFoundComponent},

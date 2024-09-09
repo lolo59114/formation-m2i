@@ -1,0 +1,8 @@
+<h1>Affichage d'une fact Chuck Norris</h1>
+<div>
+  <p><img [src]="fact?.icon_url"/></p>
+  <p> Id :  {{ fact?.id }} </p>
+  <p> La blague : {{ fact?.value ? fact?.value : factString}}</p>
+</div>
+
+<button (click)="reload()">Une autre !</button>

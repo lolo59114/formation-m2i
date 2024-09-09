@@ -1,0 +1,9 @@
+<h2>Liste des poubelles</h2>
+<div class="grid">
+  @for(trash of trashbags; track trash) {
+    <p>{{ trash.name }} - {{ trash.capacity }}L - {{ trash.hasLace ? "Avec des liens" : "A corde" }}</p>
+  } @empty {
+    <p>Aucune poubelle pour le moment</p>
+  }
+</div>
+

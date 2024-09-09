@@ -1,0 +1,16 @@
+{
+  "trashBags": [
+    {
+      "id": "a1d9",
+      "name": "Chaise 1",
+      "capacity": 3,
+      "hasLace": false
+    },
+    {
+      "id": "57e4",
+      "name": "Chaise 2",
+      "capacity": 6,
+      "hasLace": true
+    }
+  ]
+}
