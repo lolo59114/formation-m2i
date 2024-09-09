@@ -69,13 +69,11 @@ export class PokemonComponent {
     if(this.pokemonForm.valid) {
       this.pokemons.push(this.pokemonForm.value as Pokemon);
       localStorage.setItem("pokemons", JSON.stringify(this.pokemons));
-
       this.pokemonForm.reset();
     }
   }
 
   removePokemonFromPokedex(pokemon: Pokemon) {
-    console.log(pokemon);
     this.pokedexService.removePokemon(pokemon);
   }
 

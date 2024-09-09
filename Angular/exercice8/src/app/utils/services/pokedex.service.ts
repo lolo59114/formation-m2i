@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Pokemon} from "../types/pokemon";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +8,13 @@ import {Pokemon} from "../types/pokemon";
 export class PokedexService {
 
   pokemons: Pokemon[] = [];
+  pokedexSize$ = new BehaviorSubject<number>(0);
 
   constructor() {
     let stored = localStorage.getItem('pokedex');
     if(stored) {
       this.pokemons = JSON.parse(stored);
+      this.pokedexSize$.next(this.pokemons.length);
     }
   }
 
@@ -19,6 +22,7 @@ export class PokedexService {
     if(!this.checkCatched(pokemon)) {
       this.pokemons.push(pokemon);
       localStorage.setItem("pokedex", JSON.stringify(this.pokemons));
+      this.pokedexSize$.next(this.pokemons.length);
     }
   }
 
@@ -27,6 +31,7 @@ export class PokedexService {
     if(index > -1) {
       this.pokemons.splice(index, 1);
       localStorage.setItem("pokedex", JSON.stringify(this.pokemons));
+      this.pokedexSize$.next(this.pokemons.length);
     }
   }
 
