@@ -18,22 +18,22 @@ export class ChucknorrisComponent implements OnInit {
   }
 
   // Avec type Fact
-  // ngOnInit() {
-  //   this.chucknorrisService.getAJoke().subscribe(response => this.fact = response);
-  // }
+  ngOnInit() {
+    this.chucknorrisService.getAJoke().subscribe(response => this.fact = response);
+  }
 
   // Avec la value en string
-  ngOnInit() {
-    this.chucknorrisService.getAJoke().subscribe(response => this.factString = response);
-  }
+  // ngOnInit() {
+  //   this.chucknorrisService.getAJoke().subscribe(response => this.factString = response);
+  // }
 
   // Avec type Fact
-  // reload() {
-  //   this.chucknorrisService.getAJoke().subscribe(response => this.fact = response);
-  // }
+  reload() {
+    this.chucknorrisService.getAJoke().subscribe(response => this.fact = response);
+  }
 
   // Avec la value en string
-  reload() {
-    this.chucknorrisService.getAJoke().subscribe(response => this.factString = response);
-  }
+  // reload() {
+  //   this.chucknorrisService.getAJoke().subscribe(response => this.factString = response);
+  // }
 }

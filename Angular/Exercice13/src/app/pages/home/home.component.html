@@ -1,0 +1,8 @@
+<h1>Bienvenue sur notre application de quizz !</h1>
+<div class="center">
+  <form [formGroup]="form" (ngSubmit)="validate()">
+    <label class="label">Combien de questions voulez-vous ? <input type="number" min="5" max="20" formControlName="quantity"></label>
+    <button>Commencer</button>
+  </form>
+</div>
+

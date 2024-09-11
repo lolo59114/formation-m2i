@@ -8,7 +8,7 @@ import {TrashBag} from "../types/trashbag";
   providedIn: 'root'
 })
 export class TrashbagService {
-  apiUrl = environment.apiUrl + "trashBags";
+  apiUrl = environment.apiUrl + "/trashBags";
 
   constructor(private http: HttpClient) { }
 

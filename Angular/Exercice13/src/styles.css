@@ -1,0 +1,122 @@
+
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --dark: #344055;
+  --primary: blue;
+  --main-font: 'Montserrat', sans-serif;
+  --title-font: 'League Spartan', sans-serif;
+}
+
+/*body {*/
+/*  margin: 0;*/
+/*  color: var(--dark);*/
+/*  font-family: var(--main-font);*/
+/*}*/
+
+html, body {
+  height: 100%; /* S'assure que la page occupe tout l'écran */
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  background: linear-gradient(to bottom, #5C4033, #228B22, #FFD700); /* Fond dégradé */
+}
+
+.container {
+  width: 80%;
+  padding: 20px;
+  background-color: #228B22; /* Optionnel : couleur de fond pour la div */
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1); /* Optionnel : ombre portée pour un effet élégant */
+  border-radius: 10px; /* Optionnel : coins arrondis */
+}
+
+
+h1 {
+  text-align: center;
+}
+
+h1, h2 {
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+h3 {
+  color: var(--primary);
+}
+
+button {
+  background-color: #32CD32; /* Vert Lime */
+  color: white; /* Couleur du texte */
+  border: none; /* Pas de bordure */
+  padding: 20px 50px; /* Taille du bouton */
+  font-size: 24px; /* Taille du texte */
+  font-family: 'Arial', sans-serif; /* Police du texte */
+  border-radius: 30px; /* Coins arrondis */
+  cursor: pointer; /* Curseur pointeur sur hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Effet d'ombre */
+  transition: background-color 0.3s ease; /* Animation du changement de couleur */
+}
+
+button.secondary {
+  border: solid 1px var(--primary);
+  background: white;
+  color: var(--primary);
+}
+
+.btn-container {
+  display: flex;
+  gap: 20px;
+}
+
+form {
+  width: 90%;
+  max-width: 500px;
+}
+
+form p {
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  margin: 80px auto;
+}
+
+.error {
+  color: red;
+}
+
+footer {
+  text-align: center;
+  border-top: solid 1px var(--dark);
+  padding-top: 20px;
+}
+
+.card {
+  border-radius: 10px 10px 10px 20px;
+  box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.56);
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.rounded {
+  margin-right: 10px;
+}
+
+.center {
+  text-align: center;
+  justify-content: center;
+}
+
+.label {
+  font-size: 32px;
+}

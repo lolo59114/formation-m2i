@@ -13,6 +13,11 @@ import {HttpComponent} from "./pages/rxjs/http/http.component";
 import {TrashbagComponent} from "./pages/trashbag/trashbag.component";
 import {ListComponent} from "./pages/trashbag/list/list.component";
 import {AddComponent as TrashAddComponent} from "./pages/trashbag/add/add.component";
+import {RegisterComponent} from "./pages/register/register.component";
+import {LoginComponent} from "./pages/login/login.component";
+import {isLoggedGuard} from "./utils/guards/is-logged.guard";
+import {I18nComponent} from "./pages/i18n/i18n.component";
+import {DomComponent} from "./pages/dom/dom.component";
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,11 +26,15 @@ export const routes: Routes = [
   {path: 'pipes', component: PipesComponent},
   {path: 'formations', component: FormationsComponent},
   {path: 'formulaire', loadComponent: () => import('./pages/formulaire/formulaire.component').then(m => m.FormulaireComponent)},
-  {path: 'admin', component: AdminComponent, children: [
+  {path: 'register', component: RegisterComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'admin', component: AdminComponent, canActivate: [isLoggedGuard], children: [
     {path: 'add', component: AddComponent},
     ]},
   {path: 'rxjs', component: RxjsComponent},
   {path: 'http', component: HttpComponent},
+  {path: 'i18n', component: I18nComponent},
+  {path: 'dom', component: DomComponent},
   {path: 'trash', component: TrashbagComponent, children: [
       {path: '', component: ListComponent},
       {path: 'add', component: TrashAddComponent},

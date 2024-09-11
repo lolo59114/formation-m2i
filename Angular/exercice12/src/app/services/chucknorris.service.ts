@@ -13,25 +13,25 @@ export class ChucknorrisService {
   constructor(private http: HttpClient) { }
 
   // Avec type Fact
-  // getAJoke(): Observable<Fact> {
-  //   return this.http.get<Fact>(`${environment.apiUrl}/jokes/random`).pipe(
-  //     catchError(err => {
-  //       alert(err?.message);
-  //       return of();
-  //     })
-  //   );
-  // }
-
-  // Avec la value en string (c'est mieux avec un JSON)
-  getAJoke(): Observable<string> {
-    return this.http.get<{value: string}>(`${environment.apiUrl}/jokes/random`).pipe(
-      map((response: {value:string}) => {
-        return response.value;
-      }),
+  getAJoke(): Observable<Fact> {
+    return this.http.get<Fact>(`${environment.apiUrl}/jokes/random`).pipe(
       catchError(err => {
-        console.log(err);
+        alert(err?.message);
         return of();
       })
     );
   }
+
+  // Avec la value en string (c'est mieux avec un JSON)
+  // getAJoke(): Observable<string> {
+  //   return this.http.get<{value: string}>(`${environment.apiUrl}/jokes/random`).pipe(
+  //     map((response: {value:string}) => {
+  //       return response.value;
+  //     }),
+  //     catchError(err => {
+  //       console.log(err);
+  //       return of();
+  //     })
+  //   );
+  // }
 }

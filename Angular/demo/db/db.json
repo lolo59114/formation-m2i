@@ -1,4 +1,13 @@
 {
+  "users": [
+    {
+      "email": "VILoic@Gmail.com",
+      "password": "$2a$10$7UevDCbftdN5gflxsvBDPedezpsRrDKfNsLZrUeDjgeOy8jaJS4s2",
+      "firstname": "VI",
+      "lastname": "Loic",
+      "id": 1
+    }
+  ],
   "trashBags": [
     {
       "id": "a1d9",

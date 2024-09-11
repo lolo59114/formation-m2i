@@ -1,0 +1,24 @@
+<h1>I18N</h1>
+
+<h2>La locale {{ locale }}</h2>
+
+<p>Nous sommes le {{ today | date : undefined : undefined : locale }}</p>
+<p>Le prix est {{ 25.99 | currency : code : 'symbol' : undefined : locale }}</p>
+
+<p>
+  <button (click)="changeLocale('fr-FR')">FR</button>
+  <button (click)="changeLocale('en-US')">EN</button>
+</p>
+<p>
+  <button (click)="changeDevise('EUR')">EUR</button>
+  <button (click)="changeDevise('USD')">DOLLAR</button>
+</p>
+
+<h2>Fichiers de traductions</h2>
+<p>{{ 'HELLO' | translate }}</p>
+<p>{{ 'WELCOME' | translate }}</p>
+
+<p>
+  <button (click)="changeLang('fr')">FR</button>
+  <button (click)="changeLang('en')">EN</button>
+</p>

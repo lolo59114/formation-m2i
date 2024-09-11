@@ -1,0 +1,8 @@
+<h2>{{ question.question }}</h2>
+<div class="grid">
+    @for (answer of question.answers; track question) {
+        <button class="card" [id]="'answer'+$index" type="button" name="answer" [value]="$index" (click)="sendAnswer($event)">
+          {{ answer.answer }}
+        </button>
+    }
+</div>
