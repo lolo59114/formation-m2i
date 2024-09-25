@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire </title>
+    <span th:replace="~{home :: bootstrapImport}"></span>
+
+</head>
+<body>
+<header>
+    <span th:replace="~{home :: navbar}"></span>
+</header>
+<div class="container p-4">
+    <div class="row justify-content-center">
+        <div class="col-6 jus">
+            <h1 class="text-center mb-4">Add a post</h1>
+            <hr>
+            <form th:action="@{/post/add}" th:object="${post}" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label"></label>
+                    <input type="text" name="title" class="form-control" id="title" placeholder="Title"
+                           aria-describedby="title" th:field="*{title}">
+                </div>
+                <div class="mb-3 align-items-center">
+                    <textarea class="form-control" name="content" rows="10" th:field="*{content}" placeholder="Content"></textarea>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary me-md-2" type="submit"><i class="bi bi-patch-plus"> Submit</i></button>
+                </div>
+                <input type="hidden" th:field="*{id}">
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+</body>
+</html>

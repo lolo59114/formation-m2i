@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <th:block th:fragment="bootstrapImport">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </th:block>
+</head>
+<body>
+<th:block th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">Mon blog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item" th:if="${login}">
+                        <a class="nav-link" th:href="@{/postForm}">Ajouter un post</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" th:if="${login}">
+                        <a class="nav-link" th:href="@{/deconnexion}">Deconnexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</th:block>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4">Posts</h1>
+            <div th:if="${posts.isEmpty()}">
+                <p>Il n'y a pas de post pour le moment...</p>
+            </div>
+            <div th:each="post : ${posts}" class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${post.getTitle()}">Post Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${post.getAuthor().getUsername()}">Author</h6>
+                    <p class="card-text" th:text="${post.getContent()}">Post Content</p>
+                    <p class="text-muted" th:text="${post.getCreatedAt().toLocalDate()}">Created At</p>
+                    <div th:if="${post.getAuthor().getUsername()} == ${user.getUsername()}">
+                        <a th:href="@{/post/edit/{id}(id=${post.getId()})}" class="btn btn-primary btn-sm">Modifier le post</a>
+                        <a th:href="@{/post/delete/{id}(id=${post.getId()})}" class="btn btn-danger btn-sm">Supprimer le post</a>
+                    </div>
+                    <hr>
+                    <div class="mt-4">
+                        <h5>Commentaires</h5>
+                        <ul class="list-group list-group-flush">
+                            <li th:each="comment : ${post.getComments()}" class="list-group-item">
+                                <div>
+                                    <h6 th:text="${comment.getUser().getUsername()}" class="fw-bold"></h6>
+                                    <p th:text="${comment.getContent()}"></p>
+                                </div>
+                                <div th:if="${comment.getUser().getUsername()} == ${user.getUsername()}">
+                                    <a th:href="@{/comment/edit/{id}(id=${comment.getId()})}" class="btn btn-primary btn-sm">Modifier le commentaire</a>
+                                    <a th:href="@{/comment/delete/{id}(id=${comment.getId()})}" class="btn btn-danger btn-sm">Supprimer le commentaire</a>
+                                </div>
+                            </li>
+                            <li th:if="${post.getComments().isEmpty()}" class="list-group-item text-muted">
+                                Il n'y a pas de commentaire pour ce post
+                            </li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <h5>Commenter le post</h5>
+                    <form th:action="@{/addComment/{postId}(postId=${post.getId()})}" th:object="${comment}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        <div class="mb-3">
+                            <textarea class="form-control" name="content" rows="3" th:field="*{content}" placeholder="Votre commentaire..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
