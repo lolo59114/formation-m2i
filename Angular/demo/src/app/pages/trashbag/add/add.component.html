@@ -1,0 +1,16 @@
+<h2>Ajouter une poubelle</h2>
+<form (ngSubmit)="handleSubmit()">
+  <p>
+    <label>Nom: <input [(ngModel)]="trash.name" name="name"> </label>
+  </p>
+  <p>
+    <label>Capacity: <input type="number" [(ngModel)]="trash.capacity" name="capacity"> </label>
+  </p>
+  <p>
+    <label>Avec des liens <input type="checkbox" [(ngModel)]="trash.hasLace" name="hasLace"> </label>
+  </p>
+  <p>
+    <button>Ajouter</button>
+  </p>
+</form>
+
